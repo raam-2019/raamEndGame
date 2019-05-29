@@ -1,4 +1,3 @@
-/* //The things you need is at the bottom  */
   @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
   
   body {
@@ -30,7 +29,7 @@
   }
   
 
-  /* Below is for Fanpage.css  */
+  /* Below is for Fanpage.css  ... There is another one called FanExpLanding page*/   
   .App {
     display: block;
     min-height: 100vh;
@@ -136,7 +135,7 @@
 
 
 
- 
+/* //Header Navigation ----------------------------------------------Start-----------------------*/
 
 .container {
   width: 80%;
@@ -233,27 +232,29 @@ nav button span {
   }
 }
 
+/* //Header Navigation ----------------------------------------------End----------------------
 
-/* //FanExpLanding */
+
+/* //FanExpLanding ----------------------------------------------Start-----------------------*/
 
 .LandingMain{
   /* height: 650px; */
-  width: 100%;
-  /* background-color: crimson ; */
+  /* width: 100%; */
+  /* background-color: whitesmoke ; */
   
 }
 
 .TLA{
   /* background-color: darkcyan ; */
-  height: 50%;
-  width: 60%;
+  /* height: 40%; */
+  /* width: 40%; */
   /* float: left; */
 }
 
 .TRA{
   /* background-color: darkolivegreen ; */
-  height: 50%;
-  width: 40%;
+  /* height: 50%; */
+  /* width: 60%; */
 }
 
 .row {
@@ -291,6 +292,23 @@ nav button span {
   color: white;
 }
 
+.textWhite {
+  /* text-transform: uppercase; */
+  foat: left;
+  font-size: 14px;
+  color: white;
+  
+
+}
+
+.textWhite1 {
+  /* text-transform: uppercase; */
+  foat: left;
+  font-size: 14px;
+  color: white;
+}
+
+
 .BM{
   /* background-color: darkgreen; */
   /* height: 30%; */
@@ -302,10 +320,38 @@ nav button span {
   background-image: url('./Image/LandingBackground.png');
   /* height: 500px; */
   background-color: #666;
+  padding-right: 18%;
 
 }
 
 .BLL{
   background-color: black;
-  height: 600px;
+  /* height: 1000px; */
 }
+
+.mm{
+ background-color: whitesmoke;
+ padding-top: 2%;
+ width: 15rem;
+ height: 3rem;
+ padding-left: 5%;
+}
+
+.nn{
+  background-color: whitesmoke;
+  padding-top: 2%;
+  width: 12rem;
+  height: 3rem;
+  padding-left: 5%;
+
+}
+
+.SL{
+  /* background-color: aliceblue; */
+}
+
+.LLL{
+
+}
+
+/* //FanExpLanding ----------------------------------------------End-----------------------*/
