@@ -1,7 +1,3 @@
-Please dont change this structure..............
-
-Src will be our root or whatever.....
-
     Components folder will contain all the components. In react the pages are called component. 
     
         1st Component is Mapbox component. Everything Mapbox will render will be coded here (** matrics) aka widget 0
