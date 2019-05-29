@@ -1,0 +1,14 @@
+{
+    "react": {
+        "awscloudformation": {
+            "AuthRoleName": "raam-20190405190109-authRole",
+            "UnauthRoleArn": "arn:aws:iam::954575035901:role/raam-20190405190109-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::954575035901:role/raam-20190405190109-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "raam-20190405190109-deployment",
+            "UnauthRoleName": "raam-20190405190109-unauthRole",
+            "StackName": "raam-20190405190109",
+            "StackId": "arn:aws:cloudformation:us-east-1:954575035901:stack/raam-20190405190109/1656e020-57ff-11e9-b292-0eaa79b17470"
+        }
+    }
+}

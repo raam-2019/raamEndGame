@@ -1,0 +1,423 @@
+/* //The things you need is at the bottom  */
+
+
+a.underLine{ 
+    color: inherit; border-bottom: 1px dashed #b7b7b7;
+  }
+  
+  a.underLine:hover, a.underLine:active, a.underLine:focus{ 
+    color: inherit; text-decoration: none; border-bottom: 1px solid black; outline: none;
+  }
+  
+ 
+  
+ 
+  
+  #footer{
+    position: absolute;
+    text-align: right;
+    right: 15px;
+    bottom: 0;
+    height: 45px;
+    font-size: 13.5px;
+    font-family: Poppins, sans-serif;
+    font-style: italic;
+    color: gray;
+  }
+  
+  .wrapper {
+    display: flex;
+    align-items: stretch;
+    perspective: 1500px;
+    width: 100%;
+  }
+  
+  #sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #eb6864;
+    color: #fff;
+    transition: all o.6s cubic-bezier(0.945, 0.02, 0.27, 0.665);
+    transform-origin: center left;
+    min-height: 100vh;
+  }
+  
+  #sidebarCollapse {
+    width: 40px;
+    height: 40px;
+    background: #f5f5f5;
+  }
+  
+  #sidebarCollapse span {
+    height: 80%;
+    height: 2px;
+    margin: 0 auto;
+    display: block;
+    background: block;
+    background: #555;
+    transition: all 0.8s cubic-bezier(0.81, -0.33, 0.345, 1.375);
+  }
+  
+  #sidebarCollapse span:first-of-type {
+    transform: rotate(45deg) translate(2px, 2px);
+  }
+  #sidebarCollapse span:nth-of-type(2) {
+    opacity: 0;
+  }
+  #sidebarCollapse span:last-of-type {
+    transform: rotate(-45deg) translate(1px, -1px);
+  }
+  
+  #sidebarCollapse.active span {
+    transform: none;
+    opacity: 1;
+    margin: 5px auto;
+  }
+  
+  #sidebar.active {
+    margin-left: -250px;
+    transform: rotateY(100deg);
+  }
+  
+  a[data-toggle="collapse"] {
+    position: relative;
+  }
+  
+  .dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+  }
+  
+  .index-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 8px;
+    margin-right: 8px;
+    color: whitesmoke;
+  }
+  
+  .fade-enter {
+    opacity: 0.01;
+  }
+  
+  .fade-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+  
+  .fade-exit {
+    opacity: 1;
+  }
+  
+  .fade-exit-active {
+    opacity: 0.01;
+    transition: opacity 500ms ease-in;
+  }
+  
+  @media (max-width: 768px) {
+    #HeadImg{
+      display: none;
+    }
+    #HeadImg_Link{
+      display: none;
+    }
+    #footer{
+      display: none;
+    }
+    #sidebar {
+      margin-left: -250px;
+      transform: rotateY(100deg);
+    }
+    #sidebar.active {
+      margin-left: 0;
+      transform: none;
+    }
+    #sidebarCollapse span:first-of-type,
+    #sidebarCollapse span:nth-of-type(2),
+    #sidebarCollapse span:last-of-type {
+      transform: none;
+      opacity: 1;
+      margin: 5px auto;
+    }
+    #sidebarCollapse.active span {
+      margin: 0 auto;
+    }
+    #sidebarCollapse.active span:first-of-type {
+      transform: rotate(45deg) translate(2px, 2px);
+    }
+    #sidebarCollapse.active span:nth-of-type(2) {
+      opacity: 0;
+    }
+    #sidebarCollapse.active span:last-of-type {
+      transform: rotate(-45deg) translate(1px, -1px);
+    }
+  }
+  
+  @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+  
+  body {
+    font-family: "Poppins", sans-serif;
+    background: #fafafa;
+  }
+  
+  p {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #7b7b7b;
+  }
+  
+  a,
+  a:hover,
+  a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  
+  #content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+  }
+  
+  .navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+    margin-left: -15px;
+  }
+  
+  #sidebar {
+    background: #eb6864;
+    color: #fff;
+    transition: all 0.3s;
+  }
+  
+  #sidebar .sidebar-header {
+    padding: 20px;
+    background: #eb6864;
+  }
+  
+  #sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #eb6864;
+  }
+  
+  #sidebar ul p {
+    color: #fff;
+    padding: 10px;
+  }
+  
+  #sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+  }
+  
+  #sidebar ul li a:hover {
+    color: #ec4f5f;
+    background: #fff;
+  }
+  
+  #sidebar ul li.active > a,
+  a[aria-expanded="true"] {
+    color: #fff;
+    background: #ec4f5f;
+  }
+  ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #ec4f5f;
+  }
+  
+  ul ul a.underLine {
+    padding-left: 0px !important;
+    background: transparent;
+    color: inherit; border-bottom: 1px dashed #b7b7b7;
+  }
+  
+  html {
+    font-size: 21px;
+    line-height: 1.58;
+    color: #333;  
+    overscroll-behavior-y: auto;
+    overflow: auto;
+  }
+
+  #header {
+    text-align: center;
+    font-size: 18px;
+    background: transparent;
+    color: #777;
+    margin-bottom: 30px;
+    padding-top: 50px;
+  }
+  #header-bar {
+    color: #333;
+    background: transparent;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: 0 auto;
+    z-index: 10;
+    opacity: 0.99;
+  }
+  #header-bar-wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+  }
+  #header-bar-wrap span {
+    line-height: 50px;
+    letter-spacing: 0px;
+    font-weight: bold;
+    font-size: 30px;
+    display: block;
+  }
+  /* @media (max-width: 1000px) {
+    .main-menu, .main-contact { display: none; }
+    
+  } */
+
+  
+  .main-contact:hover {
+    background: whitesmoke;
+  }
+  .main-menu {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 5px;
+  }
+  .main-selected {font-weight: bold;}
+  .main-sub-option {
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 14px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .main-menu > div {
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  /* Above is from previous StyleSheet */
+
+
+  /* Below is the Fanpage.css  */
+
+
+  .main {
+    /* background-color: rgba(46, 63, 78); */
+  }
+  
+  .App {
+    display: block;
+    min-height: 100vh;
+    padding: 1rem;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  .App > * + * {
+    margin-top: 1rem;
+  }
+  
+  /* autoprefixer: off */
+  @supports(display:grid) {
+    .App {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+
+
+
+
+
+        /* //Spacing between the grid */
+        grid-gap: 1rem;
+    }
+  
+    .App > * + * {
+        margin-top: 0;
+    }
+  }
+  
+  @media(max-width: 600px) {
+    .App {
+        display: block;
+    }
+  
+    .App > * + * {
+        margin-top: 1rem;
+    }
+  }
+
+
+ /* //Widget Customization  */
+/* //Since there are fewer Widgets we can manually css the individual Widgets.
+//Copy Paste and customize with the respective className. 
+//Let the first one be Widget0 */
+
+  .Widget {
+    background-color: #34495e4f;
+    padding: 1rem;
+}
+
+
+
+
+
+
+/* autoprefixer: off */
+@supports(display:grid) {
+    .Widget {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto 1fr;
+        grid-template-areas: 
+            "header"
+            "content";
+    }
+
+    .App > * + * {
+        margin-top: 0;
+    }
+}
+
+.Widget .header {
+    grid-area: header;
+    line-height: 2;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Widget h2 {
+    color: aliceblue;
+    font-size: 1.5rem;
+    margin: 0;
+    line-height: 1;
+    text-overflow: ellipsis;
+}
+
+.Widget .Loading {
+    margin-left: 0.5rem;
+}
+
+.Widget .content {
+    grid-area: content;
+    padding-top: 1rem;
+}
+
+@media(max-width: 600px) {
+    .Widget .content {
+        padding-top: 0.25rem;
+    }
+}
