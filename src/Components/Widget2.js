@@ -58,9 +58,9 @@ export default class Widget2 extends React.Component {
                         <YAxis />
                         <LineSeries
                           data={[
-                              {x: 1, y: 4},
-                              {x: 5, y: 2},
-                              {x: 15, y: 6}
+                              {x: 5, y: 1},
+                              {x: 2, y: 9},
+                              {x: 30, y: 7}
                           ]}/>
                     </FlexibleXYPlot>
                 </div>
