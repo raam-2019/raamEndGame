@@ -1,12 +1,11 @@
-import React from 'react'
-import { Image } from 'react-bootstrap'
-import { Container, Row, Col } from 'react-bootstrap'
-
-import DaBike from '../../Assets/Image/DaveBike.jpg'
-import DaDaveOne from '../../Assets/Image/4.jpg'
-import DaDaveTwo from '../../Assets/Image/1.jpg'
-import DaDaveThree from '../../Assets/Image/3.jpg'
-import DaDaveFour from '../../Assets/Image/2.jpg'
+import React from 'react';
+import { Image } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import DaBike from '../../Assets/Image/DaveBike.jpg';
+import DaDaveOne from '../../Assets/Image/4.jpg';
+import DaDaveTwo from '../../Assets/Image/1.jpg';
+import DaDaveThree from '../../Assets/Image/3.jpg';
+import DaDaveFour from '../../Assets/Image/2.jpg';
 
 import '../../Assets/Stylesheet.css'
 

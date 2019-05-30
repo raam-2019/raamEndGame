@@ -8,6 +8,8 @@ import Widget5 from "../Widget5";
 import Widget6 from "../Widget6";
 import {API, graphqlOperation} from 'aws-amplify';
 import {Racerdata, Asset} from "../../graphql/queries";
+import Navagation from '../GlobalUtilities/Navigation';
+import FanExpLanding from './FanExpLanding';
 
 import "../../Assets/Stylesheet.css";
 
@@ -34,8 +36,14 @@ class Fanexperience extends Component {
     render() {
         return (
             <div className="main">
-                <div className="container-fluid">
-                     < Widget0 />
+                 <div  >
+                    <Navagation />
+                    <br />
+                    <br />
+                    <FanExpLanding />
+                    <br />
+                    <Widget0 />
+
                     <br />
                     <div className="App">
                     <Widget1 heading="Stat 1" rowspan={2} colspan={3} />
@@ -45,7 +53,7 @@ class Fanexperience extends Component {
                     <Widget5 heading="ThisAndThat"/>
                     <Widget6 heading="RAAM"/>
                     </div>
-                </div>
+               </div>
             </div>
         );
     }
