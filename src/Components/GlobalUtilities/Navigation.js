@@ -1,67 +1,78 @@
-<!-- import React, { Component } from 'react';
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem } from 'reactstrap';
-import "../css/stylesheet.css";
+import React, { Component } from 'react'
+import { Button, Navbar, Nav, Form, FormControl } from 'react-bootstrap'
+import '../../Assets/Stylesheet.css'
+ 
+import $ from 'jquery';
 
 class Navagation extends Component {
-    constructor(props) {
-        super(props);
-    
-        this.toggle = this.toggle.bind(this);
-        this.state = {
-          isOpen: false
-        };
-      }
-      toggle() {
-        this.setState({
-          isOpen: !this.state.isOpen
-        });
-      }
-    render() { 
-        return (
-            <div style={{marginBottom: "20px"}}>
-            <Navbar color="dark" light expand="md">
-              <NavbarBrand href="/" style={{float: "center"}}>
-                <div className="index-title">
-                    Placeholder Title
-                </div>
-              </NavbarBrand>
-              <NavbarToggler onClick={this.toggle} />
-              <Collapse isOpen={this.state.isOpen} navbar>
-                <Nav className="ml-auto" navbar>
-                  <NavItem>
-                    <NavLink href="/" style={{color: "whitesmoke"}}>Link 1</NavLink>
-                  </NavItem>
-                  <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret style={{color: "whitesmoke"}}>
-                      Dropdown
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>
-                        Link 1
-                      </DropdownItem>
-                      <DropdownItem divider />
-                      <DropdownItem>
-                        Link 2
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
-                </Nav>
-              </Collapse>
-            </Navbar>
-          </div>
-         );
-    }
+  componentDidMount () {
+    // Jquery here $(...)...
+
+    $(document).ready(function () {
+      'use strict'
+
+      var c
+
+      var currentScrollTop = 0
+
+      var navbar = $('nav')
+
+      $(window).scroll(function () {
+        var a = $(window).scrollTop()
+        var b = navbar.height()
+
+        currentScrollTop = a
+
+        if (c < currentScrollTop && a > b + b) {
+          navbar.addClass('scrollUp')
+        } else if (c > currentScrollTop && !(a <= b)) {
+          navbar.removeClass('scrollUp')
+        }
+        c = currentScrollTop
+      })
+    })
+  }
+
+  render () {
+    return (
+      <nav>
+        <div class='container'>
+          <a href='/' id='brand'>
+            RAAM
+          </a>
+          <a href='/' id='brandWhite'>
+             _ 
+          </a>
+          <a href='/' id='brandRed'>
+             2019
+          </a>
+          <button>
+            <span />
+            <span />
+            <span />
+          </button>
+
+          <ul class='navbar-menu'>
+            <li>
+              <a href='/'>Home</a>
+            </li>
+            <li>
+              <a href='/'>page a</a>
+            </li>
+            <li>
+              <a href='/'>page b</a>
+            </li>
+            <li>
+              <a href='/'>page c</a>
+            </li>
+            <li>
+              <a href='/'>page d</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    )
+  }
 }
- 
-export default Navagation; -->
+
+export default Navagation

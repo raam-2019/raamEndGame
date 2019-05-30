@@ -16,6 +16,7 @@ const TOKEN = 'pk.eyJ1IjoibWlzbGFtNSIsImEiOiJjanVpdG5vZWoxZThsNGZwamJ4Nmxya2o0In
 
 class Widget0 extends React.Component {
 
+
     state = {
         viewport: {
             width: '70%',
