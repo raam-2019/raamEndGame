@@ -20,9 +20,9 @@ class Widget0 extends React.Component {
         viewport: {
             width: '70%',
             height: 500,
-            latitude: 43.053619,
-            longitude: -89.3778086,
-            zoom: 10,
+            latitude: 33.176215,
+            longitude: -117.363864,
+            zoom: 9.75,
             bearing: 0,
             pitch: 0,
         }
@@ -54,7 +54,8 @@ class Widget0 extends React.Component {
             <div id="mainWrapper">
                 <Container className="d-flex flex-wrap justify-content-left align-items-center align-content-center">
                     <ReactMapGL mapboxApiAccessToken={TOKEN}
-                        mapStyle="mapbox://styles/mislam5/cjuiyejbm6qn11gnv0e44i7qm"
+                        // mapStyle="mapbox://styles/mislam5/cjuiyejbm6qn11gnv0e44i7qm"
+                        mapStyle='mapbox://styles/mislam5/cjuiyejbm6qn11gnv0e44i7qm'
                         {...this.state.viewport} onViewportChange={this._onViewportChange}
                      >
                         <div className="nav">
