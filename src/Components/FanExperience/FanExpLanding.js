@@ -14,19 +14,17 @@ class FanExpLanding extends React.Component {
   render () {
     return (
       <div className='LandingMain'>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <div class='row'>
-          <div class='col'>
+      <br />
+        <Row>
+          <Col>
             <div className='TLA container'>
               <Image src={DaBike} fluid />
             </div>
-          </div>
-          <div class='col'>
+          </Col>
+          <Col>
+          <br />
+          <br />
+          <br />
             <div className='TRA container'>
               <div>
                 <a href='/' className='brand'>
@@ -48,8 +46,8 @@ class FanExpLanding extends React.Component {
                 ThePerfectRace
               </a>
             </div>
-          </div>
-        </div>
+          </Col>
+        </Row>
 
         <div className='BM container center'>
           <br />
