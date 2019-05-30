@@ -16,3 +16,14 @@
                     And grid position customization is in the fanexperience.js (col,row)
                     
 
+
+        To run the project type     yarn && yarn start     and delete package-lock before that to avoid conflict.
+                
+                Or
+                
+                    npm install
+                        npm start        but before delete yarn.lock
+                        
+                        
+                                    Use wither Yarn or NMP but not both together. This is cause problems. 
+                                        Always add new framework to the package.json file. 
