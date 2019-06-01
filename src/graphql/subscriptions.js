@@ -41,3 +41,10 @@ export const onUpdateAsset = `subscription onUpdateAssetTableC60dd8a{
   }
 }
 `;
+
+export const onRiderUpdate = `  subscription Rider {
+  rider{
+    id
+  }
+}
+`;
