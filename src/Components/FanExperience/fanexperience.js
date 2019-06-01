@@ -22,7 +22,7 @@ class Fanexperience extends Component {
     }
 
     state = {users: [], error: ""}
-  
+
     async componentDiyarndMount(){
         const allRacerData = await API.graphql(graphqlOperation(Asset));
         console.log(allRacerData);
