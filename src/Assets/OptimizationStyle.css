@@ -30,23 +30,25 @@
 
 
   /* Below is for Fanpage.css  ... There is another one called FanExpLanding page*/
-  .biometrics {
+  .optimization {
     display: block;
     min-height: 100vh;
     padding: 1rem;
     -webkit-font-smoothing: antialiased;
   }
 
-  .biometrics > * + * {
+  .optimization > * + * {
     margin-top: 1rem;
   }
 
   /* autoprefixer: off */
   @supports(display:grid) {
-    .biometrics {
+    .optimization {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        background-color: whitesmoke;
+
 
 
 
@@ -56,17 +58,17 @@
         grid-gap: 0.3rem;
     }
 
-    .biometrics > * + * {
+    .optimization > * + * {
         margin-top: 0;
     }
   }
 
   @media(max-width: 600px) {
-    .biometrics {
+    .optimization {
         display: block;
     }
 
-    .biometrics > * + * {
+    .optimization > * + * {
         margin-top: 1rem;
     }
   }
@@ -79,12 +81,8 @@
 
   .Widget {
     background-color: #34495e4f;
-    padding: 1rem;
+    padding: .1rem;
 }
-
-
-
-
 
 
 /* autoprefixer: off */
@@ -98,7 +96,7 @@
             "content";
     }
 
-    .biometrics > * + * {
+    .optimization > * + * {
         margin-top: 0;
     }
 }
