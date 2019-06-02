@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Container } from 'reactstrap'
-import { curveCatmullRom } from 'd3-shape'
 import {
   XYPlot,
   XAxis,
@@ -58,7 +57,7 @@ export default class Widget2 extends React.Component {
               data={[
                     {x: 1, y: 4},
 	                {x: 5, y: 2},
-	                {x: 15, y: 6} 
+	                {x: 15, y: 6}
                     ]}
             />
           </FlexibleXYPlot>
