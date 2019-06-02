@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Navbar, Nav, Form, FormControl } from 'react-bootstrap'
 import '../../Assets/Stylesheet.css'
- 
+
 import $ from 'jquery';
 
 class Navagation extends Component {
@@ -41,7 +41,7 @@ class Navagation extends Component {
             RAAM
           </a>
           <a href='/' id='brandWhite'>
-             _ 
+             _
           </a>
           <a href='/' id='brandRed'>
              2019
@@ -57,13 +57,13 @@ class Navagation extends Component {
               <a href='/'>Home</a>
             </li>
             <li>
-              <a href='/social'>Social</a>
+              <a href='/social'>Social Media</a>
             </li>
             <li>
-              <a href='/'>page b</a>
+              <a href='https://www.davehaase.com/shop'>Sponsor now!</a>
             </li>
             <li>
-              <a href='/'>page c</a>
+              <a href='/dashboardRAAMforVIPaccess'>TEST team page</a>
             </li>
             <li>
               <a href='/'>page d</a>
