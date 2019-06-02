@@ -2,6 +2,7 @@ import React from 'react';
 import { Image } from 'react-bootstrap';
 import { Container, Row, Col } from 'react-bootstrap';
 import DaBike from '../../Assets/Image/DaveBike.jpg';
+import DaveBike from "../../Assets/Image/DaveBike1.png";
 import DaDaveOne from '../../Assets/Image/4.jpg';
 import DaDaveTwo from '../../Assets/Image/1.jpg';
 import DaDaveThree from '../../Assets/Image/3.jpg';
@@ -17,7 +18,7 @@ class FanExpLanding extends React.Component {
         <Row>
           <Col>
             <div className='TLA container'>
-              <Image src={DaBike} fluid />
+              <Image src={DaveBike} fluid />
             </div>
           </Col>
           <Col>
