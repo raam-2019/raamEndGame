@@ -102,7 +102,7 @@ class CustomCarousel extends Component {
                 style={{ width: "100%", height: "600px", alignItems: "center" }}
               />
             </Media>
-            <Media body style={{color: "white", marginLeft: "1rem"}}>
+            <Media body className="CarouselText">
               <Media heading>Title</Media>
               Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
               scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum

@@ -358,5 +358,51 @@ nav button span {
 /* //FanExpLanding ----------------------------------------------End-----------------------*/
 
 .carousel {
-  margin-top: 1.5rem
+  margin-top: 1.5rem;
+  /*
+  border-width: thick;
+  border-style: solid;
+  border-color: #101010;
+  padding: 1px;
+  background: #101010;
+  */
+}
+
+.CarouselText {
+  border-width: thick;
+  border-style: solid;
+  border-color: #131313;
+  padding: 1px;
+  background: #131313;
+  color: whitesmoke;
+  margin-left: 1rem;
+  padding: 2px;
+}
+
+.carousel-control-prev-icon {
+  outline: transparent;
+  background-size: 100%, 100%;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background-image: none;
+}
+.carousel-control-next-icon {
+  outline: transparent;
+  background-size: 100%, 100%;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background-image: none;
+}
+
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 55px;
+  color: whitesmoke;
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 55px;
+  color: whitesmoke;
 }
