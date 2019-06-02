@@ -72,7 +72,7 @@ class Dashboard extends React.Component {
 
           <div className="optimization">
             <Widget4 heading="optimization" rowspan={2} colspan={4} />
-            <Widget5 heading="power & speed" rowspan={2} colspan={4} />
+            <Widget5 heading="power and speed" rowspan={2} colspan={4} />
             <Widget6 heading="Batteries and stuff" rowspan={1} colspan={4} />
           </div>
         </div>
