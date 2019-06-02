@@ -57,7 +57,7 @@ class Navagation extends Component {
               <a href='/'>Home</a>
             </li>
             <li>
-              <a href='/'>page a</a>
+              <a href='/social'>Social</a>
             </li>
             <li>
               <a href='/'>page b</a>

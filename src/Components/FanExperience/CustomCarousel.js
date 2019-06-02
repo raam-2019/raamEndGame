@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import {
   Media,
+  Card,
+  CardImg,
+  CardTitle,
+  CardBody,
+  CardSubtitle,
+  CardText,
   Row,
   Col,
   Carousel,
@@ -93,16 +99,34 @@ class CustomCarousel extends Component {
           onExited={this.onExited}
           key={item.src}
         >
+          <Card style={{background: "black"}}>
+            <CardImg
+              top
+              src={item.src}
+              alt={item.altText}
+              className="CarouselImage"
+            />
+            <CardBody>
+              <CardText className="CarouselText">
+              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+              scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum
+              in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
+              nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              </CardText>
+            </CardBody>
+          </Card>
+{/*
           <Media>
-            <Media left href="#">
+            <Media top href="#">
               <Media
                 object
                 src={item.src}
                 alt={item.altText}
                 style={{ width: "100%", height: "600px", alignItems: "center" }}
+                className="CarouselImage"
               />
             </Media>
-            <Media body className="CarouselText">
+            <Media bottom body className="CarouselText">
               <Media heading>Title</Media>
               Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
               scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum
@@ -110,6 +134,7 @@ class CustomCarousel extends Component {
               nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
             </Media>
           </Media>
+*/}
           <CarouselCaption
             captionText={item.caption}
             captionHeader={item.caption}
@@ -118,7 +143,7 @@ class CustomCarousel extends Component {
       );
     });
     return (
-      <Row style={{ height: "650px" }}>
+      <Row style={{ height: "100%" }}>
         <Col xs="2" />
         <Col xs="8">
           <Carousel

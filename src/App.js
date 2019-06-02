@@ -16,11 +16,10 @@ class App extends Component {
       //which we might need later to avoid multiple same implementations.
       //For development purpose I have added the exact.
       <BrowserRouter>
-        <div>
+        <React.Fragment>
           <Route path="/" component={Fanexperience} exact />
-          <Route path="/social" component={SocialMedia} />
           <Route path="/dashboardRAAMforVIPaccess" component={Dashboard} />
-        </div>
+        </React.Fragment>
       </BrowserRouter>
 
 

@@ -8,6 +8,7 @@ import Widget3 from "../Widget3";
 import Widget4 from "../Widget4";
 import Widget5 from "../Widget5";
 import Widget6 from "../Widget6";
+import SocialMedia from "../SocialMedia/socialMedia";
 import { API, graphqlOperation } from "aws-amplify";
 import { Racerdata, Asset } from "../../graphql/queries";
 import Navagation from "../GlobalUtilities/Navigation";
