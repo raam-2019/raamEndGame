@@ -43,6 +43,11 @@ class Dashboard extends React.Component {
 
   render() {
     return (
+      /*
+        //NOTE:
+        We will need to tie together the time axis with all of the components.
+        To do this we may need a redux backend.
+      */
         // For Dashboard access for now we will have to add /dashboardRAAMforVIPaccess to out http
         <div className="main">
           <Navagation />
@@ -60,9 +65,9 @@ class Dashboard extends React.Component {
           <br />
 
           <div className="biometrics">
-            <Widget1 heading="Stat 1" rowspan={2} colspan={1} />
-            <Widget2 heading="Stat 2" rowspan={2} colspan={1} />
-            <Widget3 heading="Some graph shit" rowspan={2} colspan={1} />
+            <Widget1 heading="Core temp + skin temp" rowspan={2} colspan={1} />
+            <Widget2 heading="HR + BR" rowspan={2} colspan={1} />
+            <Widget3 heading="Mo2 (hemo_percent, hemo_total)" rowspan={2} colspan={1} />
           </div>
 
           <div className="optimization">
