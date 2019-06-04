@@ -322,7 +322,11 @@ nav button span {
   /* height: 500px; */
   background-color: #666;
   padding-right: 18%;
+}
 
+.WhiteBackground{
+  background-color: white;
+  padding-right: 18%;
 }
 
 .BLL{
@@ -421,4 +425,18 @@ nav button span {
   .CarouselImage{
     height: 300px;
   }
+}
+
+.panel_right{
+  position: fixed;
+  right: 15px;
+  top: 100px;
+  z-index: 100;
+  width: 190px;
+}
+
+.panel_item:hover{
+  color: black;
+  background: orange;
+  cursor: pointer; 
 }

@@ -17,7 +17,7 @@ class FanExpLanding extends React.Component {
       <br />
         <Row>
           <Col>
-            <div className='TLA container'>
+            <div className='TLA container' ref={this.props.dataRef1}>
               <Image src={DaveBike} fluid />
             </div>
           </Col>
@@ -49,7 +49,7 @@ class FanExpLanding extends React.Component {
           </Col>
         </Row>
 
-        <div className='BM container center'>
+        <div className='BM container center' ref={this.props.dataRef2}>
           <br />
           <br />
           <a href='/' className='brandRed'>
