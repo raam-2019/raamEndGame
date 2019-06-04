@@ -433,10 +433,18 @@ nav button span {
   top: 100px;
   z-index: 100;
   width: 190px;
+  background: whitesmoke;
+}
+
+.panel_item{
+  color: red;
+  background: whitesmoke;
+  font-weight: bold;
 }
 
 .panel_item:hover{
   color: black;
   background: orange;
+  font-weight: bold;
   cursor: pointer; 
 }

@@ -79,10 +79,10 @@ class Fanexperience extends Component {
         </Row>
 
         <ListGroup className="panel_right">
-          <ListGroupItem className="panel_item" onClick={this.scrollToRef1}>Scroll from me</ListGroupItem>
-          <ListGroupItem className="panel_item" onClick={this.scrollToRef2}>Scroll from me</ListGroupItem>
-          <ListGroupItem className="panel_item" onClick={this.scrollToRef3}>Scroll from me</ListGroupItem>
-          <ListGroupItem className="panel_item" onClick={this.scrollToRef4}>Scroll from me</ListGroupItem>
+          <ListGroupItem className="panel_item" onClick={this.scrollToRef1}>Introduction</ListGroupItem>
+          <ListGroupItem className="panel_item" onClick={this.scrollToRef2}>Who is Dave</ListGroupItem>
+          <ListGroupItem className="panel_item" onClick={this.scrollToRef3}>Widgets</ListGroupItem>
+          <ListGroupItem className="panel_item" onClick={this.scrollToRef4}>About Us</ListGroupItem>
           <ListGroupItem className="panel_item" onClick={this.scrollToRef5}>Scroll from me</ListGroupItem>
         </ListGroup>
       </div>
