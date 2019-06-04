@@ -8,20 +8,22 @@ var textColor = 'black'; //Set this in the div in the render.
 var batteryLife = -1; //Default value if something goes wrong.
 var lastCall = -1;
 
-class teamxpWidget6 extends React.Component {
+class teamxpWidget8 extends React.Component {
 
 
     constructor(props) {
         super(props);
 
         //TODO insert logic for handling the api request here.
+        //Name the length lastCall
         //Name the variable recieved batteryLife.
 
         //Testing variable replace with actual battery life later
         //Dependency injection good for testing??
 
+
         batteryLife = Math.round(Math.random() * 100 + 1);
-        lastCall = '10:28am';
+        lastCall = '10:29am';
 
         if(batteryLife   < 15) {
           //Battery should display a red background
@@ -66,6 +68,7 @@ class teamxpWidget6 extends React.Component {
                     <h1>
                       {this.props.children}
                       {batteryLife}%
+
                     </h1>
                     <h3 style={{color: textColor, fontSize: '10px'}}>
                       last updated: {lastCall}
@@ -76,4 +79,4 @@ class teamxpWidget6 extends React.Component {
     }
 }
 
-export default teamxpWidget6
+export default teamxpWidget8

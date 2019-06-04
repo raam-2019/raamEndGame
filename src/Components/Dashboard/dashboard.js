@@ -16,10 +16,14 @@ import Widget3 from "./teamxpWidget3"
 
 import Widget4 from "./teamxpWidget4"
 import Widget5 from "./teamxpWidget5"
+
 import Widget6 from "./teamxpWidget6"
+import Widget7 from "./teamxpWidget7"
+import Widget8 from "./teamxpWidget8"
 
 import "../../Assets/BiometricsStyle.css";
 import "../../Assets/OptimizationStyle.css";
+
 
 class Dashboard extends React.Component {
 
@@ -71,9 +75,11 @@ class Dashboard extends React.Component {
           </div>
 
           <div className="optimization">
-            <Widget4 heading="optimization" rowspan={2} colspan={4} />
-            <Widget5 heading="power and speed" rowspan={2} colspan={4} />
-            <Widget6 heading="Batteries and stuff" rowspan={1} colspan={4} />
+          <Widget4 heading="optimization" rowspan={2} colspan={5} />
+          <Widget5 heading="power & speed" rowspan={2} colspan={5} />
+          <Widget6 heading="Garmin" rowspan={1} colspan={1} />
+          <Widget7 heading="Samsung" rowspan={1} colSpan={1} />
+          <Widget8 heading="Equivital" rowspan={1} colSpan={1} />
           </div>
         </div>
       );
