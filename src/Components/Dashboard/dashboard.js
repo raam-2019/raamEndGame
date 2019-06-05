@@ -11,13 +11,13 @@ import Navagation from "../GlobalUtilities/Navigation";
 import Widget0 from "../Widget0"
 
 import Widget1 from "./teamxpWidget1"
-import Widget2 from "./teamxpWidget2"
+import Widget2 from "./HeartRateWidget"
 import Widget3 from "./teamxpWidget3"
 
 import Widget4 from "./teamxpWidget4"
 import Widget5 from "./teamxpWidget5"
 
-import Widget6 from "./teamxpWidget6"
+import Widget6 from "./GarminWidget"
 import Widget7 from "./teamxpWidget7"
 import Widget8 from "./teamxpWidget8"
 

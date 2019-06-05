@@ -8,7 +8,7 @@ var textColor = 'black'; //Set this in the div in the render.
 var batteryLife = -1; //Default value if something goes wrong.
 var lastCall = -1;
 
-class teamxpWidget6 extends React.Component {
+class GarminWidget extends React.Component {
 
 
     constructor(props) {
@@ -76,4 +76,4 @@ class teamxpWidget6 extends React.Component {
     }
 }
 
-export default teamxpWidget6
+export default GarminWidget
