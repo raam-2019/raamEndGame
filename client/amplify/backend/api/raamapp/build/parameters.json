@@ -1,0 +1,6 @@
+{
+    "AppSyncApiName": "raamapp",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "S3DeploymentBucket": "raam-webapp-20190426150434-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/ebae30339cb423a7ef8f11dcdf5b336010786bdf"
+}

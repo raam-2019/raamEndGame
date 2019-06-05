@@ -52,27 +52,21 @@ class Widget0 extends React.Component {
     }
 
     componentDidMount(){
-        
-    //    let request = new Request(`http://trackleaders.com/spot/transam19/fullfeed.xml`);
-    //    let uri = "http://trackleaders.com/spot/transam19/fullfeed.xml";
-            
-    //    let h = new Headers({
-    //     'Access-Control-Allow-Origin':'*',
-    //     'Content-Type': 'multipart/form-data'
-    // });
-        
-    //     let req =  {
-    //         method: 'POST',
-    //         headers: h,
-    //         mode: 'cors'
-    //     };
-
-    //    fetch(uri,req)
-    //    .then(response=> response.json())
-    //    .catch(function(error) {
-    //      console.log('Looks like there was a problem: \n', error);
-    //    });
       
+       this.trackData();
+    }
+
+    trackData(){
+
+        setInterval(function(){
+            fetch('/api/trackleads')
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(function(error) {
+                console.log('Looks like there was a problem: \n', error);
+            })
+        } , 60000) ;
+        
     }
 
     // mapStyle = "mapbox://styles/mislam5/cjuiyejbm6qn11gnv0e44i7qm"

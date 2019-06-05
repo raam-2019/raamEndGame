@@ -1,36 +1,42 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+client/node_modules
+client/.pnp
+client/.pnp.js
 
 # testing
-/coverage
+client/coverage
 
 # production
-/build
+client/build
 
 # misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-yarn.lock
-package-lock.json
+client/.DS_Store
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+client/yarn.lock
+client/package-lock.json
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
 
 #amplify
-amplify/\#current-cloud-backend
-amplify/.config/local-*
-amplify/backend/amplify-meta.json
-amplify/backend/awscloudformation
-build/
-dist/
-node_modules/
-aws-exports.js
-awsconfiguration.json
+client/amplify/\#current-cloud-backend
+client/amplify/.config/local-*
+client/amplify/backend/amplify-meta.json
+client/amplify/backend/awscloudformation
+client/build/
+client/dist/
+client/node_modules/
+client/aws-exports.js
+client/awsconfiguration.json
+
+#above ignores are of client folder
+
+#server's
+/node_modules
+package-lock.json 

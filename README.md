@@ -1,29 +1,43 @@
-    Components folder will contain all the components. In react the pages are called component. 
-    
-        1st Component is Mapbox component. Everything Mapbox will render will be coded here (** matrics) aka widget 0
-        
-            2nd Component is Core Temp + Skin Temp (Graph).  aka widget 1
-            
-                3rd Component is HR + BR aka widget 2
-                
-                    and so on...
+# React Express Starter Pack
 
+> Create full stack apps with React and Express. Run your client and server with a single command. 
 
-                    We will chose the components we want and call them in the fanexperience page aand 
-                    dashboard page respectively.
+### Redux Version
+This version does not include Redux
+[Click Here For Redux Version](https://github.com/bradtraversy/react_redux_express_starter) 
 
-                    Customization is in the Stylesheet.css in src/Assets 
-                    And grid position customization is in the fanexperience.js (col,row)
-                    
+## Quick Start
 
+``` bash
+# Install dependencies for server
+npm install
 
-        To run the project type     yarn && yarn start     and delete package-lock before that to avoid conflict.
-                
-                Or
-                
-                    npm install
-                        npm start        but before delete yarn.lock
-                        
-                        
-                                    Use wither Yarn or NMP but not both together. This is cause problems. 
-                                        Always add new framework to the package.json file. 
+# Install dependencies for client
+npm run client-install
+
+# Run the client & server with concurrently
+npm run dev
+
+# Run the Express server only
+npm run server
+
+# Run the React client only
+npm run client
+
+# Server runs on http://localhost:5000 and client on http://localhost:3000
+```
+
+## App Info
+
+### Author
+
+Brad Traversy
+[Traversy Media](http://www.traversymedia.com)
+
+### Version
+
+1.0.0
+
+### License
+
+This project is licensed under the MIT License
