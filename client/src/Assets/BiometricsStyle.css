@@ -1,18 +1,18 @@
   @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-  
+
   body {
     font-family: "Poppins", sans-serif;
     /* background: #fafafa; */
   }
-  
+
   p {
     font-family: "Poppins", sans-serif;
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
-     
+
   }
-  
+
   a,
   a:hover,
   a:focus {
@@ -20,53 +20,53 @@
     text-decoration: none;
     transition: all 0.3s;
   }
-  
+
   #content {
     width: 100%;
     padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
   }
-  
 
-  /* Below is for Fanpage.css  ... There is another one called FanExpLanding page*/   
-  .App {
+
+  /* Below is for Fanpage.css  ... There is another one called FanExpLanding page*/
+  .biometrics {
     display: block;
     min-height: 100vh;
     padding: 1rem;
     -webkit-font-smoothing: antialiased;
   }
-  
-  .App > * + * {
+
+  .biometrics > * + * {
     margin-top: 1rem;
   }
-  
+
   /* autoprefixer: off */
   @supports(display:grid) {
-    .App {
+    .biometrics {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(3, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
 
 
 
 
 
         /* //Spacing between the grid */
-        grid-gap: 0.1rem;
+        grid-gap: 0.3rem;
     }
-  
-    .App > * + * {
+
+    .biometrics > * + * {
         margin-top: 0;
     }
   }
-  
+
   @media(max-width: 600px) {
-    .App {
+    .biometrics {
         display: block;
     }
-  
-    .App > * + * {
+
+    .biometrics > * + * {
         margin-top: 1rem;
     }
   }
@@ -74,7 +74,7 @@
 
  /* //Widget Customization  */
 /* //Since there are fewer Widgets we can manually css the individual Widgets.
-//Copy Paste and customize with the respective className. 
+//Copy Paste and customize with the respective className.
 //Let the first one be Widget0 */
 
   .Widget {
@@ -93,12 +93,12 @@
         display: grid;
         grid-template-columns: auto;
         grid-template-rows: auto 1fr;
-        grid-template-areas: 
+        grid-template-areas:
             "header"
             "content";
     }
 
-    .App > * + * {
+    .biometrics > * + * {
         margin-top: 0;
     }
 }
@@ -241,7 +241,7 @@ nav button span {
   /* height: 650px; */
   /* width: 100%; */
   /* background-color: whitesmoke ; */
-  
+
 }
 
 .TLA{
@@ -264,7 +264,7 @@ nav button span {
 
 .col {
   flex: 1; /* additionally, equal width */
-  
+
   padding: 1em;
   /* border: solid; */
   /* border-color: white; */
@@ -298,7 +298,7 @@ nav button span {
   foat: left;
   font-size: 14px;
   color: white;
-  
+
 
 }
 
@@ -322,11 +322,7 @@ nav button span {
   /* height: 500px; */
   background-color: #666;
   padding-right: 18%;
-}
 
-.WhiteBackground{
-  background-color: white;
-  padding-right: 18%;
 }
 
 .BLL{
@@ -376,17 +372,11 @@ nav button span {
   border-width: thick;
   border-style: solid;
   border-color: #131313;
+  padding: 1px;
   background: #131313;
   color: whitesmoke;
-  margin-top: -1rem;
-  /* margin-left: 1rem; */
+  margin-left: 1rem;
   padding: 2px;
-}
-
-.CarouselImage{
-  width: 100%;
-  height: 600px;
-  align-items: center
 }
 
 .carousel-control-prev-icon {
@@ -415,36 +405,4 @@ nav button span {
   content: '<';
   font-size: 55px;
   color: whitesmoke;
-}
-
-@media (max-width: 768px) {
-  .carousel {
-    height: 325px;
-  }
-
-  .CarouselImage{
-    height: 300px;
-  }
-}
-
-.panel_right{
-  position: fixed;
-  right: 15px;
-  top: 100px;
-  z-index: 100;
-  width: 190px;
-  background: whitesmoke;
-}
-
-.panel_item{
-  color: red;
-  background: whitesmoke;
-  font-weight: bold;
-}
-
-.panel_item:hover{
-  color: black;
-  background: orange;
-  font-weight: bold;
-  cursor: pointer; 
 }

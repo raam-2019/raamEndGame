@@ -53,22 +53,21 @@ class Widget0 extends React.Component {
 
     componentDidMount(){
       
-       this.trackData();
-    }
-
-    trackData(){
-
-        setInterval(function(){
-            fetch('/api/trackleads')
-            .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(function(error) {
-                console.log('Looks like there was a problem: \n', error);
-            })
-        } , 60000) ;
-        
-    }
-
+        this.trackData();
+     }
+ 
+     trackData(){
+ 
+         setInterval(function(){
+             fetch('/api/trackleads')
+             .then(res => res.json())
+             .then(data => console.log(data))
+             .catch(function(error) {
+                 console.log('Looks like there was a problem: \n', error);
+             })
+         } , 60000) ;
+         
+     }
     // mapStyle = "mapbox://styles/mislam5/cjuiyejbm6qn11gnv0e44i7qm"
     // For Dashboard access for now we will have to add /dashboardRAAMforVIPaccess to our http
     //Fanexperience will be root dir
