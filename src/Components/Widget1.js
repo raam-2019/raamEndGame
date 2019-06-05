@@ -16,6 +16,14 @@ class Widget1 extends React.Component {
             this.spanStyles.gridRow = `span ${props.rowspan}`;
         }
     }
+
+    state = {
+        riderData : []
+    }
+
+    componentDidUpdate(){
+        console.log(this.props);
+  }
     
     render() {
         return (

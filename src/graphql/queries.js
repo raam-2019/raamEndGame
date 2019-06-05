@@ -15,7 +15,7 @@ export const Racerdata = `query listRacerNj7uthp6pzfadg3eixfrzy5utmRaamenvs {
 }
 `;
 
-export const Asset = ` query AssetTable6ce042e {
+export const Asset = `query AssetTable6ce042e {
   listAssetTable6ce042es(limit:2){
     items {
       id

@@ -13,9 +13,7 @@ import ReactMapGL, { Marker, Popup, NavigationControl,LinearInterpolator, FlyToI
 const TOKEN = 'pk.eyJ1IjoibWlzbGFtNSIsImEiOiJjanVpdG5vZWoxZThsNGZwamJ4Nmxya2o0In0.19pBli659L76GrJaX0JWoA';
 //Mapbox Navigation Style
 
-
 class Widget0 extends React.Component {
-
 
     state = {
         viewport: {
@@ -26,7 +24,9 @@ class Widget0 extends React.Component {
             zoom: 9.75,
             bearing: 0,
             pitch: 0,
-        }
+        },
+
+        riderData : []
         
     };
 
@@ -46,6 +46,34 @@ class Widget0 extends React.Component {
         };
         this.setState({viewport});
     };
+
+    componentDidUpdate(){
+          console.log(this.props);
+    }
+
+    componentDidMount(){
+        
+    //    let request = new Request(`http://trackleaders.com/spot/transam19/fullfeed.xml`);
+    //    let uri = "http://trackleaders.com/spot/transam19/fullfeed.xml";
+            
+    //    let h = new Headers({
+    //     'Access-Control-Allow-Origin':'*',
+    //     'Content-Type': 'multipart/form-data'
+    // });
+        
+    //     let req =  {
+    //         method: 'POST',
+    //         headers: h,
+    //         mode: 'cors'
+    //     };
+
+    //    fetch(uri,req)
+    //    .then(response=> response.json())
+    //    .catch(function(error) {
+    //      console.log('Looks like there was a problem: \n', error);
+    //    });
+      
+    }
 
     // mapStyle = "mapbox://styles/mislam5/cjuiyejbm6qn11gnv0e44i7qm"
     // For Dashboard access for now we will have to add /dashboardRAAMforVIPaccess to our http

@@ -31,6 +31,14 @@ export default class Widget2 extends React.Component {
     }
   }
 
+  state = {
+    riderData : []
+}
+
+componentDidUpdate(){
+    console.log(this.props);
+}
+
   render () {
     // Constants from for setting up canvas
     // const {useCanvas} = this.state;
