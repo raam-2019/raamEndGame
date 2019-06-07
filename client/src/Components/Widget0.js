@@ -62,18 +62,23 @@ class Widget0 extends React.Component {
      }
  
      trackData(){
- 
-         setInterval(function(){
+        var self = this;
+        setInterval(function(){
              fetch('/api/trackleads')
              .then(res => res.json())
              .then(function(data){
 
-                 let {mapStyle} = this.state;
+                 let {mapStyle} = self.state;
 
                  var trackleaders = data.trackleaders_aggregate_feed.trackleaders_feed;
                  var pointData ;
                  var points = [];
                  
+                 var geojsonWrapper = {
+                    "type": "FeatureCollection",
+                    "features": []
+                    }  
+
                  trackleaders.forEach(trackleader => {
                     pointData = {
                         type: 'Point',
@@ -82,7 +87,12 @@ class Widget0 extends React.Component {
 
                     points.push(pointData)
 
-                });
+                 });
+
+                geojsonWrapper.features.push(points);
+
+                console.log(geojsonWrapper);
+       
 
                 if (!mapStyle.hasIn(['sources', 'point'])) {
                     mapStyle = mapStyle
@@ -90,11 +100,11 @@ class Widget0 extends React.Component {
                       .setIn(['sources', 'point'], fromJS({type: 'geojson'}))
                       // Add point layer to map
                       .set('layers', mapStyle.get('layers').push(this.state.pointLayer));
-                  }
+                 }
 
-                mapStyle = mapStyle.setIn(['sources', 'point', 'data'], points );
+                mapStyle = mapStyle.setIn(['sources', 'point', 'data'], geojsonWrapper );
 
-                this.setState({mapStyle});
+                self.setState({mapStyle});
 
                 // console.log(parseFloat(trackleaders[0].message[0].latitude[0]));
              })
@@ -113,12 +123,12 @@ class Widget0 extends React.Component {
                 
                 <Container className="d-flex flex-wrap justify-content-left align-items-center align-content-center">
                     
-                    <ReactMapGL mapboxApiAccessToken={TOKEN}
+                    <ReactMapGL 
+                        mapboxApiAccessToken={TOKEN}
                         mapStyle={this.state.mapStyle}
                         //mapStyle='mapbox://styles/rsbaumann/cjwdycid51bvk1cp7ye1y0u5f?optimize=true'
                         {...this.state.viewport} 
-                        onViewportChange={this._onViewportChange}
-                        
+                        onViewportChange={this._onViewportChange}    
                      >
 
                     <div className="nav">
