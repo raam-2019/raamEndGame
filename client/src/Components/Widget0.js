@@ -80,10 +80,17 @@ class Widget0 extends React.Component {
                     }  
 
                  trackleaders.forEach(trackleader => {
-                    pointData = {
-                        type: 'Point',
-                        coordinates: [parseFloat(trackleader.message[0].longitude[0]) , parseFloat(trackleader.message[0].latitude[0])]
-                    };
+                     
+                    pointData =  {
+                        "type": "Feature",
+                          "geometry": {
+                            "type": "Point",
+                            "coordinates": [parseFloat(trackleader.message[0].longitude[0]) , parseFloat(trackleader.message[0].latitude[0])]
+                          },
+                          "properties": {
+                            "speed": 10
+                          }
+                        }
 
                     points.push(pointData)
 
@@ -92,8 +99,7 @@ class Widget0 extends React.Component {
                 geojsonWrapper.features.push(points);
 
                 console.log(geojsonWrapper);
-       
-
+    
                 if (!mapStyle.hasIn(['sources', 'point'])) {
                     mapStyle = mapStyle
                       // Add geojson source to map
