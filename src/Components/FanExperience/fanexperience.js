@@ -103,7 +103,7 @@ DisplayState = () => {
         <Row style={{paddingBottom: "2rem", paddingTop:"2rem"}} ref={this.Ref5}>
           <Col></Col>
           <Col xs="10">
-          <iframe src="https://www.davehaase.com/" width="100%" height="600px">
+          <iframe src="https://www.juicer.io/api/feeds/jonas-klare/iframe?per=1" frameborder="0" width="1000" height="1000">
             <p>Your current browser does not support iframe, please try again with a new browser.</p>
           </iframe>
           </Col>
