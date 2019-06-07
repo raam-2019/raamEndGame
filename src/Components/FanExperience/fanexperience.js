@@ -19,23 +19,22 @@ import "../../Assets/Stylesheet.css";
 
 class Fanexperience extends Component {
 
-    constructor(props) {
-        super(props);
-        this.Ref1 = React.createRef();
-        this.Ref2 = React.createRef();
-        this.Ref3 = React.createRef();
-        this.Ref4 = React.createRef();
-        this.Ref5 = React.createRef();
-      }
-    
+constructor(props) {
+  super(props);
+  this.Ref1 = React.createRef();
+  this.Ref2 = React.createRef();
+  this.Ref3 = React.createRef();
+  this.Ref4 = React.createRef();
+  this.Ref5 = React.createRef();
+}
 
-  listQuery = async () => {
-    console.log("listing todos");
-    const allTodos = await API.graphql(graphqlOperation(Asset));
-    alert(JSON.stringify(allTodos));
-  };
+listQuery = async () => {
+  console.log("listing todos");
+  const allTodos = await API.graphql(graphqlOperation(Asset));
+  alert(JSON.stringify(allTodos));
+};
 
-state = {riderData: [], error: "", value: ''}
+state = {riderData: [], error: "", value: '', isLoaded: false}
 
 async componentDidMount(){
 
@@ -53,7 +52,6 @@ async componentDidMount(){
         // next: (RiderData) => console.log(RiderData.value.data)
         next: (RiderData) => this.addToState(RiderData.value.data)
     });
-
     // Stop receiving data updates from the subscription
   //  subscription.unsubscribe();
 
@@ -66,13 +64,19 @@ addToState = (data) =>{
         return {
             riderData,
             value: '',
+            isLoaded: true
         };
     })
+}
+
+DisplayState = () => {
+  console.log(this.state);
 }
 
   // For Dashboard access for now we will have to add /dashboardRAAMforVIPaccess to our http
   //Fanexperience will be root dir
   render() {
+    const { riderData, isLoaded } = this.state;
     return (
       <div className="main">
         <Navagation />
@@ -99,7 +103,7 @@ addToState = (data) =>{
         <Row style={{paddingBottom: "2rem", paddingTop:"2rem"}} ref={this.Ref5}>
           <Col></Col>
           <Col xs="10">
-          <iframe src="https://www.davehaase.com/" width="100%" height="600px">
+          <iframe src="https://www.juicer.io/api/feeds/jonas-klare/iframe?per=1" frameborder="0" width="1000" height="1000">
             <p>Your current browser does not support iframe, please try again with a new browser.</p>
           </iframe>
           </Col>
@@ -113,6 +117,19 @@ addToState = (data) =>{
           <ListGroupItem className="panel_item" onClick={this.scrollToRef4}>About Us</ListGroupItem>
           <ListGroupItem className="panel_item" onClick={this.scrollToRef5}>Scroll from me</ListGroupItem>
         </ListGroup>
+
+        {/* Examples of loading in data */}
+        {
+          isLoaded ? 
+            <h1>{riderData[0].rider.ts}</h1> :
+            <h1>It is not loaded</h1>
+        }
+        {
+          isLoaded ? 
+            <Widget0 data={riderData[0].rider.ts}></Widget0>:
+            <h1>It is not loaded</h1>
+        }
+        <Button onClick={this.DisplayState}>Click Me!</Button>
       </div>
     );
   }
