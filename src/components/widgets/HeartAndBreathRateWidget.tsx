@@ -1,10 +1,12 @@
-import * as _ from 'lodash';
 import * as React from 'react';
 
 import {IPoint} from 'types/IPoint';
 import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
 import {XYPlotTemplate} from 'components/widgets/shared/XYPlotTemplate';
-import {BasicHorizontalAxis, BasicVerticalAxis} from 'components/widgets/shared/BasicAxes';
+import {
+  BasicHorizontalAxis,
+  BasicVerticalAxis
+} from 'components/widgets/shared/BasicAxes';
 
 
 

@@ -7,15 +7,22 @@ import ReactMapGL, {
   FlyToInterpolator,
   ViewportProps
 } from 'react-map-gl';
+import {Img} from 'components/Img/Img';
+
+import imgPersonPin from 'assets/images/personPin.png';
+
+import styles from './DavesLocationMap.module.css';
 
 
 
 const TOKEN = 'pk.eyJ1IjoibWlzbGFtNSIsImEiOiJjanVpdG5vZWoxZThsNGZwamJ4Nmxya2o0In0.19pBli659L76GrJaX0JWoA';
+const DEFAULT_ZOOM = 14;
 
 
 
 export interface IDavesLocationMapProps {
-
+  davesLat: number;
+  davesLon: number;
 }
 
 interface IDavesLocationMapState {
@@ -28,12 +35,12 @@ export class DavesLocationMap extends React.Component<IDavesLocationMapProps, ID
     super(props);
     this.state = {
       viewport: {
-        zoom: 8,
-        width: 500,
+        zoom: DEFAULT_ZOOM,
+        width: 1000,
         height: 650,
-        latitude: 37.7577,
-        longitude: -122.4376,
-        transitionDuration: 1000,
+        latitude: 33.1959,
+        longitude: -117.3795,
+        transitionDuration: 250,
         transitionInterpolator: new FlyToInterpolator()
       }
     };
@@ -42,14 +49,25 @@ export class DavesLocationMap extends React.Component<IDavesLocationMapProps, ID
 
 
   public render = () => (
-    <ReactMapGL
-      mapboxApiAccessToken={TOKEN}
-      mapStyle="mapbox://styles/mislam5/cjuiyejbm6qn11gnv0e44i7qm"
-      onViewportChange={this.__handleViewportChange}
-      {...this.state.viewport}>
+    <div className={styles.root}>
+      <ReactMapGL
+        className={styles.map}
+        mapboxApiAccessToken={TOKEN}
+        mapStyle="mapbox://styles/mislam5/cjuiyejbm6qn11gnv0e44i7qm"
+        onViewportChange={this.__handleViewportChange}
+        {...this.state.viewport}>
 
-      <NavigationControl onViewportChange={this.__handleViewportChange} />
-    </ReactMapGL>
+        <NavigationControl
+          className={styles.nav}
+          onViewportChange={this.__handleViewportChange} />
+
+        <button
+          className={styles.goToDave}
+          onClick={this.__handleClickGoToDave}>
+          <Img src={imgPersonPin} />
+        </button>
+      </ReactMapGL>
+    </div>
   );
 
 
@@ -63,4 +81,14 @@ export class DavesLocationMap extends React.Component<IDavesLocationMapProps, ID
       })
     });
 
+
+
+  private __handleClickGoToDave = () =>
+    this.setState({
+      viewport: update(this.state.viewport, {
+        latitude: {$set: this.props.davesLat},
+        longitude: {$set: this.props.davesLon},
+        zoom: {$set: DEFAULT_ZOOM}
+      })
+    });
 }

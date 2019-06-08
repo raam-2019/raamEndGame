@@ -1,0 +1,42 @@
+.root {
+  /* Fixes a rendering bug that causes the map to render on the right 50%
+   * https://github.com/phegman/vue-mapbox-gl/issues/11 
+   */
+  text-align: left;
+}
+
+.map {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  border-radius: 4px;
+  overflow: hidden;
+  
+}
+
+.nav {
+  position: absolute;
+  right: 12px;
+  bottom: 32px;
+  display: block;
+}
+
+.goToDave {
+  position: absolute;
+  right: 12px;
+  bottom: 130px;
+  background: white;
+  border-radius: 8px;
+  border: none;
+
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  outline: none;
+
+  width: 30px;
+  height: 30px;
+
+  padding: 4px;
+}
+
+.goToDave img {
+  height: 100%;
+  opacity: 0.8;
+}

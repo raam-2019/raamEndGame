@@ -37,7 +37,8 @@ export interface IFanPageProps extends RouteComponentProps {}
 
 
 interface IFanPageState {
-  stuff: 'string'
+  davesLat: number;
+  davesLon: number;
 }
 
 export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
@@ -48,7 +49,8 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
   constructor(props: IFanPageProps) {
     super(props);
     this.state = {
-      stuff: 'string'
+      davesLat: 0,
+      davesLon: 0
     };
   }
 
@@ -64,7 +66,19 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
           return;
         }
 
-        const {} = riderData.rider;
+        // TODO {AD} Process incoming data here into state for widgets etc.
+        const {
+          // ts,
+          latitude,
+          longitude
+        } = riderData.rider;
+
+        if (latitude !== null && longitude !== null) {
+          this.setState({
+            davesLat: latitude,
+            davesLon: longitude
+          });
+        }
       });
   };
 
@@ -125,11 +139,11 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
             A fixed route from sea-to-sea, 50% longer than the Tour de France. 4 mountain ranges, 3 deserts, and just 7 stops for sleep (2 hours at a time).
           </Paragraph>
 
-
-<FlexCell>
-            <DavesLocationMap />
-
-</FlexCell>
+          <FlexCell >
+            <DavesLocationMap
+              davesLat={this.state.davesLat}
+              davesLon={this.state.davesLon} />
+          </FlexCell>
 
         </FlexColumn>
       </Section>
