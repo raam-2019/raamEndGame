@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {IPoint} from 'types/IPoint';
-import {BarChart} from "components/widgets/shared/BasicBarGraph";
+import {BasicBarChart} from "components/widgets/shared/BasicBarChart";
 import {XYPlotTemplate} from 'components/widgets/shared/XYPlotTemplate';
 import {
   BasicHorizontalAxis,
   BasicVerticalAxis
 } from 'components/widgets/shared/BasicAxes';
 
-const MIN_POINTS_BEFORE_SHOW = 6;
+const MIN_POINTS_BEFORE_SHOW = 3;
 
 export interface IMo2PercentProps {
   mo2: IPoint[];
@@ -17,7 +17,6 @@ export interface IMo2PercentProps {
 }
 
 export const Mo2PercentWidget: React.FC<IMo2PercentProps> = props => (
-    <div>
   <XYPlotTemplate
     status={props.mo2.length < MIN_POINTS_BEFORE_SHOW && props.mo2.length < MIN_POINTS_BEFORE_SHOW ? "loading" : "ready"}
     heightPx={props.heightPx}
@@ -34,13 +33,9 @@ export const Mo2PercentWidget: React.FC<IMo2PercentProps> = props => (
       axisLabel: "Mo2%"
     })}
 
-    {BarChart({
+    {BasicBarChart({
       data: props.mo2,
       color: 'green'
     })}
   </XYPlotTemplate>
-  <button onClick={() => {
-      console.log(props.mo2);
-  }}>Hello</button>
-  </div>
 );

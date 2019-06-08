@@ -10,7 +10,7 @@ export interface IBasicBarChart {
   color?: string;
 };
 
-export const BarChart = (props: IBasicBarChart) => {
+export const BasicBarChart = (props: IBasicBarChart) => {
   return <ReactVis.VerticalBarSeries
     className={props.extraClassName}
     data={props.data}
