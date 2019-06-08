@@ -47,12 +47,12 @@ async componentDidMount(){
 
 
     //subscription query for real time data
-    const subscription = API.graphql(
-        graphqlOperation(onRiderUpdate)
-    ).subscribe({
-        // next: (RiderData) => console.log(RiderData.value.data)
-        next: (RiderData) => this.addToState(RiderData.value.data)
-    });
+    // const subscription = API.graphql(
+    //     graphqlOperation(onRiderUpdate)
+    // ).subscribe({
+    //     // next: (RiderData) => console.log(RiderData.value.data)
+    //     next: (RiderData) => this.addToState(RiderData.value.data)
+    // });
 
     // Stop receiving data updates from the subscription
   //  subscription.unsubscribe();

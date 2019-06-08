@@ -62,16 +62,16 @@ class Widget0 extends React.Component {
 
                  let {mapStyle} = self.state;
 
-                 var trackleaders = data.trackleaders_aggregate_feed.trackleaders_feed;
+                 var trackleaders = data['trackleaders_aggregate_feed']['trackleaders_feed'];
                  var pointData ;
                  var points = [];
                  
                  var geojsonWrapper = {
                     "type": "FeatureCollection",
                     "features": []
-                    }  
-
-                 trackleaders.forEach(trackleader => {
+                    }  ;
+    
+                    trackleaders.forEach(trackleader => {
                    
                     pointData =  {
                         "type": "Feature",
@@ -84,33 +84,28 @@ class Widget0 extends React.Component {
                           }
                         }
 
-                    points.push(pointData)
-
+                    points.push(pointData);
                  });
-
-               // self.setState({riderData:points})
 
                 geojsonWrapper.features.push(points);
 
-                console.log(geojsonWrapper);
+               // console.log(geojsonWrapper);
 
                 if (!mapStyle.hasIn(['sources', 'point'])) {
                   mapStyle = mapStyle
-                    // Add geojson source to map
                     .setIn(['sources', 'point'], fromJS({type: 'geojson'}))
-                    // Add point layer to map
                     .set('layers', mapStyle.get('layers').push(pointLayer));
                 }
+                
                 // Update data source
                 mapStyle = mapStyle.setIn(['sources', 'point', 'data'], geojsonWrapper);
             
-                self.setState({mapStyle});
-               
+                self.setState({mapStyle});               
              })
              .catch(function(error) {
                  console.log('Looks like there was a problem: \n', error);
              })
-         } , 40000) ;
+         } , 10000) ;
          
      }
 
