@@ -16,6 +16,11 @@ import {CoreAndSkinTemperatureWidget} from 'components/widgets/CoreAndSkinTemper
 import * as dataUtil from 'util/dataUtil';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {BatteryLifeWidget} from 'components/BatteryLifeWidget/BatteryLifeWidget';
+
+import imgTopoBkgd from 'assets/images/topographBackground.png';
+
+import styles from './TeamPage.module.css';
 
 
 
@@ -29,6 +34,12 @@ interface ITeamPageState {
   breathRate: IPoint[];
   mo2: IPoint[];
   skinTemp: IPoint[];
+
+  aeroBattery: number;
+  androidBattery: number;
+  mo2Battery: number;
+  radarBattery: number;
+  watchBattery: number;
 }
 
 export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
@@ -44,7 +55,12 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       heartRate: [],
       mo2: [],
       breathRate: [],
-      skinTemp: []
+      skinTemp: [],
+      aeroBattery: 0,
+      androidBattery: 0,
+      mo2Battery: 0,
+      radarBattery: 0,
+      watchBattery: 0
     };
 
   }
@@ -65,9 +81,14 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           ts,
           watchHeartRate,
           eqCoreTemp,
+          eqSkinTemp,
           hemoPercent,
           eqBreathingRate,
-          eqSkinTemp
+          aeroBattery,
+          androidBattery,
+          mo2Battery,
+          radarBattery,
+          watchBattery
         } = riderData.rider;
 
         this.setState(update(this.state, {
@@ -75,7 +96,12 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           coreBodyTemp: {$set: dataUtil.concatAndSortByX(this.state.coreBodyTemp, ts, eqCoreTemp)},
           mo2: {$set: dataUtil.concatAndSortByX(this.state.mo2, ts, hemoPercent)},
           breathRate: {$set: dataUtil.concatAndSortByX(this.state.breathRate, ts, eqBreathingRate)},
-          skinTemp: {$set: dataUtil.concatAndSortByX(this.state.skinTemp, ts, eqSkinTemp)}
+          skinTemp: {$set: dataUtil.concatAndSortByX(this.state.skinTemp, ts, eqSkinTemp)},
+          aeroBattery: {$set: aeroBattery || -1},
+          androidBattery: {$set: androidBattery || -1},
+          mo2Battery: {$set: mo2Battery || -1},
+          radarBattery: {$set: radarBattery || -1},
+          watchBattery: {$set: watchBattery || -1}
         }));
       });
   };
@@ -90,15 +116,41 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
 
   public render = () => (
-    <PageTemplate>
-      <Section>
-        <Heading>
-          <RedWord>Team</RedWord> Page
-        </Heading>
-      </Section>
+    <PageTemplate {...this.props}>
+      <Section
+        backgroundImage={imgTopoBkgd}
+        extraClassName={styles.firstSection}>
+        <Heading><RedWord>Device</RedWord> Health</Heading>
 
-      <Section>
-        <Heading>Biometrics</Heading>
+        <FlexRow justifyContent="space-between">
+          <FlexCell>
+            <BatteryLifeWidget
+              batteryLife={this.state.aeroBattery}
+              deviceName="Aero" />
+          </FlexCell>
+          <FlexCell>
+            <BatteryLifeWidget
+              batteryLife={this.state.androidBattery}
+              deviceName="Android" />
+          </FlexCell>
+          <FlexCell>
+            <BatteryLifeWidget
+              batteryLife={this.state.mo2Battery}
+              deviceName="MO2" />
+          </FlexCell>
+          <FlexCell>
+            <BatteryLifeWidget
+              batteryLife={this.state.radarBattery}
+              deviceName="Radar" />
+          </FlexCell>
+          <FlexCell>
+            <BatteryLifeWidget
+              batteryLife={this.state.watchBattery}
+              deviceName="Watch" />
+          </FlexCell>
+        </FlexRow>
+
+        <Heading><RedWord>#</RedWord>Biometrics</Heading>
 
         <FlexRow>
           <FlexCell>
@@ -125,7 +177,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       </Section>
 
       <Section>
-        <Heading>Performance</Heading>
+        <Heading><RedWord>#</RedWord>Performance</Heading>
 
         <LiveGraphWrapper
           width="300px"
@@ -134,7 +186,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       </Section>
 
       <Section>
-        <Heading>Course Awareness</Heading>
+        <Heading><RedWord>Course</RedWord> Awareness</Heading>
       </Section>
     </PageTemplate>
   );

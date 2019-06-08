@@ -29,6 +29,7 @@ import styles from './FanPage.module.css';
 import globalStyles from 'globalStyles.module.css';
 import {Subject} from 'rxjs';
 import {DavesLocationMap} from 'pages/FanPage/DavesLocationMap/DavesLocationMap';
+import {Routes} from 'pages/routes';
 
 
 
@@ -92,7 +93,7 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
 
 
   public render = () => (
-    <PageTemplate>
+    <PageTemplate {...this.props}>
       <Section
         backgroundImage={imgTopoBkgd}
         extraClassName={`${globalStyles.alignCenter} ${styles.bannerSection}`}>
@@ -200,7 +201,31 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
 
       <WhenShouldDaveRestSection />
       <HowWasThisAccomplishedSection />
+
+      <Section backgroundColor="black">
+        <FlexRow justifyContent="flex-end">
+          <FlexCell flex="0">
+            {this.props.location.pathname !== Routes.teamPage.path && (
+              <button
+                className={styles.teamPageButton}
+                onClick={this.__handleClickTeamLogin}>
+                Team Login
+              </button>
+            )}
+          </FlexCell>
+        </FlexRow>
+      </Section>
     </PageTemplate>
   );
+
+
+
+  private __handleClickTeamLogin = () => {
+    const result = window.prompt("Enter Team Password");
+
+    if (result === 'daveHaaseTeam2019') {
+      this.props.history.push(Routes.teamPage.path);
+    }
+  };
 
 }
