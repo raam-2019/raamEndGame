@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Button, ListGroup, ListGroupItem } from "reactstrap";
+import { Row, Col, Button, ListGroup, ListGroupItem, Spinner } from "reactstrap";
 import $ from "jquery";
 import CustomCarousel from "./CustomCarousel";
 import Widget0 from "../Widget0";
@@ -88,12 +88,12 @@ DisplayState = () => {
 
         <br />
         <div className="App" ref={this.Ref3}>
-          <Widget1 heading="Stat 1" rowspan={2} colspan={3}  data={this.state.riderData}/>
-          <Widget2 heading="Stat 2" rowspan={2} colspan={1}  data={this.state.riderData}/>
-          <Widget3 heading="Some graph shit" colspan={2} rowspan={2}  data={this.state.riderData}/>
-          <Widget4 heading="Some more stat"  data={this.state.riderData}/>
-          <Widget5 heading="ThisAndThat"  data={this.state.riderData}/>
-          <Widget6 heading="RAAM"  data={this.state.riderData}/>
+          <Widget1 heading="Stat 1" rowspan={2} colspan={3}  data={this.state}/>
+          <Widget2 heading="Stat 2" rowspan={2} colspan={1}  data={this.state}/>
+          <Widget3 heading="Some graph shit" colspan={2} rowspan={2}  data={this.state}/>
+          <Widget4 heading="Some more stat"  data={this.state}/>
+          <Widget5 heading="ThisAndThat"  data={this.state}/>
+          <Widget6 heading="RAAM"  data={this.state}/>
         </div>
         
         <div className="BLL" style={{justifyContent: "center"}} ref={this.Ref4}>
@@ -127,9 +127,8 @@ DisplayState = () => {
         {
           isLoaded ? 
             <Widget0 data={riderData[0].rider.ts}></Widget0>:
-            <h1>It is not loaded</h1>
+            <Spinner type="grow" color="primary" ></Spinner>
         }
-        <Button onClick={this.DisplayState}>Click Me!</Button>
       </div>
     );
   }
