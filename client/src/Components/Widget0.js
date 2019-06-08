@@ -1,141 +1,145 @@
-
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import { Container } from "reactstrap";
-import ReactMapGL, { Marker, Popup, NavigationControl,LinearInterpolator, FlyToInterpolator } from 'react-map-gl';
-import {defaultMapStyle, pointLayer} from '../mapstyle.js';
-import {fromJS} from 'immutable';
+import ReactMapGL, {
+  Marker,
+  Popup,
+  NavigationControl,
+  LinearInterpolator,
+  FlyToInterpolator
+} from "react-map-gl";
+import { defaultMapStyle, pointLayer } from "../mapstyle.js";
+import { fromJS } from "immutable";
 // const TOKEN = 'pk.eyJ1IjoibWlzbGFtNSIsImEiOiJjanVpdG5vZWoxZThsNGZwamJ4Nmxya2o0In0.19pBli659L76GrJaX0JWoA'; //rayhan's token
-const TOKEN = 'pk.eyJ1IjoicnNiYXVtYW5uIiwiYSI6ImNqdzg5aWxkYzF1azI0OW5uaWVmazhleXUifQ.XAm1dRGmXuRAMSQm0TJKXg'; //ryan baumann's token
+const TOKEN =
+  "pk.eyJ1IjoicnNiYXVtYW5uIiwiYSI6ImNqdzg5aWxkYzF1azI0OW5uaWVmazhleXUifQ.XAm1dRGmXuRAMSQm0TJKXg"; //ryan baumann's token
 //Mapbox Navigation Style
 
 class Widget0 extends React.Component {
+  state = {
+    // mapStyle:'mapbox://styles/rsbaumann/cjwdv1evs18rk1cnuwku6tys5?optimize=true',
+    mapStyle: defaultMapStyle,
+    viewport: {
+      width: "70%",
+      height: 500,
+      latitude: 33.176215,
+      longitude: -117.363864,
+      zoom: 9.75,
+      bearing: 0,
+      pitch: 0
+    },
 
-    state = {
-        // mapStyle:'mapbox://styles/rsbaumann/cjwdv1evs18rk1cnuwku6tys5?optimize=true',
-        mapStyle: defaultMapStyle,
-        viewport: {
-            width: '70%',
-            height: 500,
-            latitude: 33.176215,
-            longitude: -117.363864,
-            zoom: 9.75,
-            bearing: 0,
-            pitch: 0,
-        },
+    riderData: []
+  };
 
-        riderData : [],
+  _onViewportChange = viewport => {
+    this.setState({ viewport });
+  };
 
+  _goToCyclist = () => {
+    const viewport = {
+      ...this.state.viewport,
+      longitude: -74.1, //This is be the coordinate of the cyclist
+      latitude: 40.7,
+      zoom: 14,
+      transitionDuration: 5000,
+      transitionInterpolator: new FlyToInterpolator()
+      // transitionEasing: d3.easeCubic
     };
+    this.setState({ viewport });
+  };
 
-    
-    _onViewportChange = viewport => {
-        this.setState({viewport});
-    };
+//   componentDidUpdate() {
+//     console.log(this.props);
+//   }
 
-    _goToCyclist = () => {
-        const viewport = {
-            ...this.state.viewport,
-            longitude: -74.1, //This is be the coordinate of the cyclist
-            latitude: 40.7,
-            zoom: 14,
-            transitionDuration: 5000,
-            transitionInterpolator: new FlyToInterpolator(),
-            // transitionEasing: d3.easeCubic
-        };
-        this.setState({viewport});
-    };
+  componentDidMount() {
+    this.trackData();
+  }
 
-    componentDidUpdate(){
-          console.log(this.props);
-    }
+  trackData() {
+    var self = this;
+    setInterval(function() {
+      fetch("/api/trackleads")
+        .then(res => res.json())
+        .then(function(data) {
+          let { mapStyle } = self.state;
 
-    componentDidMount(){ 
-        this.trackData();
-     }
- 
-     trackData(){
-        var self = this;
-        setInterval(function(){
-             fetch('/api/trackleads')
-             .then(res => res.json())
-             .then(function(data){
+          var trackleaders =
+            data["trackleaders_aggregate_feed"]["trackleaders_feed"];
+          var pointData;
+          var points = [];
 
-                 let {mapStyle} = self.state;
+          var geojsonWrapper = {
+            type: "FeatureCollection",
+            features: []
+          };
 
-                 var trackleaders = data['trackleaders_aggregate_feed']['trackleaders_feed'];
-                 var pointData ;
-                 var points = [];
-                 
-                 var geojsonWrapper = {
-                    "type": "FeatureCollection",
-                    "features": []
-                    }  ;
-    
-                    trackleaders.forEach(trackleader => {
-                   
-                    pointData =  {
-                        "type": "Feature",
-                          "geometry": {
-                            "type": "Point",
-                            "coordinates": [parseFloat(trackleader.message[0].longitude[0]) , parseFloat(trackleader.message[0].latitude[0])]
-                          },
-                          "properties": {
-                            "speed": 10
-                          }
-                        }
+          trackleaders.forEach(trackleader => {
+            pointData = {
+              type: "Feature",
+              geometry: {
+                type: "Point",
+                coordinates: [
+                  parseFloat(trackleader.message[0].longitude[0]),
+                  parseFloat(trackleader.message[0].latitude[0])
+                ]
+              },
+              properties: {
+                speed: 10
+              }
+            };
 
-                    points.push(pointData);
-                 });
+            geojsonWrapper.features.push(pointData);
+          });
 
-                geojsonWrapper.features.push(points);
+          if (!mapStyle.hasIn(["sources", "point"])) {
+            mapStyle = mapStyle
+              .setIn(
+                ["sources", "point"],
+                fromJS({ type: "geojson", data: geojsonWrapper })
+              )
+              .set("layers", mapStyle.get("layers").push(pointLayer));
+          }
 
-               // console.log(geojsonWrapper);
+          // Update data source
+          mapStyle = mapStyle.setIn(
+            ["sources", "point", "data"],
+            geojsonWrapper
+          );
 
-                if (!mapStyle.hasIn(['sources', 'point'])) {
-                  mapStyle = mapStyle
-                    .setIn(['sources', 'point'], fromJS({type: 'geojson'}))
-                    .set('layers', mapStyle.get('layers').push(pointLayer));
-                }
-                
-                // Update data source
-                mapStyle = mapStyle.setIn(['sources', 'point', 'data'], geojsonWrapper);
-            
-                self.setState({mapStyle});               
-             })
-             .catch(function(error) {
-                 console.log('Looks like there was a problem: \n', error);
-             })
-         } , 10000) ;
-         
-     }
+          self.setState({ mapStyle });
+        })
+        .catch(function(error) {
+          console.log("Looks like there was a problem: \n", error);
+        });
+    }, 5000);
+  }
 
-    // For Dashboard access for now we will have to add /dashboardRAAMforVIPaccess to our http
-    //Fanexperience will be root dir
-    render() {
-        return (
-            <div id="mainWrapper">
-                
-                <Container className="d-flex flex-wrap justify-content-left align-items-center align-content-center">
-                    
-                    <ReactMapGL 
-                        mapboxApiAccessToken={TOKEN}
-                        mapStyle={this.state.mapStyle}
-                        //mapStyle='mapbox://styles/rsbaumann/cjwdycid51bvk1cp7ye1y0u5f?optimize=true'
-                        {...this.state.viewport} 
-                        onViewportChange={this._onViewportChange}    
-                     >
-                
-                    <div className="nav">
-                        <NavigationControl onViewportChange={(viewport) => this.setState({ viewport })}  />   
-                    </div>                    
-                    </ReactMapGL>
-
-                    <button onClick={this._goToCyclist}>Cyclist</button>
-                
-                </Container>
+  // For Dashboard access for now we will have to add /dashboardRAAMforVIPaccess to our http
+  //Fanexperience will be root dir
+  render() {
+    return (
+      <div id="mainWrapper">
+        <Container className="d-flex flex-wrap justify-content-left align-items-center align-content-center">
+          <ReactMapGL
+            mapboxApiAccessToken={TOKEN}
+            mapStyle={this.state.mapStyle}
+            //mapStyle='mapbox://styles/rsbaumann/cjwdycid51bvk1cp7ye1y0u5f?optimize=true'
+            {...this.state.viewport}
+            onViewportChange={this._onViewportChange}
+          >
+            <div className="nav">
+              <NavigationControl
+                onViewportChange={viewport => this.setState({ viewport })}
+              />
             </div>
-        );
-    }
+          </ReactMapGL>
+
+          <button onClick={this._goToCyclist}>Cyclist</button>
+        </Container>
+      </div>
+    );
+  }
 }
 
-export default Widget0
+export default Widget0;
