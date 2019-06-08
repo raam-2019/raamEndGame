@@ -36,14 +36,14 @@ export function exec<TData>(subscriptionString: string) {
 
 
 function __subscribeToRiderUpdates() {
-  exec<{data?: IRiderReturn}>(rider)
+  exec<{value: {data?: IRiderReturn}}>(rider)
 
     .subscribe({
 
       next: result => {
         console.log(result);
-        if (result.data) {
-          __subject.next(result.data);
+        if (result.value.data) {
+          __subject.next(result.value.data);
         }
       },
 
