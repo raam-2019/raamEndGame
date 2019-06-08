@@ -8,6 +8,7 @@ import {Section} from 'components/layout/Section/Section';
 import {RedWord} from 'components/RedWord/RedWord';
 import * as amplifyService from 'services/amplify';
 import {HeartAndBreathRateWidget} from 'components/widgets/HeartAndBreathRateWidget';
+import {Mo2PercentWidget} from 'components/widgets/Mo2PercentWidget';
 import {IPoint} from 'types/IPoint';
 import {FlexRow} from 'components/layout/FlexRow';
 import {LiveGraphWrapper} from 'components/LiveGraphWrapper/LiveGraphWrapper';
@@ -85,7 +86,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           hemoPercent,
           eqBreathingRate,
           aeroBattery,
-          androidBattery,
+          androidBattery, 
           mo2Battery,
           radarBattery,
           watchBattery
@@ -171,8 +172,13 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           </FlexCell>
 
           <FlexCell>
-            {/* TODO Needs to be an MO2 widget here */}
+            <Mo2PercentWidget
+              mo2={this.state.mo2}
+              heightPx={300}
+              widthPx={300}
+            />
           </FlexCell>
+
         </FlexRow>
       </Section>
 
