@@ -25,7 +25,12 @@ const TOKEN = "pk.eyJ1IjoicnNiYXVtYW5uIiwiYSI6ImNqdzg5aWxkYzF1azI0OW5uaWVmazhleX
 
 
 
-class RaceTrackerMap extends React.Component<object, any> {
+export interface IRaceTrackerMapProps {
+  davesLat: number;
+  davesLon: number;
+}
+
+class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
   private __unsubscribe = new Subject();
 
@@ -53,7 +58,8 @@ class RaceTrackerMap extends React.Component<object, any> {
 
 
   public componentDidMount = () => {
-    trackLeaderService.asObservable()
+    trackLeaderService
+      .asObservable()
       .pipe(takeUntil(this.__unsubscribe))
       .subscribe(data => {
         if (!data) {
@@ -127,7 +133,7 @@ class RaceTrackerMap extends React.Component<object, any> {
 
         <button
           className={styles.goToDave}
-          onClick={this.__handleGoToCyclist}>
+          onClick={this.__handleClickGoToCyclist}>
           <Img src={imgPersonPin} />
         </button>
       </ReactMapGL>
@@ -136,11 +142,11 @@ class RaceTrackerMap extends React.Component<object, any> {
 
 
 
-  private __handleGoToCyclist = () => {
+  private __handleClickGoToCyclist = () => {
     const viewport = {
       ...this.state.viewport,
-      longitude: -74.1,
-      latitude: 40.7,
+      latitude: this.props.davesLat,
+      longitude: this.props.davesLon,
       zoom: 14,
       transitionDuration: 5000,
       transitionInterpolator: new FlyToInterpolator()

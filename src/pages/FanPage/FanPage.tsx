@@ -140,11 +140,9 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
           </Paragraph>
 
           <FlexCell >
-            {/* <DavesLocationMap
+            <RaceTrackerMap
               davesLat={this.state.davesLat}
-              davesLon={this.state.davesLon} /> */}
-
-            <RaceTrackerMap />
+              davesLon={this.state.davesLon} />
           </FlexCell>
 
         </FlexColumn>

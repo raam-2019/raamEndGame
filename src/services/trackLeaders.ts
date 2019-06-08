@@ -1,13 +1,13 @@
+import * as _ from 'lodash';
 import {BehaviorSubject} from "rxjs";
 import {Parser} from 'xml2js';
-import {reject} from 'q';
 
 
 
 const __subject = new BehaviorSubject<any | null>(null);
 
 
-const INTERVAL_MS = 1000 * 60;
+const INTERVAL_MS = 1000 * 30;
 
 
 export function init() {
@@ -46,25 +46,40 @@ function __fetchResults() {
     })
 
     .catch(err => {
-      console.log(err);
-      __subject.error(err)
+      console.error(err);
     });
 }
 
 
 
-function __readStream(stream: ReadableStreamDefaultReader<Uint8Array>) {
-  return new Promise<string>(resolve => {
-    stream.read()
-      .then(results =>
-        resolve(new TextDecoder('ascii').decode(results.value)));
-  });
+function __readStream(streamReader: ReadableStreamDefaultReader<Uint8Array>) {
+  const chunks: Uint8Array[] = [];
+
+  function pump(): Promise<Uint8Array[]> {
+    return streamReader.read()
+      .then(({value, done}) => {
+        if (done) {
+          streamReader.releaseLock();
+          return Promise.resolve(chunks);
+        }
+
+        chunks.push(value);
+        return pump();
+      });
+  }
+
+  return pump()
+
+    .then(results => {
+      const decoder = new TextDecoder('ascii');
+      return _.join(_.map(chunks, chunk => decoder.decode(chunk)));
+    });
 }
 
 
 
 function __parseBody(body: string) {
-  return new Promise<any>(resolve => {
+  return new Promise<any>((resolve, reject) => {
     const parser = new Parser();
 
     parser.parseString(body, (err: Error, result: any) => {
