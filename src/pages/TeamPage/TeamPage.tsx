@@ -14,6 +14,9 @@ import {FlexRow} from 'components/layout/FlexRow';
 import {LiveGraphWrapper} from 'components/LiveGraphWrapper/LiveGraphWrapper';
 import {FlexCell} from 'components/layout/FlexCell';
 import {CoreAndSkinTemperatureWidget} from 'components/widgets/CoreAndSkinTemperatureWidget';
+import * as dataUtil from 'util/dataUtil';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 
 
@@ -31,6 +34,9 @@ interface ITeamPageState {
 
 export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
+  private __unsubscribe = new Subject();
+
+
 
   constructor(props: ITeamPageProps) {
     super(props);
@@ -47,8 +53,10 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
 
   public componentDidMount = () => {
+    window.document.title = "#InternetOfDave - Team Page";
     amplifyService
       .onRiderUpdate()
+      .pipe(takeUntil(this.__unsubscribe))
       .subscribe(riderData => {
         if (!riderData) {
           return;
@@ -64,13 +72,20 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         } = riderData.rider;
 
         this.setState(update(this.state, {
-          heartRate: this.__concatAndSortNewPoint(this.state.heartRate, ts, watchHeartRate),
-          coreBodyTemp: this.__concatAndSortNewPoint(this.state.coreBodyTemp, ts, eqCoreTemp),
-          mo2: this.__concatAndSortNewPoint(this.state.mo2, ts, hemoPercent),
-          breathRate: this.__concatAndSortNewPoint(this.state.breathRate, ts, eqBreathingRate),
-          skinTemp: this.__concatAndSortNewPoint(this.state.skinTemp, ts, eqSkinTemp)
+          heartRate: {$set: dataUtil.concatAndSortByX(this.state.heartRate, ts, watchHeartRate)},
+          coreBodyTemp: {$set: dataUtil.concatAndSortByX(this.state.coreBodyTemp, ts, eqCoreTemp)},
+          mo2: {$set: dataUtil.concatAndSortByX(this.state.mo2, ts, hemoPercent)},
+          breathRate: {$set: dataUtil.concatAndSortByX(this.state.breathRate, ts, eqBreathingRate)},
+          skinTemp: {$set: dataUtil.concatAndSortByX(this.state.skinTemp, ts, eqSkinTemp)}
         }));
       });
+  };
+
+
+
+  public componentWillUnmount = () => {
+    this.__unsubscribe.next();
+    this.__unsubscribe.complete();
   };
 
 
@@ -105,13 +120,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           </FlexCell>
 
           <FlexCell>
-            {/* Needs to be a MO2 */}
-            {/* <HeartAndBreathRateWidget
-              strokeColor="green"
-              widthPx={300}
-              heightPx={300}
-              title="MO2"
-              heartRateSeries={this.state.mo2} /> */}
+            {/* TODO Needs to be an MO2 widget here */}
           </FlexCell>
         </FlexRow>
       </Section>
@@ -130,11 +139,5 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       </Section>
     </PageTemplate>
   );
-
-
-
-  private __concatAndSortNewPoint = (values: IPoint[], x: number | null, y: number | null) => ({
-    $set: _.sortBy(_.concat(values, (x && y) ? {x, y} : []), point => point.x)
-  });
 
 }

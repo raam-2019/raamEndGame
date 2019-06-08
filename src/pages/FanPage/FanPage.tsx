@@ -28,6 +28,7 @@ import imgQlikApp from 'assets/images/qlik-app@3x.png';
 import styles from './FanPage.module.css';
 import globalStyles from 'globalStyles.module.css';
 import {Subject} from 'rxjs';
+import {DavesLocationMap} from 'pages/FanPage/DavesLocationMap/DavesLocationMap';
 
 
 
@@ -54,11 +55,16 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
 
 
   public componentDidMount = () => {
+    window.document.title = "#ThePerfectRace - Dave Haase";
     amplifyService
       .onRiderUpdate()
       .pipe(takeUntil(this.__unsubscribe))
       .subscribe(riderData => {
-        console.log(riderData);
+        if (!riderData) {
+          return;
+        }
+
+        const {} = riderData.rider;
       });
   };
 
@@ -119,10 +125,12 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
             A fixed route from sea-to-sea, 50% longer than the Tour de France. 4 mountain ranges, 3 deserts, and just 7 stops for sleep (2 hours at a time).
           </Paragraph>
 
-          <LiveGraphWrapper
-            height="650px"
-            title="Figure showing where dave is"
-            width="100%" />
+
+<FlexCell>
+            <DavesLocationMap />
+
+</FlexCell>
+
         </FlexColumn>
       </Section>
 
