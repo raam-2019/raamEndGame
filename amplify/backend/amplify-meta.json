@@ -1,0 +1,56 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "raam-webapp-20190426150434-authRole",
+            "UnauthRoleArn": "arn:aws:iam::213794083137:role/raam-webapp-20190426150434-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::213794083137:role/raam-webapp-20190426150434-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "raam-webapp-20190426150434-deployment",
+            "UnauthRoleName": "raam-webapp-20190426150434-unauthRole",
+            "StackName": "raam-webapp-20190426150434",
+            "StackId": "arn:aws:cloudformation:us-east-1:213794083137:stack/raam-webapp-20190426150434/83175630-685e-11e9-ad0e-12f2c8f206e2"
+        },
+        "categories": {
+            "auth": {
+                "cognitof259d1c5": {}
+            }
+        }
+    },
+    "api": {
+        "raamapp": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "securityType": "API_KEY",
+                "GraphQLAPIIdOutput": "2yqa34xw2fdepb7gcwcsjvu7my",
+                "GraphQLAPIEndpointOutput": "https://44o7r2nhjnf2dhugturadwzuve.appsync-api.us-east-1.amazonaws.com/graphql",
+                "GraphQLAPIKeyOutput": "da2-hpzhksaeprf77izgxblpqxicbm"
+            },
+            "lastPushTimeStamp": "2019-06-07T16:16:38.367Z",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/raam-webapp-20190426150434-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+                "logicalId": "apiraamapp"
+            }
+        }
+    },
+    "auth": {
+        "cognitof259d1c5": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "AppClientSecret": "s745gaj5qhq790lu05q95osmtnr3q0ruo993nosno2e2f05v39k",
+                "UserPoolId": "us-east-1_4u4mOAbex",
+                "AppClientIDWeb": "2rkp9cvh2t9n2bp7sotrivglm8",
+                "AppClientID": "2ikik5n15klq2f2sa0cvku43ab",
+                "IdentityPoolId": "us-east-1:4b1cc434-652a-4a32-b294-3aa5e750c1ec",
+                "IdentityPoolName": "cognitof259d1c5_identitypool_f259d1c5__react",
+                "UserPoolName": "cognitof259d1c5_userpool_f259d1c5"
+            },
+            "lastPushTimeStamp": "2019-06-07T16:16:38.370Z",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/raam-webapp-20190426150434-deployment/amplify-cfn-templates/auth/cognitof259d1c5-cloudformation-template.yml",
+                "logicalId": "authcognitof259d1c5"
+            }
+        }
+    }
+}

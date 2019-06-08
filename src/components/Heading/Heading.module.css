@@ -1,0 +1,13 @@
+.heading {
+  margin: 30px 0;
+  font-size: 60px;
+  font-weight: normal;
+  font-family: 'Have-Heart-Two';
+}
+
+.subheading {
+  color: white;
+  font-size: 51px;
+  font-family: BlackerDisplay;
+  font-weight: 800;
+}

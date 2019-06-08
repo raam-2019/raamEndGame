@@ -1,0 +1,24 @@
+.root {
+  position: relative;
+}
+
+  .root .headingContainer {
+    position: absolute;
+    top: 48px;
+
+    left: calc(100% - 100px);
+  }
+
+  .root .headingContainer .heading {
+    display: inline-block;
+    margin: 0;
+    padding: 13px;
+    color: black;
+    white-space: nowrap;
+    font-family: BlackerDisplay;
+    font-weight: 800;
+    font-size: 42px;
+    margin-bottom: 14px;
+
+    background-color: white;
+  }

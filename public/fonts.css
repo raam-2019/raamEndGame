@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'BlackerDisplay';
+  src: url(fonts/Blacker-Display-ExtraBold-trial.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Have-Heart-Two';
+  src: url(fonts/Have-Heart-Two.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Karla';
+  src: url(fonts/Karla-Regular.woff) format('woff');
+}
