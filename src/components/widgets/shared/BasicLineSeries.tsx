@@ -5,8 +5,6 @@ import {IPoint} from 'types/IPoint';
 
 const ReactVis = require('react-vis');
 
-
-
 export interface IBasicLineSeriesProps {
   extraClassName?: string;
   data: IPoint[];
