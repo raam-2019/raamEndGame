@@ -19,6 +19,9 @@ import {LiveGraphWrapper} from 'components/LiveGraphWrapper/LiveGraphWrapper';
 import {DaveBiographySection} from 'pages/FanPage/DaveBiographySection/DaveBiographySection';
 import {HowWasThisAccomplishedSection} from 'pages/FanPage/HowWasThisAccomplishedSection/HowWasThisAccomplishedSection';
 import * as amplifyService from 'services/amplify';
+import {Routes} from 'pages/routes';
+import RaceTrackerMap from 'components/widgets/RaceTrackerMap/RaceTrackerMap';
+import {Subject} from 'rxjs';
 
 import imgTopoBkgd from 'assets/images/topographBackground.png';
 import imgPerfectRaceHeader from 'assets/images/perfectRaceHeader.png';
@@ -27,10 +30,6 @@ import imgQlikApp from 'assets/images/qlik-app@3x.png';
 
 import styles from './FanPage.module.css';
 import globalStyles from 'globalStyles.module.css';
-import {Subject} from 'rxjs';
-import {DavesLocationMap} from 'pages/FanPage/DavesLocationMap/DavesLocationMap';
-import {Routes} from 'pages/routes';
-
 
 
 
@@ -141,9 +140,11 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
           </Paragraph>
 
           <FlexCell >
-            <DavesLocationMap
+            {/* <DavesLocationMap
               davesLat={this.state.davesLat}
-              davesLon={this.state.davesLon} />
+              davesLon={this.state.davesLon} /> */}
+
+            <RaceTrackerMap />
           </FlexCell>
 
         </FlexColumn>
