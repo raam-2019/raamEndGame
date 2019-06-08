@@ -1,24 +1,31 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import styles from './BatteryLifeWidget.module.css';
 import {FlexRow} from 'components/layout/FlexRow';
 import {FlexCell} from 'components/layout/FlexCell';
+
+import styles from './BatteryLifeWidget.module.css';
 
 
 
 export interface IBatteryLifeWidgetProps {
   batteryLife: number;
   deviceName: string;
+
+  min: number;
+  max: number;
 }
 
 export const BatteryLifeWidget: React.FC<IBatteryLifeWidgetProps> = props => {
+
+
+
   const barColors = ['',
-    'red',
-    'yellow',
     'blue',
-    'lightgreen',
-    'green',
+    'blue',
+    'blue',
+    'blue',
+    'blue',
   ];
 
   const elBars = _.times(props.batteryLife, index => (

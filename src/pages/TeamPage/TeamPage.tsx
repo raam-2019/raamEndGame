@@ -125,26 +125,36 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         <FlexRow justifyContent="space-between">
           <FlexCell>
             <BatteryLifeWidget
+              min={0}
+              max={5}
               batteryLife={this.state.aeroBattery}
               deviceName="Aero" />
           </FlexCell>
           <FlexCell>
             <BatteryLifeWidget
+              min={0}
+              max={100}
               batteryLife={this.state.androidBattery}
               deviceName="Android" />
           </FlexCell>
           <FlexCell>
             <BatteryLifeWidget
+              min={0}
+              max={100}
               batteryLife={this.state.mo2Battery}
               deviceName="MO2" />
           </FlexCell>
           <FlexCell>
             <BatteryLifeWidget
+              min={0}
+              max={5}
               batteryLife={this.state.radarBattery}
               deviceName="Radar" />
           </FlexCell>
           <FlexCell>
             <BatteryLifeWidget
+              min={0}
+              max={100}
               batteryLife={this.state.watchBattery}
               deviceName="Watch" />
           </FlexCell>
