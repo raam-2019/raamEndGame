@@ -172,8 +172,8 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           </FlexCell>
 
           <FlexCell>
-          <Mo2PercentWidget
-              mo2={this.state.heartRate}
+            <Mo2PercentWidget
+              mo2={this.state.mo2}
               heightPx={300}
               widthPx={300}
             />
