@@ -93,7 +93,7 @@ DisplayState = () => {
           <Widget3 heading="Some graph shit" colspan={2} rowspan={2}  data={this.state}/>
           <Widget4 heading="Some more stat"  data={this.state}/>
           <Widget5 heading="ThisAndThat"  data={this.state}/>
-          <Widget6 heading="RAAM"  data={this.state}/>
+          <Widget6 heading="RAAM" data={this.state} widthPx="300" heightPx="300"/>
         </div>
         
         <div className="BLL" style={{justifyContent: "center"}} ref={this.Ref4}>
