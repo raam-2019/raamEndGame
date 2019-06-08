@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import { Container } from "reactstrap";
 import ReactMapGL, { Marker, Popup, NavigationControl,LinearInterpolator, FlyToInterpolator } from 'react-map-gl';
-// import d3 from 'd3-ease';//Mapbox token
+import {defaultMapStyle, pointLayer} from '../mapstyle.js';
 import {fromJS} from 'immutable';
 // const TOKEN = 'pk.eyJ1IjoibWlzbGFtNSIsImEiOiJjanVpdG5vZWoxZThsNGZwamJ4Nmxya2o0In0.19pBli659L76GrJaX0JWoA'; //rayhan's token
 const TOKEN = 'pk.eyJ1IjoicnNiYXVtYW5uIiwiYSI6ImNqdzg5aWxkYzF1azI0OW5uaWVmazhleXUifQ.XAm1dRGmXuRAMSQm0TJKXg'; //ryan baumann's token
@@ -11,7 +11,8 @@ const TOKEN = 'pk.eyJ1IjoicnNiYXVtYW5uIiwiYSI6ImNqdzg5aWxkYzF1azI0OW5uaWVmazhleX
 class Widget0 extends React.Component {
 
     state = {
-        mapStyle:'mapbox://styles/rsbaumann/cjwdv1evs18rk1cnuwku6tys5?optimize=true',
+        // mapStyle:'mapbox://styles/rsbaumann/cjwdv1evs18rk1cnuwku6tys5?optimize=true',
+        mapStyle: defaultMapStyle,
         viewport: {
             width: '70%',
             height: 500,
@@ -24,15 +25,6 @@ class Widget0 extends React.Component {
 
         riderData : [],
 
-        pointLayer: fromJS({
-            id: 'point',
-            source: 'point',
-            type: 'circle',
-            paint: {
-              'circle-radius': 10,
-              'circle-color': '#007cbf'
-            }
-          })
     };
 
     
@@ -80,7 +72,7 @@ class Widget0 extends React.Component {
                     }  
 
                  trackleaders.forEach(trackleader => {
-                     
+                   
                     pointData =  {
                         "type": "Feature",
                           "geometry": {
@@ -96,28 +88,29 @@ class Widget0 extends React.Component {
 
                  });
 
+               // self.setState({riderData:points})
+
                 geojsonWrapper.features.push(points);
 
                 console.log(geojsonWrapper);
-    
+
                 if (!mapStyle.hasIn(['sources', 'point'])) {
-                    mapStyle = mapStyle
-                      // Add geojson source to map
-                      .setIn(['sources', 'point'], fromJS({type: 'geojson'}))
-                      // Add point layer to map
-                      .set('layers', mapStyle.get('layers').push(this.state.pointLayer));
-                 }
-
-                mapStyle = mapStyle.setIn(['sources', 'point', 'data'], geojsonWrapper );
-
+                  mapStyle = mapStyle
+                    // Add geojson source to map
+                    .setIn(['sources', 'point'], fromJS({type: 'geojson'}))
+                    // Add point layer to map
+                    .set('layers', mapStyle.get('layers').push(pointLayer));
+                }
+                // Update data source
+                mapStyle = mapStyle.setIn(['sources', 'point', 'data'], geojsonWrapper);
+            
                 self.setState({mapStyle});
-
-                // console.log(parseFloat(trackleaders[0].message[0].latitude[0]));
+               
              })
              .catch(function(error) {
                  console.log('Looks like there was a problem: \n', error);
              })
-         } , 10000) ;
+         } , 40000) ;
          
      }
 
@@ -136,11 +129,10 @@ class Widget0 extends React.Component {
                         {...this.state.viewport} 
                         onViewportChange={this._onViewportChange}    
                      >
-
+                
                     <div className="nav">
                         <NavigationControl onViewportChange={(viewport) => this.setState({ viewport })}  />   
-                    </div>
-                    
+                    </div>                    
                     </ReactMapGL>
 
                     <button onClick={this._goToCyclist}>Cyclist</button>
