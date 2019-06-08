@@ -11,6 +11,9 @@ import {
 } from "./MapStyle";
 import {fromJS} from "immutable";
 import {Img} from 'components/Img/Img';
+import * as trackLeaderService from 'services/trackLeaders';
+import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 import imgPersonPin from 'assets/images/personPin.png';
 
@@ -23,6 +26,8 @@ const TOKEN = "pk.eyJ1IjoicnNiYXVtYW5uIiwiYSI6ImNqdzg5aWxkYzF1azI0OW5uaWVmazhleX
 
 
 class RaceTrackerMap extends React.Component<object, any> {
+
+  private __unsubscribe = new Subject();
 
 
 
@@ -48,59 +53,62 @@ class RaceTrackerMap extends React.Component<object, any> {
 
 
   public componentDidMount = () => {
-    setInterval(() => {
-      fetch("/api/trackleads")
-        .then(res => res.json())
-        .then(data => {
+    trackLeaderService.asObservable()
+      .pipe(takeUntil(this.__unsubscribe))
+      .subscribe(data => {
+        if (!data) {
+          return;
+        }
 
-          var trackleaders = data["trackleaders_aggregate_feed"]["trackleaders_feed"];
+        const trackleaders = data["trackleaders_aggregate_feed"]["trackleaders_feed"];
 
-          const geojsonWrapper = {
-            type: "FeatureCollection",
-            features: []
-          } as any;
+        const geojsonWrapper = {
+          type: "FeatureCollection",
+          features: []
+        } as any;
 
-          _.forEach(trackleaders, trackLeader => {
-            const pointData = {
-              type: "Feature",
-              geometry: {
-                type: "Point",
-                coordinates: [
-                  parseFloat(trackLeader.message[0].longitude[0]),
-                  parseFloat(trackLeader.message[0].latitude[0])
-                ]
-              },
-              properties: {
-                speed: 10
-              }
-            };
-            geojsonWrapper.features.push(pointData);
-          });
-
-          let {mapStyle} = this.state;
-          if (!mapStyle.hasIn(["sources", "point"])) {
-            mapStyle = mapStyle
-              .setIn(
-                ["sources", "point"],
-                fromJS({type: "geojson", data: geojsonWrapper})
-              )
-              .set("layers", mapStyle.get("layers").push(pointLayer));
-          }
-
-          // Update data source
-          mapStyle = mapStyle.setIn(
-            ["sources", "point", "data"],
-            geojsonWrapper
-          );
-
-          this.setState({mapStyle});
-        })
-
-        .catch(error => {
-          console.log("Looks like there was a problem: \n", error);
+        _.forEach(trackleaders, trackLeader => {
+          const pointData = {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [
+                parseFloat(trackLeader.message[0].longitude[0]),
+                parseFloat(trackLeader.message[0].latitude[0])
+              ]
+            },
+            properties: {
+              speed: 10
+            }
+          };
+          geojsonWrapper.features.push(pointData);
         });
 
-    }, 5000);
+        let {mapStyle} = this.state;
+        if (!mapStyle.hasIn(["sources", "point"])) {
+          mapStyle = mapStyle
+            .setIn(
+              ["sources", "point"],
+              fromJS({type: "geojson", data: geojsonWrapper})
+            )
+            .set("layers", mapStyle.get("layers").push(pointLayer));
+        }
+
+        // Update data source
+        mapStyle = mapStyle.setIn(
+          ["sources", "point", "data"],
+          geojsonWrapper
+        );
+
+        this.setState({mapStyle});
+      });
+  };
+
+
+
+  public componentWillUnmount = () => {
+    this.__unsubscribe.next();
+    this.__unsubscribe.complete();
   };
 
 

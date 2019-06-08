@@ -1,17 +1,17 @@
-import * as _ from 'lodash';
-
 import {BehaviorSubject} from "rxjs";
+import {Parser} from 'xml2js';
+import {reject} from 'q';
 
 
 
-const __subject = new BehaviorSubject<string | null>(null);
+const __subject = new BehaviorSubject<any | null>(null);
 
 
-const INTERVAL_MS = 1000 * 60 * 5;
+const INTERVAL_MS = 1000 * 60;
 
 
 export function init() {
-  // __fetchResults();
+  __fetchResults();
   setInterval(__fetchResults, INTERVAL_MS);
 }
 
@@ -33,20 +33,23 @@ function __fetchResults() {
       return Promise.resolve(null);
     })
 
+    .then(response => {
+      if (!response) {
+        return null;
+      }
+
+      return __parseBody(response);
+    })
+
     .then(result => {
       __subject.next(result);
     })
 
-    .catch(err => __subject.error(err));
+    .catch(err => {
+      console.log(err);
+      __subject.error(err)
+    });
 }
-
-
-
-asObservable()
-  .subscribe({
-    next: result => _.isString(result) ? console.log(result.length) : console.log(result),
-    error: err => console.error(err)
-  });
 
 
 
@@ -55,5 +58,21 @@ function __readStream(stream: ReadableStreamDefaultReader<Uint8Array>) {
     stream.read()
       .then(results =>
         resolve(new TextDecoder('ascii').decode(results.value)));
+  });
+}
+
+
+
+function __parseBody(body: string) {
+  return new Promise<any>(resolve => {
+    const parser = new Parser();
+
+    parser.parseString(body, (err: Error, result: any) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
   });
 }
