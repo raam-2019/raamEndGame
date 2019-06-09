@@ -4,7 +4,7 @@ import {XYPlotTemplate} from 'components/widgets/shared/XYPlotTemplate';
 import {IDefaultWidgetProps} from 'components/widgets/shared/IDefaultWidgetProps';
 import {IPoint} from 'types/IPoint';
 import {BasicHorizontalAxis, BasicVerticalAxis} from 'components/widgets/shared/BasicAxes';
-import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
+import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
 
 function timeCompare(a: { x: any; }, b: { x: any; }){
     let timeA = a.x;
@@ -34,16 +34,18 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
     title="Elevation over Predicated Time"
     useHorizontalGridLines={true}>
     {BasicHorizontalAxis({
-      axisLabel: "Time (Minutes)"
+      axisLabel: "Time (Minutes)",
     })}
 
     {BasicVerticalAxis({
       axisLabel: "Elevation Level"
     })}
-
-    {LinearLineSeries({
+    
+    {LinearAreaSeries({
       data: props.elevation.sort(timeCompare),
-      lineColor: 'orange'
+      lineColor: 'orange',
+      fillColor: '#FFCF9E'
     })}
+    
   </XYPlotTemplate>
 );
