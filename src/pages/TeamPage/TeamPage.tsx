@@ -79,7 +79,10 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
 
   public componentDidMount = () => {
+
+  
     window.document.title = "#InternetOfDave - Team Page";
+
     amplifyService
       .onRiderUpdate()
       .pipe(takeUntil(this.__unsubscribe))
@@ -99,6 +102,13 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           enduranceZone: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'enduranceZone')}
         }));
       });
+
+      setInterval(function(){
+       amplifyService.getAnalytics().then(result => {
+        console.log(result);
+        })
+      }
+      , 60000 )
   };
 
 

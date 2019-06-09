@@ -22,6 +22,7 @@ import styles from './RaceTrackerMap.module.css';
 
 
 
+
 const TOKEN = "pk.eyJ1IjoicnNiYXVtYW5uIiwiYSI6ImNqdzg5aWxkYzF1azI0OW5uaWVmazhleXUifQ.XAm1dRGmXuRAMSQm0TJKXg";
 
 
@@ -85,9 +86,13 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
               ]
             },
             properties: {
-              description: `<h3>Racer ID: `+trackLeader['trackleaders_racer_ID'][0]+`</h3> 
-              <strong>Device Battery State: `+trackLeader.message[0]['batteryState'][0]+`</strong>
-             `,  
+              description: {
+                RacerID: trackLeader['trackleaders_racer_ID'][0],
+                DeviceBatteryState: trackLeader.message[0]['batteryState'][0],
+                ts: (trackLeader.message[0]['timestamp']==null ?trackLeader.message[0]['dateTime']:trackLeader.message[0]['timestamp']) ,
+                lat:trackLeader.message[0]['latitude'],
+                lng:trackLeader.message[0]['longitude']
+              },  
               speed: 10
             }
           };
@@ -131,9 +136,9 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         mapStyle={this.state.mapStyle}
         {...this.state.viewport}
         onViewportChange={this.__handleViewportChange}
-        onClick={this._onClick}>
+        onClick={this.__handleClick}>
         
-         {this._renderPopup()}
+         {this.__renderPopup()}
         <NavigationControl
           className={styles.nav}
           onViewportChange={this.__handleViewportChange} />
@@ -147,14 +152,15 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     </div>
   );
 
-  private _onClick = (event:any)  => {
+  private __handleClick = (event:any)  => {
     const feature = event.features && event.features[0];
+
     if (feature) {
         if(feature.layer.id == "point"){
             this.setState({popup: {
                 lat: event.lngLat[1],
                 lng: event.lngLat[0],
-                description:feature.properties.description
+                description: feature.properties.description
             } 
           })
          
@@ -162,8 +168,9 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     }
   };
 
- private  _renderPopup() {
+  private __renderPopup = () =>  {
     const {popup} = this.state;
+ 
     return (
       popup && (
         <Popup
@@ -174,9 +181,29 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
           closeOnClick={false}
           onClose={() => this.setState({popup: null})}
         >
-
-        {popup.description}
         
+        { <div>
+            <h3>
+              Racer ID: {JSON.parse(popup.description).RacerID}
+            </h3>
+            <strong>
+              Device Battery State: {JSON.parse(popup.description).DeviceBatteryState}
+            </strong>
+            <br></br>
+            <strong>
+              Time Stamp: {JSON.parse(popup.description).ts}
+            </strong>
+            <br></br>
+            <strong>
+              Latitude: {JSON.parse(popup.description).lat}
+            </strong>
+            <br></br>
+            <strong>
+              Longitude: {JSON.parse(popup.description).lng}
+            </strong>
+          </div> }
+         
+
         </Popup>
       )
     );

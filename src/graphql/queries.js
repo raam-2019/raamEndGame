@@ -49,3 +49,34 @@ export const listAssetTable6ce042es = `query ListAssetTable6ce042es(
   }
 }
 `;
+
+export const listRaamalytics = `query Raaamalytics {
+  listRaamalytics{
+    items {
+      key
+      model_run_tstamp
+      course_bearing
+      cumulative_distance_to_segment
+      headwind_m_per_s
+      headwind_plus_2hr
+      model_run
+      predicted_arrival_time
+      predicted_finishing_time
+      predicted_power_watts
+      segment_calories
+      segment_duration_s
+      segment_id
+      segment_speed_km_per_h
+      segment_tss
+      wind_direction
+      wind_direction_confidence_level
+      wind_direction_plus_2hr
+      wind_direction_plus_2hr_confidence_level
+      wind_speed_confidence_level
+      wind_speed_m_per_s
+      wind_speed_plus_2hr
+      wind_speed_plus_2hr_confidence_level
+    }
+  }
+}
+`;
