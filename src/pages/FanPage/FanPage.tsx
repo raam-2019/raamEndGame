@@ -100,7 +100,6 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
   };
 
 
-
   public render = () => (
     <PageTemplate {...this.props}>
       <Section
