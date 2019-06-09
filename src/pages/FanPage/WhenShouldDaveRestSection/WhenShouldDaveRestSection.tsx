@@ -8,7 +8,7 @@ import {Paragraph} from 'components/Paragraph/Paragraph';
 import {FlexRow} from 'components/layout/FlexRow';
 import {FlexCell} from 'components/layout/FlexCell';
 import {LiveGraphWrapper} from 'components/LiveGraphWrapper/LiveGraphWrapper';
-import {NumberWidget} from 'components/widgets/NumberWidget';
+import {NumberWidget} from 'components/NumberWidget/NumberWidget';
 
 import globalStyles from 'globalStyles.module.css';
 import styles from './WhenShouldDaveRestSection.module.css';
@@ -34,7 +34,7 @@ export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps
 
     <FlexRow className={styles.row}>
       <FlexCell>
-      <NumberWidget NumberPoints={props.coreBodyTemp}/>
+      <NumberWidget numberPoints={props.coreBodyTemp}/>
       </FlexCell>
 
       <FlexCell className={globalStyles.alignLeft}>
@@ -52,7 +52,7 @@ export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps
       </FlexCell>
 
       <FlexCell>
-        <NumberWidget NumberPoints={props.mo2}/>
+        <NumberWidget numberPoints={props.mo2}/>
       </FlexCell>
     </FlexRow>
 

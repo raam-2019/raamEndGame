@@ -223,7 +223,9 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
 
 
 
-      <WhenShouldDaveRestSection mo2={this.state.mo2} coreBodyTemp={this.state.coreBodyTemp}/>
+      <WhenShouldDaveRestSection 
+        mo2={this.state.mo2} 
+        coreBodyTemp={this.state.coreBodyTemp} />
       <HowWasThisAccomplishedSection />
 
       <Section backgroundColor="black">
