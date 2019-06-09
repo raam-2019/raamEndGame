@@ -3,7 +3,8 @@ import * as React from "react";
 
 import ReactMapGL, {
   NavigationControl,
-  FlyToInterpolator
+  FlyToInterpolator,
+  Popup
 } from "react-map-gl";
 import {
   defaultMapStyle,
@@ -50,8 +51,8 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         bearing: 0,
         pitch: 0
       },
-
-      riderData: []
+      riderData: [],
+      popup:null
     };
   }
 
@@ -84,6 +85,9 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
               ]
             },
             properties: {
+              description: `<h3>Racer ID: `+trackLeader['trackleaders_racer_ID'][0]+`</h3> 
+              <strong>Device Battery State: `+trackLeader.message[0]['batteryState'][0]+`</strong>
+             `,  
               speed: 10
             }
           };
@@ -126,7 +130,10 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         mapboxApiAccessToken={TOKEN}
         mapStyle={this.state.mapStyle}
         {...this.state.viewport}
-        onViewportChange={this.__handleViewportChange}>
+        onViewportChange={this.__handleViewportChange}
+        onClick={this._onClick}>
+        
+         {this._renderPopup()}
         <NavigationControl
           className={styles.nav}
           onViewportChange={this.__handleViewportChange} />
@@ -139,6 +146,41 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
       </ReactMapGL>
     </div>
   );
+
+  private _onClick = (event:any)  => {
+    const feature = event.features && event.features[0];
+    if (feature) {
+        if(feature.layer.id == "point"){
+            this.setState({popup: {
+                lat: event.lngLat[1],
+                lng: event.lngLat[0],
+                description:feature.properties.description
+            } 
+          })
+         
+       }
+    }
+  };
+
+ private  _renderPopup() {
+    const {popup} = this.state;
+    return (
+      popup && (
+        <Popup
+          tipSize={5}
+          anchor="top"
+          longitude={popup.lng}
+          latitude={popup.lat}
+          closeOnClick={false}
+          onClose={() => this.setState({popup: null})}
+        >
+
+        {popup.description}
+        
+        </Popup>
+      )
+    );
+  }
 
 
 
