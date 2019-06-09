@@ -4,9 +4,10 @@
 
   .root .headingContainer {
     position: absolute;
-    top: 48px;
 
-    left: calc(100% - 100px);
+    bottom: 0px;
+    left: 0px;
+
   }
 
   .root .headingContainer .heading {
@@ -17,8 +18,36 @@
     white-space: nowrap;
     font-family: BlackerDisplay;
     font-weight: 800;
-    font-size: 42px;
-    margin-bottom: 14px;
+    font-size: 28px;
 
     background-color: white;
   }
+
+@media (min-width:320px) {
+}
+
+/* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
+@media (min-width:481px) { }
+
+/* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
+@media (min-width:641px) { }
+
+/* tablet, landscape iPad, lo-res laptops ands desktops */ 
+@media (min-width:961px) { 
+  .root .headingContainer {
+    top: 48px;
+    left: calc(100% - 100px);
+
+    bottom: unset;
+  }
+
+  .root .headingContainer {
+    font-size: 42px;
+  }
+}
+
+/* big landscape tablets, laptops, and desktops */ 
+@media (min-width:1025px) { }
+
+/* hi-res laptops and desktops */ 
+@media (min-width:1281px) { }

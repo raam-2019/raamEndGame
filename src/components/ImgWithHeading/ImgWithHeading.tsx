@@ -22,6 +22,7 @@ export interface IImgWithHeadingProps extends IImgProps {
 export const ImgWithHeading: React.FC<IImgWithHeadingProps> = props => (
   <div className={`${styles.root} ${props.extraClassName || ''}`}>
     <Img
+      extraClassName={props.extraClassName}
       alt={props.alt}
       src={props.src}
       height={props.height}
@@ -29,6 +30,7 @@ export const ImgWithHeading: React.FC<IImgWithHeadingProps> = props => (
 
     <div className={styles.headingContainer}>
       {props.line1Text && (<h1 className={styles.heading}>{props.line1Text}</h1>)}
+      <br />
       {props.line2Text && (<h1 className={styles.heading}>{props.line2Text}</h1>)}
     </div>
   </div>

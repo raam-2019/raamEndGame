@@ -9,11 +9,15 @@ export interface IHeadingProps {
 }
 
 export const Heading: React.FC<IHeadingProps> = props => (
-  <h1 className={styles.heading + ' ' + props.extraClassName || ''}>{props.children}</h1>
+  <h1 className={`${styles.heading} ${props.extraClassName || ''}`}>
+    {props.children}
+  </h1>
 );
 
 
 
 export const SubHeading: React.FC<IHeadingProps> = props => (
-  <h2 className={styles.subheading + ' ' + props.extraClassName || ''}>{props.children}</h2>
+  <h2 className={`${styles.subheading} ${props.extraClassName || ''}`}>
+    {props.children}
+  </h2>
 );
