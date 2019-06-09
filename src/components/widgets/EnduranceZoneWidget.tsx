@@ -2,6 +2,7 @@ import * as React from 'react';
 import {IPoint} from 'types/IPoint';
 import {BasicBarChart} from "components/widgets/shared/BasicBarChart";
 import {XYPlotTemplate} from 'components/widgets/shared/XYPlotTemplate';
+import { IDefaultWidgetProps } from 'components/widgets/shared/IDefaultWidgetProps';
 import {
   BasicHorizontalAxis,
   BasicVerticalAxis
@@ -9,19 +10,19 @@ import {
 
 const MIN_POINTS_BEFORE_SHOW = 3;
 
-export interface IMo2PercentProps {
-  mo2: IPoint[];
+export interface IEnduranceZoneWidgetProps extends IDefaultWidgetProps {
+  enduranceZone: IPoint[];
 
   heightPx: number;
   widthPx: number;
 }
 
-export const Mo2PercentWidget: React.FC<IMo2PercentProps> = props => (
+export const EnduranceZoneWidget: React.FC<IEnduranceZoneWidgetProps> = props => (
   <XYPlotTemplate
-    status={props.mo2.length < MIN_POINTS_BEFORE_SHOW && props.mo2.length < MIN_POINTS_BEFORE_SHOW ? "loading" : "ready"}
+    status={props.enduranceZone.length < MIN_POINTS_BEFORE_SHOW && props.enduranceZone.length < MIN_POINTS_BEFORE_SHOW ? "loading" : "ready"}
     heightPx={props.heightPx}
     widthPx={props.widthPx}
-    title="Mo2 Percentage"
+    title="Endurance Zone"
     useHorizontalGridLines={true}>
 
     {BasicHorizontalAxis({
@@ -30,11 +31,11 @@ export const Mo2PercentWidget: React.FC<IMo2PercentProps> = props => (
     })}
 
     {BasicVerticalAxis({
-      axisLabel: "Mo2%"
+      axisLabel: "Endurance Zone"
     })}
 
     {BasicBarChart({
-      data: props.mo2,
+      data: props.enduranceZone,
       color: 'green'
     })}
   </XYPlotTemplate>
