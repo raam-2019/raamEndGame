@@ -5,7 +5,7 @@ import {IPoint} from 'types/IPoint';
 
 const ReactVis = require('react-vis');
 
-export interface IBasicLineSeriesProps {
+export interface IBasicAreaSeriesProps {
   extraClassName?: string;
   data: IPoint[];
   lineColor?: string;
@@ -13,7 +13,14 @@ export interface IBasicLineSeriesProps {
   fillColor?: string
 }
 
-export const LinearAreaSeries = (props: IBasicLineSeriesProps) => (
+/*
+/////// NOTES WITH LineSeries /////////////////
+Make sure that the line series is the first graph that is declared or else it
+will cover up the rest of the stuff that we want to show. 
+*/
+
+
+export const LinearAreaSeries = (props: IBasicAreaSeriesProps) => (
   <ReactVis.AreaSeries
     className={props.extraClassName}
     curve={curveLinear}
