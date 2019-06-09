@@ -31,8 +31,9 @@ import {Subject} from 'rxjs';
 import {DavesLocationMap} from 'pages/FanPage/DavesLocationMap/DavesLocationMap';
 import {Routes} from 'pages/routes';
 
-
-
+import {IPoint} from 'types/IPoint';
+import update from 'immutability-helper';
+import * as dataUtil from 'util/dataUtil';
 
 export interface IFanPageProps extends RouteComponentProps {}
 
@@ -40,18 +41,29 @@ export interface IFanPageProps extends RouteComponentProps {}
 interface IFanPageState {
   davesLat: number;
   davesLon: number;
+
+  coreBodyTemp: IPoint[];
+  heartRate: IPoint[];
+  breathRate: IPoint[];
+  mo2: IPoint[];
+  skinTemp: IPoint[];
 }
 
 export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
 
   private __unsubscribe = new Subject();
 
-
   constructor(props: IFanPageProps) {
     super(props);
     this.state = {
       davesLat: 0,
-      davesLon: 0
+      davesLon: 0,
+
+      coreBodyTemp: [],
+      heartRate: [],
+      mo2: [],
+      breathRate: [],
+      skinTemp: []
     };
   }
 
@@ -67,11 +79,16 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
           return;
         }
 
-        // TODO {AD} Process incoming data here into state for widgets etc.
         const {
-          // ts,
+          ts,
           latitude,
-          longitude
+          longitude,
+
+          eqCoreTemp,
+          eqSkinTemp,
+          hemoPercent,
+          eqBreathingRate,
+          watchHeartRate
         } = riderData.rider;
 
         if (latitude !== null && longitude !== null) {
@@ -79,10 +96,17 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
             davesLat: latitude,
             davesLon: longitude
           });
-        }
+        };
+
+        this.setState(update(this.state, {
+          heartRate: {$set: dataUtil.concatAndSortByX(this.state.heartRate, ts, watchHeartRate)},
+          coreBodyTemp: {$set: dataUtil.concatAndSortByX(this.state.coreBodyTemp, ts, eqCoreTemp)},
+          mo2: {$set: dataUtil.concatAndSortByX(this.state.mo2, ts, hemoPercent)},
+          breathRate: {$set: dataUtil.concatAndSortByX(this.state.breathRate, ts, eqBreathingRate)},
+          skinTemp: {$set: dataUtil.concatAndSortByX(this.state.skinTemp, ts, eqSkinTemp)},
+        }));
       });
   };
-
 
 
   public componentWillUnmount = () => {
@@ -199,7 +223,7 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
 
 
 
-      <WhenShouldDaveRestSection />
+      <WhenShouldDaveRestSection mo2={this.state.mo2} coreBodyTemp={this.state.coreBodyTemp}/>
       <HowWasThisAccomplishedSection />
 
       <Section backgroundColor="black">
