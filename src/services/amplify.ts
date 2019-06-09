@@ -42,7 +42,6 @@ function __subscribeToRiderUpdates() {
     .subscribe({
 
       next: result => {
-        console.log(result.value.data);
         if (result.value.data) {
           const currentData = __subject.getValue();
           __subject.next(_.concat(currentData, result.value.data.rider));
