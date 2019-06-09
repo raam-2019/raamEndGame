@@ -24,19 +24,16 @@ export const EnduranceZoneWidget: React.FC<IEnduranceZoneWidgetProps> = props =>
     widthPx={props.widthPx}
     title="Endurance Zone"
     useHorizontalGridLines={true}>
-
+    {BasicBarChart({
+      data: props.enduranceZone,
+      color: 'green'
+    })}
     {BasicHorizontalAxis({
       axisLabel: "Time",
       fnTickFormat: (t, index) => index
     })}
-
     {BasicVerticalAxis({
       axisLabel: "Endurance Zone"
-    })}
-
-    {BasicBarChart({
-      data: props.enduranceZone,
-      color: 'green'
     })}
   </XYPlotTemplate>
 );

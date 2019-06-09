@@ -1,0 +1,11 @@
+.root {
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.13);
+  color: #262626;
+}
+.root:disabled {
+  background: rgb(235, 235, 228);
+}
