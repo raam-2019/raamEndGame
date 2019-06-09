@@ -6,6 +6,7 @@ import {FlexCell} from 'components/layout/FlexCell';
 import {Img} from 'components/Img/Img';
 import {Paragraph} from 'components/Paragraph/Paragraph';
 import {SubHeading} from 'components/Heading/Heading';
+import {ImgWithHeading} from 'components/ImgWithHeading/ImgWithHeading';
 
 import imgDaveOnTheRoad from 'assets/images/daveOnTheRoad.png';
 import imgDaveRiding from 'assets/images/daveRiding.png';
@@ -13,35 +14,35 @@ import imgDaveSmiling from 'assets/images/daveSmiling.png';
 import imgDaveCrushingATurn from 'assets/images/daveCrushingATurn.png';
 
 import styles from './DaveBiographySection.module.css';
-import {ImgWithHeading} from 'components/ImgWithHeading/ImgWithHeading';
 
 
 
 export interface IDaveBiographySectionProps {}
 
 export const DaveBiographySection: React.FC<IDaveBiographySectionProps> = props => (
-  <Section
-    backgroundColor="black"
-    extraClassName={styles.root}>
+  <Section extraClassName={styles.root}>
+    <div className={styles.offsetBackground} />
+
     <FlexRow>
       <FlexCell>
         <ImgWithHeading
           extraClassName={styles.offsetImg}
           line1Text="Strength & Motivation"
           line2Text="Drive to Succeed"
-          src={imgDaveOnTheRoad}
-          height="485px" />
+          src={imgDaveOnTheRoad} />
       </FlexCell>
 
-      <FlexCell>
-        <Paragraph theme="light">
+      <FlexCell
+        justifyContent="flex-end"
+        className={styles.sendToBottom}>
+        <Paragraph
+          theme="light">
           2019 is Dave’s 7th bid to win. Five times, he’s been top American finisher. His motivation? Simply, it’s the perfect race.
         </Paragraph>
       </FlexCell>
-
     </FlexRow>
 
-    <FlexRow className={styles.secondRowShift}>
+    <FlexRow>
       <FlexCell>
         <SubHeading>From Pacific to Atlantic</SubHeading>
 
@@ -50,31 +51,32 @@ export const DaveBiographySection: React.FC<IDaveBiographySectionProps> = props 
         </Paragraph>
       </FlexCell>
 
-      <FlexCell className={styles.doubleImageContainer}>
-        <Img
-          height="457px"
-          src={imgDaveRiding} />
-        <Img
-          height="466px"
-          src={imgDaveSmiling} />
+      <FlexCell
+        className={styles.doubleImageContainer}
+        flex="583px">
+        <Img src={imgDaveSmiling} />
+        <Img src={imgDaveRiding} />
       </FlexCell>
     </FlexRow>
 
-    <FlexRow
-      className={styles.rowOffset}>
+    <FlexRow>
       <FlexCell>
         <ImgWithHeading
+          extraClassName={styles.crushingTurnImg}
           line1Text="Breakthrough with"
           line2Text="Innovation in Technology"
-          height="400px"
           src={imgDaveCrushingATurn} />
       </FlexCell>
 
-      <FlexCell className={styles.sendToBottom}>
-        <Paragraph theme="light">
+      <FlexCell
+        justifyContent="flex-end"
+        className={styles.sendToBottom}>
+        <Paragraph
+          theme="light"
+          useMargin={false}>
           Enabling this insanity is a technical internet of things platform to explore that “line” that separates breakthrough from catastrophe.
         </Paragraph>
       </FlexCell>
     </FlexRow>
-  </Section>
+  </Section >
 );

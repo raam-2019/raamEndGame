@@ -9,11 +9,13 @@ import {FlexRow} from 'components/layout/FlexRow';
 import {FlexCell} from 'components/layout/FlexCell';
 import {LiveGraphWrapper} from 'components/LiveGraphWrapper/LiveGraphWrapper';
 import {NumberWidget} from 'components/NumberWidget/NumberWidget';
+import {IPoint} from 'types/IPoint';
 
 import globalStyles from 'globalStyles.module.css';
 import styles from './WhenShouldDaveRestSection.module.css';
 
-import {IPoint} from 'types/IPoint';
+
+
 
 export interface IWhenShouldDaveRestSectionProps {
   mo2: IPoint[];
@@ -28,18 +30,23 @@ export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps
       </Heading>
 
       <Paragraph>
-        This is how all of the data we analyze ties together. It’s more than just heartbeats and speed. It’s what lies out of sight, or beneath our human senses that holds the secret.
+        It's about heartbeats but it's also about what lies out of sight, or beneath our human senses, that holds the secret to the perfect race.
       </Paragraph>
     </FlexColumn>
 
     <FlexRow className={styles.row}>
-      <FlexCell>
-        <NumberWidget numberPoints={props.coreBodyTemp} name="temp" />
+      <FlexCell
+        alignItems="center"
+        justifyContent="center">
+        <NumberWidget
+          extraClassName={styles.widget}
+          numberPoints={props.coreBodyTemp}
+          name="temp" />
       </FlexCell>
 
       <FlexCell className={globalStyles.alignLeft}>
         <Paragraph>
-          It’s an ingestible reporting back from inside Dave preventing heat stress injury. We can’t win if we can’t finish. And we finish what we start.
+          The most commonly used indicator of exertion is heart rate. Here's Dave's. But knowing when to surrender more (or save it) is so much more...
         </Paragraph>
       </FlexCell>
     </FlexRow>
@@ -47,23 +54,28 @@ export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps
     <FlexRow className={styles.row}>
       <FlexCell className={globalStyles.alignRight}>
         <Paragraph>
-          It’s near-infrared spectroscopy to measure the oxygen saturation in muscles. This is actionable info to keep Dave at his limits. Moment by moment.
+          It’s an ingestible reporting back from inside Dave preventing heat stress injury. We can’t win if we can’t finish. And we finish what we start.
         </Paragraph>
       </FlexCell>
 
       <FlexCell>
-        <NumberWidget numberPoints={props.mo2} name="percent" />
+        <NumberWidget
+          extraClassName={styles.widget}
+          numberPoints={props.mo2}
+          name="percent" />
       </FlexCell>
     </FlexRow>
 
     <FlexRow className={styles.row}>
       <FlexCell>
-        <LiveGraphWrapper title="Graph of Data 3" />
+        <LiveGraphWrapper
+          extraClassName={styles.widget}
+          title="Graph of Data 3" />
       </FlexCell>
 
       <FlexCell className={globalStyles.alignLeft}>
         <Paragraph>
-          It’s a forward view to conditions precisely where Dave will be in the future. This is actionable info for when to push and when to rest. Can we call a couple hours “rest?”
+          It’s near-infrared spectroscopy to measure the oxygen saturation in muscles. This is actionable info to keep Dave at his limits. Moment by moment.
         </Paragraph>
       </FlexCell>
     </FlexRow>
@@ -71,12 +83,14 @@ export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps
     <FlexRow className={styles.row}>
       <FlexCell className={styles.alignRight}>
         <Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lorem arcu, cursus id arcu tincidunt, pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lorem
-          </Paragraph>
+          It’s a forward view to conditions precisely where Dave will be in the future. This is actionable info for when to push and when to rest. Can we call a couple hours “rest?”
+        </Paragraph>
       </FlexCell>
 
       <FlexCell>
-        <LiveGraphWrapper title="Graph of Data 4" />
+        <LiveGraphWrapper
+          extraClassName={styles.widget}
+          title="Graph of Data 4" />
       </FlexCell>
     </FlexRow>
   </Section>
