@@ -1,0 +1,58 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Deploy Dev",
+      "type": "shell",
+      "command": "node ./node_modules/metisoft-deploy-tools/dist/deployToAws dev"
+    },
+    {
+      "label": "Deploy Prod",
+      "type": "shell",
+      "command": "node ./node_modules/metisoft-deploy-tools/dist/deployToAws prod"
+    },
+    {
+      "label": "Set Environment to devLocal",
+      "type": "shell",
+      "command": "node ./node_modules/metisoft-deploy-tools/dist/setEnv devLocal"
+    },
+    {
+      "label": "Set Environment to dev",
+      "type": "shell",
+      "command": "node ./node_modules/metisoft-deploy-tools/dist/setEnv dev"
+    },
+    {
+      "label": "Build TS and Declarations",
+      "type": "shell",
+      "command": "tsc && tsc --declaration",
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "Merge master",
+      "type": "shell",
+      "command": "git merge --no-ff master"
+    },
+    {
+      "label": "Windows - netstat",
+      "type": "shell",
+      "command": "netstat -ano | findstr :8081"
+    },
+    {
+      "label": "Windows - ngrok http 8081",
+      "type": "shell",
+      "command": "ngrok http -bind-tls=true -host-header=rewrite 8081"
+    },
+    {
+      "label": "Knex Migrate Latest (development)",
+      "type": "shell",
+      "command": "knex migrate:latest --env development"
+    },
+    {
+      "label": "Knex Rollback Latest Migration (development)",
+      "type": "shell",
+      "command": "knex migrate:rollback"
+    }
+  ]
+}

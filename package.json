@@ -1,38 +1,58 @@
 {
-  "name": "raam",
-  "version": "0.1.0",
+  "name": "raam-react",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
-    "aws-amplify": "^1.1.7",
-    "aws-amplify-react": "^2.1.1",
-    "bootstrap": "^4.3.1",
-    "instafeed-lite": "^1.0.10",
-    "jquery": "^3.4.0",
-    "popper.js": "^1.15.0",
+    "@types/d3-shape": "^1.3.1",
+    "@types/immutable": "^3.8.7",
+    "@types/jest": "24.0.13",
+    "@types/lodash": "^4.14.134",
+    "@types/node": "12.0.6",
+    "@types/react": "^16.8.19",
+    "@types/react-dom": "16.8.4",
+    "@types/react-map-gl": "^4.1.2",
+    "@types/react-router": "^5.0.1",
+    "@types/react-router-dom": "^4.3.3",
+    "@types/xml2js": "^0.4.4",
+    "@types/xmldom": "^0.1.29",
+    "aws-amplify": "^1.1.28",
+    "aws-amplify-react": "^2.3.8",
+    "d3": "^5.9.2",
+    "d3-shape": "^1.3.5",
+    "immutability-helper": "^3.0.0",
+    "immutable": "^4.0.0-rc.12",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "react": "^16.8.6",
-    "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
-    "react-instafeed": "^1.0.0",
-    "react-load-script": "0.0.6",
-    "react-map-gl": "^4.1.2",
-    "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
+    "react-map-gl": "^5.0.3",
+    "react-responsive-carousel": "^3.1.49",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1",
     "react-vis": "^1.11.7",
-    "reactstrap": "^8.0.0"
+    "rxjs": "^6.5.2",
+    "typescript": "3.5.1",
+    "xml2js": "^0.4.19",
+    "xmldom": "^0.1.27"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

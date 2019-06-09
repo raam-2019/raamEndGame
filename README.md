@@ -1,29 +1,34 @@
-    Components folder will contain all the components. In react the pages are called component. 
-    
-        1st Component is Mapbox component. Everything Mapbox will render will be coded here (** matrics) aka widget 0
-        
-            2nd Component is Core Temp + Skin Temp (Graph).  aka widget 1
-            
-                3rd Component is HR + BR aka widget 2
-                
-                    and so on...
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Available Scripts
 
-                    We will chose the components we want and call them in the fanexperience page aand 
-                    dashboard page respectively.
+In the project directory, you can run:
 
-                    Customization is in the Stylesheet.css in src/Assets 
-                    And grid position customization is in the fanexperience.js (col,row)
-                    
+### `npm start`
 
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-        To run the project type     yarn && yarn start     and delete package-lock before that to avoid conflict.
-                
-                Or
-                
-                    npm install
-                        npm start        but before delete yarn.lock
-                        
-                        
-                                    Use wither Yarn or NMP but not both together. This is cause problems. 
-                                        Always add new framework to the package.json file. 
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.<br>
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).

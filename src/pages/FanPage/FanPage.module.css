@@ -1,0 +1,46 @@
+.perfectRaceHeaderImg {
+  margin-bottom: 60px;
+  width: 75%;
+  max-width: 624px;
+}
+
+.bannerBikeImg {
+  width: 100%;
+  max-width: 1034px;
+}
+
+.bannerSection {
+  padding: 200px 0px;
+}
+
+.whoIsDaveHaaseSection {
+  padding-bottom: 181px;
+}
+
+.whereIsDaveSection {
+  padding-top: 100px;
+  padding-bottom: 150px;
+}
+
+.analyzeDataSection {
+  padding-top: 500px;
+  padding-bottom: 100px;
+}
+
+.perfectRaceSection {
+  padding-bottom: 250px;
+}
+
+.daveSkinAndCoreTemperatureGraph {
+  position: absolute;
+  bottom: 0;
+  z-index: 100;
+  left: 50%;
+  width: 75%;
+  transform: translateX(-50%) translateY(50%);
+}
+
+.howWasThisAccomplishedSection {
+  padding-top: 106px;
+
+}

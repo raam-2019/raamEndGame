@@ -1,0 +1,17 @@
+.root {
+  font-size: 28px;
+  color: black;
+  font-family: Karla, Arial, Helvetica, sans-serif;
+  line-height: normal;
+  line-height: 1.5;
+  margin: 0;
+  margin-bottom: 60px;
+}
+
+.dark {
+  color: #000000;
+}
+
+.light {
+  color: #ffffff;
+}

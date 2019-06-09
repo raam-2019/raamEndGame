@@ -9,7 +9,6 @@ export const onCreateTodo = `subscription OnCreateTodo {
   }
 }
 `;
-
 export const onUpdateTodo = `subscription OnUpdateTodo {
   onUpdateTodo {
     id
@@ -18,7 +17,6 @@ export const onUpdateTodo = `subscription OnUpdateTodo {
   }
 }
 `;
-
 export const onDeleteTodo = `subscription OnDeleteTodo {
   onDeleteTodo {
     id
@@ -27,24 +25,63 @@ export const onDeleteTodo = `subscription OnDeleteTodo {
   }
 }
 `;
-
-// export const onCreateRacer = `subscription onCreateRacerNj7uthp6pzfadg3eixfrzy5utmRaamenv{
-//   onCreateRacerNj7uthp6pzfadg3eixfrzy5utmRaamenv(){
-
-//   }
-// }
-// `;
-
-export const onUpdateAsset = `subscription onUpdateAssetTableC60dd8a{
-  onUpdateAssetTableC60dd8a{
+export const rider = `subscription Rider {
+  rider {
+    id
+    ts
+    watchPower
+    radarBattery
+    pcrr
+    totalVehicles
+    palt
+    hemoTotal
+    hemoPercent
+    watchBattery
+    watchSpeed
+    watchAltitude
+    aeroBattery
+    enduranceZone
+    ptot
+    watchHeartRate
+    watchPressure
+    cda
+    intervalZone
+    pacc
+    watchHeading
+    longitude
+    latitude
+    watchLocationQuality
+    eqBreathingRate
+    watchCadence
+    pair
+    eqCoreTemp
+    eqSkinTemp
+    eqHeartRate
+    aeroPressure
+    androidBattery
+    watchTemperature
+    mo2Battery
+  }
+}
+`;
+export const onCreateAssetTable6ce042e = `subscription OnCreateAssetTable6ce042e($id: String, $ts: Int) {
+  onCreateAssetTable6ce042e(id: $id, ts: $ts) {
+    id
     ts
   }
 }
 `;
-
-export const onRiderUpdate = `  subscription Rider {
-  rider{
+export const onUpdateAssetTable6ce042e = `subscription OnUpdateAssetTable6ce042e($id: String, $ts: Int) {
+  onUpdateAssetTable6ce042e(id: $id, ts: $ts) {
     id
+    ts
+  }
+}
+`;
+export const onDeleteAssetTable6ce042e = `subscription OnDeleteAssetTable6ce042e($id: String, $ts: Int) {
+  onDeleteAssetTable6ce042e(id: $id, ts: $ts) {
+    id
+    ts
   }
 }
 `;

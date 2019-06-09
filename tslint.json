@@ -1,0 +1,44 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "quotemark": [false, "single", "double", "avoid-template", "jsx-double"],
+    "no-console": {
+      "severity": "warning"
+    },
+    "no-empty": false,
+    "max-line-length": false,
+    "no-magic-numbers": true,
+    "eofline": true,
+    "prefer-const": true,
+    "arrow-return-shorthand": true,
+    "interface-name": true,
+    "newline-before-return": true,
+    "no-trailing-whitespace": true,
+    "ordered-imports": true,
+    "no-duplicate-imports": true,
+    "newline-per-chained-call": false,
+    "no-irregular-whitespace": true,
+    "no-consecutive-blank-lines": false,
+    "variable-name": [false],
+    "member-access": true,
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": {
+          "object": "never",
+          "arrays": "never",
+          "functions": "never",
+          "typeLiterals": "never"
+        },
+        "esSpecCompliant": true
+      }
+    ],
+    "no-empty-interface": false,
+    "import-spacing": true,
+    "object-literal-key-quotes": false,
+    "object-literal-shorthand": true,
+    "object-literal-sort-keys": [false, "always"],
+  }
+}
