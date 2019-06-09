@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import * as React from 'react';
 
 import update from 'immutability-helper';
@@ -18,6 +19,7 @@ import * as dataUtil from 'util/dataUtil';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {BatteryLifeWidget} from 'components/BatteryLifeWidget/BatteryLifeWidget';
+import {ISensorData} from 'types/subscriptionTypes';
 
 import imgTopoBkgd from 'assets/images/topographBackground.png';
 
@@ -73,27 +75,14 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           return;
         }
 
-        const {
-          ts,
-          watchHeartRate,
-          eqCoreTemp,
-          eqSkinTemp,
-          hemoPercent,
-          eqBreathingRate,
-          androidBattery,
-          radarBattery,
-          watchBattery
-        } = riderData.rider;
+        this.__setCurrentBatteryLevelState(riderData);
 
         this.setState(update(this.state, {
-          heartRate: {$set: dataUtil.concatAndSortByX(this.state.heartRate, ts, watchHeartRate)},
-          coreBodyTemp: {$set: dataUtil.concatAndSortByX(this.state.coreBodyTemp, ts, eqCoreTemp)},
-          mo2: {$set: dataUtil.concatAndSortByX(this.state.mo2, ts, hemoPercent)},
-          breathRate: {$set: dataUtil.concatAndSortByX(this.state.breathRate, ts, eqBreathingRate)},
-          skinTemp: {$set: dataUtil.concatAndSortByX(this.state.skinTemp, ts, eqSkinTemp)},
-          androidBattery: {$set: androidBattery || -1},
-          radarBattery: {$set: radarBattery || -1},
-          watchBattery: {$set: watchBattery || -1}
+          heartRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchHeartRate')},
+          coreBodyTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqCoreTemp')},
+          mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoPercent')},
+          breathRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
+          skinTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
         }));
       });
   };
@@ -186,5 +175,21 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       </Section>
     </PageTemplate>
   );
+
+
+
+  private __setCurrentBatteryLevelState = (riderData: ISensorData[]) => {
+    const lastData = _.last(riderData);
+    if (!lastData) {
+      return;
+    }
+
+    const {androidBattery, radarBattery, watchBattery} = lastData;
+    this.setState({
+      androidBattery: androidBattery || -1,
+      radarBattery: radarBattery || -1,
+      watchBattery: watchBattery || -1
+    });
+  };
 
 }

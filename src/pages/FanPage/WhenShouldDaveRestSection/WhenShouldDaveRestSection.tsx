@@ -34,7 +34,7 @@ export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps
 
     <FlexRow className={styles.row}>
       <FlexCell>
-      <NumberWidget numberPoints={props.coreBodyTemp} name="temp"/>
+        <NumberWidget numberPoints={props.coreBodyTemp} name="temp" />
       </FlexCell>
 
       <FlexCell className={globalStyles.alignLeft}>
@@ -52,7 +52,7 @@ export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps
       </FlexCell>
 
       <FlexCell>
-        <NumberWidget numberPoints={props.mo2} name="percent"/>
+        <NumberWidget numberPoints={props.mo2} name="percent" />
       </FlexCell>
     </FlexRow>
 
