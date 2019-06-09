@@ -165,7 +165,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
             <EnduranceZoneWidget
               enduranceZone={this.state.enduranceZone}
               heightPx={300}
-              widthPx={300}
+              widthPx={900}
             />
           </FlexCell>
 
