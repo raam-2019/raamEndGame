@@ -48,5 +48,6 @@ export const HeartAndBreathRateWidget: React.FC<IHeartAndBreathRateWidgetProps> 
       data: props.heartRateSeries,
       lineColor: 'red'
     })}
+
   </XYPlotTemplate>
 );
