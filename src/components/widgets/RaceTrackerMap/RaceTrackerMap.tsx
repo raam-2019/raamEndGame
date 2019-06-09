@@ -7,7 +7,7 @@ import * as turf from '@turf/turf'
 
 import ReactMapGL, {
   NavigationControl,
-  FlyToInterpolator,
+  // FlyToInterpolator,
   LinearInterpolator
 } from "react-map-gl";
 import {
@@ -23,6 +23,8 @@ import {Subject} from 'rxjs';
 import imgPersonPin from 'assets/images/personPin.png';
 
 import styles from './RaceTrackerMap.module.css';
+import { number } from 'prop-types';
+
 
 
 
@@ -55,16 +57,32 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         pitch: 0
       },
 
-      riderData: []
+      riderData: [],
+      calcData:{}
     };
   }
 
+  
 
-  _autoClickForInitialFitToBounds = () => {
+  private _autoClickForInitialFitToBounds = () => {
     
     var line = turf.lineString([[-117.388839, 33.191634], [-76.321246, 38.934216]]);
       // calculate the bounding box of the feature
+      console.log('by autoclick:');
+      console.log(line);
+      
+
       const [minLng, minLat, maxLng, maxLat] = bbox(line);
+
+
+      console.log('by autoclick:');
+      console.log(minLng);
+      console.log(minLat);
+      console.log(maxLng);
+      console.log(maxLat);
+
+      
+      
       // construct a viewport instance from the current state
       const viewport = new WebMercatorViewport(this.state.viewport);
       const {longitude, latitude, zoom} = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
@@ -82,6 +100,78 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         }
       });
     
+  };
+
+
+  private _toggleRidersAroundDave = () => {
+
+    var data = this.state.calcData;
+
+    var davesLoc = {
+      dLat:  data[0].message[0].latitude[0],
+      dLong: data[0].message[0].longitude[0]
+    }
+
+    // console.log(davesLoc);
+
+
+    var distArray: any = [];
+    var distance: any = number;
+
+    _.forEach(data, riderInfo => {
+
+
+    
+    var from = turf.point([davesLoc.dLong, davesLoc.dLat]); // Dave
+    var to = turf.point([riderInfo.message[0].longitude[0], riderInfo.message[0].latitude[0]]);
+
+    // var options = { units: 'miles' };
+
+
+    distance = turf.distance(from, to);
+    
+
+    //We will store the distance and coordinates of the target rider. With 
+    var distRacerObj= {
+      dist: distance,
+      lng: riderInfo.message[0].longitude[0],
+      lat: riderInfo.message[0].latitude[0]
+    } as any
+    
+
+    distArray.push(distRacerObj);
+  
+    });
+
+    //Sorting the array of distance. We will use this to find the id/coordinates number of the rider who created the smallest distance with Dave
+    var byDist = distArray.slice(0);
+    byDist.sort(function(a:any,b:any) {
+      return a.dist - b.dist;
+    });
+
+    
+    var line = turf.lineString([[parseFloat(davesLoc.dLong), parseFloat(davesLoc.dLat)], [parseFloat(byDist[1].lng), parseFloat(byDist[1].lat)]]);
+
+    // calculate the bounding box of the feature
+    const [minLng, minLat, maxLng, maxLat] = bbox(line);
+
+    // construct a viewport instance from the current state
+    const viewport = new WebMercatorViewport(this.state.viewport);
+    const { longitude, latitude, zoom } = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
+      padding: 200
+    });
+
+    this.setState({
+      viewport: {
+        ...this.state.viewport,
+        longitude,
+        latitude,
+        zoom,
+        transitionInterpolator: new LinearInterpolator(),
+        transitionDuration: 1000
+      }
+    });
+
   };
 
 
@@ -119,12 +209,15 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
           geojsonWrapper.features.push(pointData);
         });
 
-        let {mapStyle} = this.state;
+        //Passing trackleader data to the toggle function
+       this.setState({calcData:trackleaders})
+
+        let { mapStyle } = this.state;
         if (!mapStyle.hasIn(["sources", "point"])) {
           mapStyle = mapStyle
             .setIn(
               ["sources", "point"],
-              fromJS({type: "geojson", data: geojsonWrapper})
+              fromJS({ type: "geojson", data: geojsonWrapper })
             )
             .set("layers", mapStyle.get("layers").push(pointLayer));
         }
@@ -135,9 +228,11 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
           geojsonWrapper
         );
 
-        this.setState({mapStyle});
+        this.setState({ mapStyle });
       });
   };
+
+
 
 
 
@@ -164,7 +259,9 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
         <button
           className={styles.goToDave}
-          onClick={this.__handleClickGoToCyclist}>
+         onClick={this._toggleRidersAroundDave}
+          
+          >
           <Img src={imgPersonPin} />
         </button>
       </ReactMapGL>
@@ -173,17 +270,17 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
 
 
-  private __handleClickGoToCyclist = () => {
-    const viewport = {
-      ...this.state.viewport,
-      latitude: this.props.davesLat,
-      longitude: this.props.davesLon,
-      zoom: 14,
-      transitionDuration: 5000,
-      transitionInterpolator: new FlyToInterpolator()
-    };
-    this.setState({viewport});
-  };
+  // private __handleClickGoToCyclist = () => {
+  //   const viewport = {
+  //     ...this.state.viewport,
+  //     latitude: this.props.davesLat,
+  //     longitude: this.props.davesLon,
+  //     zoom: 14,
+  //     transitionDuration: 5000,
+  //     transitionInterpolator: new FlyToInterpolator()
+  //   };
+  //   this.setState({viewport});
+  // };
 
 
 

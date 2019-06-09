@@ -8,13 +8,30 @@
 }
 
 .visRoot {
-  height: 64px;
-  width: 64px;
+  margin-top: 16px;
+  height: 32px;
+  width: 100%;
   display: flex;
+
+  border: 1px solid #ebebeb;
 
   flex-direction: column-reverse;
   justify-content: flex-start;
+
+  position: relative;
+  border-radius: 8px;
+
+  box-shadow: inset 0px 0px 4px 1px rgba(0,0,0,0.5);
 }
+
+  .visRoot .powerBar {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    bottom: 2.5px;
+    width: calc(50% - 4px);
+    border-radius: 6px;
+  }
 
 .deviceNameContainer {
   margin-left: 12px;

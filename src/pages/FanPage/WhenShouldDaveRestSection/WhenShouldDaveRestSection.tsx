@@ -8,13 +8,17 @@ import {Paragraph} from 'components/Paragraph/Paragraph';
 import {FlexRow} from 'components/layout/FlexRow';
 import {FlexCell} from 'components/layout/FlexCell';
 import {LiveGraphWrapper} from 'components/LiveGraphWrapper/LiveGraphWrapper';
+import {NumberWidget} from 'components/NumberWidget/NumberWidget';
 
 import globalStyles from 'globalStyles.module.css';
 import styles from './WhenShouldDaveRestSection.module.css';
 
+import {IPoint} from 'types/IPoint';
 
-
-export interface IWhenShouldDaveRestSectionProps {}
+export interface IWhenShouldDaveRestSectionProps {
+  mo2: IPoint[];
+  coreBodyTemp: IPoint[];
+}
 
 export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps> = props => (
   <Section extraClassName={styles.root}>
@@ -30,7 +34,7 @@ export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps
 
     <FlexRow className={styles.row}>
       <FlexCell>
-        <LiveGraphWrapper title="Graph of Data 1" />
+        <NumberWidget numberPoints={props.coreBodyTemp} name="temp" />
       </FlexCell>
 
       <FlexCell className={globalStyles.alignLeft}>
@@ -48,7 +52,7 @@ export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps
       </FlexCell>
 
       <FlexCell>
-        <LiveGraphWrapper title="Graph of Data 2" />
+        <NumberWidget numberPoints={props.mo2} name="percent" />
       </FlexCell>
     </FlexRow>
 
