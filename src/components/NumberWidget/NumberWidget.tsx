@@ -14,7 +14,7 @@ export const NumberWidget: React.FC<INumberWidgetProps> = props => (
     {props.numberPoints.length > 0 ? (
       <strong className={styles.numberStyle}>
       {props.name === "temp" ? (
-        props.numberPoints[props.numberPoints.length - 1].y.toString().substring(0, 4) + '\xB0F'
+        props.numberPoints[props.numberPoints.length - 1].y.toString().substring(0, 4) + '\xB0C'
       ) : (
         props.numberPoints[props.numberPoints.length - 1].y.toString().substring(0, 4) + '%'
       )}
