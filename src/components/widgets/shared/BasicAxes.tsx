@@ -20,7 +20,7 @@ export const BasicHorizontalAxis = (props: IBasicAxisProps) => (
 
 export const BasicVerticalAxis = (props: IBasicAxisProps) => (
   <ReactVis.YAxis
-    tickFormat={props.fnTickFormat}
+    //tickFormat={props.fnTickFormat}
     title={props.axisLabel}
     orientation={props.orientation} />
 );
