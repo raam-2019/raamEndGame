@@ -41,7 +41,6 @@ function __subscribeToRiderUpdates() {
     .subscribe({
 
       next: result => {
-        console.log(result);
         if (result.value.data) {
           __subject.next(result.value.data);
         }

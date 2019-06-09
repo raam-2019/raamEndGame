@@ -7,10 +7,13 @@
     align-content: center;
     justify-content: center;
     height: 100%;
+    background: whitesmoke;
 }
 
 .root .numberStyle {
     font-family: "Verlag", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
     font-size: 150px;
     color: #c5050c;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
