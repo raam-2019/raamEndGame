@@ -20,6 +20,10 @@ export const CoreAndSkinTemperatureWidget: React.FC<ICoreAndSkinTemperatureWidge
     status={props.coreTempSeries.length > 2 && props.skinTempSeries.length > 2 ? 'ready' : 'loading'}
     title="Core vs. Skin Temperature"
     useHorizontalGridLines={true}>
+    {LinearLineSeries({
+      data: props.skinTempSeries,
+      lineColor: 'orange'
+    })}
     {BasicHorizontalAxis({
       axisLabel: "Time",
       fnTickFormat: (t, index) => index
@@ -32,11 +36,6 @@ export const CoreAndSkinTemperatureWidget: React.FC<ICoreAndSkinTemperatureWidge
     {LinearLineSeries({
       data: props.coreTempSeries,
       lineColor: 'green'
-    })}
-
-    {LinearLineSeries({
-      data: props.skinTempSeries,
-      lineColor: 'orange'
     })}
   </XYPlotTemplate>
 );
