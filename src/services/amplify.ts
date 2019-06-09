@@ -1,14 +1,15 @@
+import * as _ from 'lodash';
 import Amplify, {
   API,
   graphqlOperation
 } from 'aws-amplify';
-import {IRiderReturn} from 'types/subscriptionTypes';
+import {ISensorData} from 'types/subscriptionTypes';
 import {rider} from 'graphql/subscriptions';
 import {BehaviorSubject} from 'rxjs';
 
 
 
-const __subject = new BehaviorSubject<IRiderReturn | null>(null);
+const __subject = new BehaviorSubject<ISensorData[]>([]);
 
 
 
@@ -36,13 +37,14 @@ export function exec<TData>(subscriptionString: string) {
 
 
 function __subscribeToRiderUpdates() {
-  exec<{value: {data?: IRiderReturn}}>(rider)
+  exec<{value: {data?: {rider: ISensorData;}}}>(rider)
 
     .subscribe({
 
       next: result => {
         if (result.value.data) {
-          __subject.next(result.value.data);
+          const currentData = __subject.getValue();
+          __subject.next(_.concat(currentData, result.value.data.rider));
         }
       },
 

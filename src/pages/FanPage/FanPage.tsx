@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import * as React from 'react';
 
 import {takeUntil} from 'rxjs/operators';
@@ -34,6 +35,7 @@ import globalStyles from 'globalStyles.module.css';
 import {IPoint} from 'types/IPoint';
 import update from 'immutability-helper';
 import * as dataUtil from 'util/dataUtil';
+import {ISensorData} from 'types/subscriptionTypes';
 
 export interface IFanPageProps extends RouteComponentProps {}
 
@@ -75,35 +77,18 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
       .onRiderUpdate()
       .pipe(takeUntil(this.__unsubscribe))
       .subscribe(riderData => {
-        if (!riderData) {
+        if (_.isEmpty(riderData)) {
           return;
         }
 
-        const {
-          ts,
-          latitude,
-          longitude,
-
-          eqCoreTemp,
-          eqSkinTemp,
-          hemoPercent,
-          eqBreathingRate,
-          watchHeartRate
-        } = riderData.rider;
-
-        if (latitude !== null && longitude !== null) {
-          this.setState({
-            davesLat: latitude,
-            davesLon: longitude
-          });
-        };
+        this.__setCurrentLatLonState(riderData);
 
         this.setState(update(this.state, {
-          heartRate: {$set: dataUtil.concatAndSortByX(this.state.heartRate, ts, watchHeartRate)},
-          coreBodyTemp: {$set: dataUtil.concatAndSortByX(this.state.coreBodyTemp, ts, eqCoreTemp)},
-          mo2: {$set: dataUtil.concatAndSortByX(this.state.mo2, ts, hemoPercent)},
-          breathRate: {$set: dataUtil.concatAndSortByX(this.state.breathRate, ts, eqBreathingRate)},
-          skinTemp: {$set: dataUtil.concatAndSortByX(this.state.skinTemp, ts, eqSkinTemp)},
+          heartRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchHeartRate')},
+          coreBodyTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqCoreTemp')},
+          mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoPercent')},
+          breathRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
+          skinTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
         }));
       });
   };
@@ -223,10 +208,15 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
 
 
 
-      <WhenShouldDaveRestSection 
-        mo2={this.state.mo2} 
+      <WhenShouldDaveRestSection
+        mo2={this.state.mo2}
         coreBodyTemp={this.state.coreBodyTemp} />
+
+
+
       <HowWasThisAccomplishedSection />
+
+
 
       <Section backgroundColor="black">
         <FlexRow justifyContent="flex-end">
@@ -243,6 +233,21 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
       </Section>
     </PageTemplate>
   );
+
+
+
+  private __setCurrentLatLonState = (riderData: ISensorData[]) => {
+    const lastData = _.last(riderData);
+    if (lastData) {
+      const {latitude, longitude} = lastData;
+      if (latitude !== null && longitude !== null) {
+        this.setState({
+          davesLat: latitude,
+          davesLon: longitude
+        });
+      };
+    }
+  };
 
 
 
