@@ -6,10 +6,11 @@ import {RedWord} from 'components/RedWord/RedWord';
 import {Paragraph} from 'components/Paragraph/Paragraph';
 import {Line} from 'components/Line/Line';
 
+import {SocialMediaFeed} from 'components/SocialMediaFeed/SocialMediaFeed';
+import {SponsorCarousel} from 'pages/FanPage/HowWasThisAccomplishedSection/SponsorCarousel/SponsorCarousel';
+
 import styles from './HowWasThisAccomplishedSection.module.css';
 import globalStyles from 'globalStyles.module.css';
-import {SocialMediaFeed} from 'components/SocialMediaFeed/SocialMediaFeed';
-
 
 
 export interface IHowWasThisAccomplishedSectionProps {}
@@ -31,6 +32,8 @@ export const HowWasThisAccomplishedSection: React.FC<IHowWasThisAccomplishedSect
         Sponsors
         <Line />
       </Heading>
+
+      <SponsorCarousel />
 
       <Heading extraClassName={globalStyles.whiteText}>
         Dave Haase
