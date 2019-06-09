@@ -6,7 +6,6 @@ import {LoadingOverlay} from 'components/LoadingOverlay/LoadingOverlay';
 const ReactVis = require('react-vis');
 
 
-
 const __gridLineStyle = {
   stroke: '#ebebeb',
   strokeWidth: '1px'
