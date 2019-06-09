@@ -30,6 +30,11 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
     status={props.elevation.length > 2 && props.elevation.length > 2 ? 'ready' : 'loading'}
     title="Elevation over Predicted Time"
     useHorizontalGridLines={true}>
+    {LinearAreaSeries({
+      data: props.elevation.sort(timeCompare),
+      lineColor: 'orange',
+      fillColor: '#FFCF9E'
+    })}
     {BasicHorizontalAxis({
       axisLabel: "Time (Minutes)",
     })}
@@ -37,12 +42,5 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
     {BasicVerticalAxis({
       axisLabel: "Elevation Level"
     })}
-
-    {LinearAreaSeries({
-      data: props.elevation.sort(timeCompare),
-      lineColor: 'orange',
-      fillColor: '#FFCF9E'
-    })}
-    
   </XYPlotTemplate>
 );

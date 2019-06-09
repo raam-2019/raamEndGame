@@ -30,24 +30,20 @@ export const HeartAndBreathRateWidget: React.FC<IHeartAndBreathRateWidgetProps> 
     title="Heart vs. Breath Rate"
     useHorizontalGridLines={true}>
     {/* React-Vis components must be at the top level and not nested, which is why we're calling functions and not making component statements */}
-    {BasicHorizontalAxis({
-      axisLabel: "Time",
-      fnTickFormat: (t, index) => index
-    })}
-
-    {BasicVerticalAxis({
-      axisLabel: "Rate"
-    })}
-
     {LinearLineSeries({
       data: props.breathRateSeries,
       lineColor: 'blue'
     })}
-
     {LinearLineSeries({
       data: props.heartRateSeries,
       lineColor: 'red'
     })}
-
+    {BasicHorizontalAxis({
+      axisLabel: "Time",
+      fnTickFormat: (t, index) => index
+    })}
+    {BasicVerticalAxis({
+      axisLabel: "Rate"
+    })}
   </XYPlotTemplate>
 );
