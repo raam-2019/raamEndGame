@@ -1,9 +1,14 @@
 import * as _ from 'lodash';
 import * as React from "react";
 
+import WebMercatorViewport from 'viewport-mercator-project';
+import bbox from '@turf/bbox';
+import * as turf from '@turf/turf'
+
 import ReactMapGL, {
   NavigationControl,
-  FlyToInterpolator
+  FlyToInterpolator,
+  LinearInterpolator
 } from "react-map-gl";
 import {
   defaultMapStyle,
@@ -34,7 +39,7 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
   private __unsubscribe = new Subject();
 
-
+  
 
   constructor(props: any) {
     super(props);
@@ -44,8 +49,7 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
       viewport: {
         width: "100%",
         height: 750,
-        latitude: 33.176215,
-        longitude: -117.363864,
+        
         zoom: 9.75,
         bearing: 0,
         pitch: 0
@@ -56,8 +60,33 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
   }
 
 
+  _autoClickForInitialFitToBounds = () => {
+    
+    var line = turf.lineString([[-117.388839, 33.191634], [-76.321246, 38.934216]]);
+      // calculate the bounding box of the feature
+      const [minLng, minLat, maxLng, maxLat] = bbox(line);
+      // construct a viewport instance from the current state
+      const viewport = new WebMercatorViewport(this.state.viewport);
+      const {longitude, latitude, zoom} = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
+        padding: 40
+      });
+
+      this.setState({
+        viewport: {
+          ...this.state.viewport,
+          longitude,
+          latitude,
+          zoom,
+          transitionInterpolator: new LinearInterpolator(),
+          transitionDuration: 1000
+        }
+      });
+    
+  };
+
 
   public componentDidMount = () => {
+
     trackLeaderService
       .asObservable()
       .pipe(takeUntil(this.__unsubscribe))
@@ -126,7 +155,9 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         mapboxApiAccessToken={TOKEN}
         mapStyle={this.state.mapStyle}
         {...this.state.viewport}
-        onViewportChange={this.__handleViewportChange}>
+        onViewportChange={this.__handleViewportChange}
+        onLoad={this._autoClickForInitialFitToBounds}
+>
         <NavigationControl
           className={styles.nav}
           onViewportChange={this.__handleViewportChange} />
