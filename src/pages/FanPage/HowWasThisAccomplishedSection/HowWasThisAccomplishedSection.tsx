@@ -45,8 +45,22 @@ export const HowWasThisAccomplishedSection: React.FC<IHowWasThisAccomplishedSect
       <Heading extraClassName={globalStyles.whiteText}>
         The Team
         <Line />
+
+
       </Heading>
 
     </FlexColumn>
   </Section>
 );
+
+
+
+// interface ITeamMember {
+//   profilePictureUrl: string;
+//   titleText: string;
+//   linkedInUrl: string;
+// }
+
+// const __teamMembers: ITeamMember[] = [
+
+// ];
