@@ -131,11 +131,9 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         </FlexRow>
 
         <Heading><RedWord>#</RedWord>Biometrics</Heading>
-
-        <FlexRow>
           <FlexCell>
             <CoreAndSkinTemperatureWidget
-              widthPx={300}
+              widthPx={900}
               heightPx={300}
               coreTempSeries={this.state.coreBodyTemp}
               skinTempSeries={this.state.skinTemp} />
@@ -146,7 +144,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
               breathRateSeries={this.state.breathRate}
               heartRateSeries={this.state.heartRate}
               heightPx={300}
-              widthPx={300}
+              widthPx={900}
             />
           </FlexCell>
 
@@ -154,11 +152,10 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
             <Mo2PercentWidget
               mo2={this.state.mo2}
               heightPx={300}
-              widthPx={300}
+              widthPx={900}
             />
           </FlexCell>
 
-        </FlexRow>
       </Section>
 
       <Section>
