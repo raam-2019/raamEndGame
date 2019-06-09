@@ -39,6 +39,7 @@ interface ITeamPageState {
   skinTemp: IPoint[];
   enduranceZone: IPoint[];
   elevation: IPoint[];
+  timeImpactOfRest: IPoint[];
 
   androidBattery: number;
   radarBattery: number;
@@ -63,6 +64,18 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       watchBattery: -1,
 
       elevation:[{x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}, 
+        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}, 
+        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}, 
+        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}],
+
+      timeImpactOfRest:[{x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
         {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}, 
         {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}, 
         {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}, 
@@ -172,6 +185,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           <FlexCell>
             <ElevationWidget
               elevation={this.state.elevation}
+              timeImpactOfRest={this.state.timeImpactOfRest}
               heightPx={300}
               widthPx={900}
             />

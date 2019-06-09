@@ -5,6 +5,7 @@ import {IDefaultWidgetProps} from 'components/widgets/shared/IDefaultWidgetProps
 import {IPoint} from 'types/IPoint';
 import {BasicHorizontalAxis, BasicVerticalAxis} from 'components/widgets/shared/BasicAxes';
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
+import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
 
 function timeCompare(a: { x: any; }, b: { x: any; }){
     let timeA = a.x;
@@ -21,6 +22,7 @@ function timeCompare(a: { x: any; }, b: { x: any; }){
 
 export interface IElevationWidgetProps extends IDefaultWidgetProps {
   elevation: IPoint[];
+  timeImpactOfRest: IPoint[];
 }
 
 export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
@@ -35,10 +37,13 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
       lineColor: 'orange',
       fillColor: '#FFCF9E'
     })}
+    {LinearLineSeries({
+      data: props.timeImpactOfRest.sort(timeCompare),
+      lineColor: 'green'
+    })}
     {BasicHorizontalAxis({
       axisLabel: "Time (Minutes)",
     })}
-
     {BasicVerticalAxis({
       axisLabel: "Elevation Level"
     })}
