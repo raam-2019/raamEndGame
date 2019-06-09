@@ -36,9 +36,7 @@ interface ITeamPageState {
   mo2: IPoint[];
   skinTemp: IPoint[];
 
-  aeroBattery: number;
   androidBattery: number;
-  mo2Battery: number;
   radarBattery: number;
   watchBattery: number;
 }
@@ -57,13 +55,10 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       mo2: [],
       breathRate: [],
       skinTemp: [],
-      aeroBattery: 0,
-      androidBattery: 0,
-      mo2Battery: 0,
-      radarBattery: 0,
-      watchBattery: 0
+      androidBattery: -1,
+      radarBattery: -1,
+      watchBattery: -1
     };
-
   }
 
 
@@ -85,9 +80,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           eqSkinTemp,
           hemoPercent,
           eqBreathingRate,
-          aeroBattery,
-          androidBattery, 
-          mo2Battery,
+          androidBattery,
           radarBattery,
           watchBattery
         } = riderData.rider;
@@ -98,9 +91,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           mo2: {$set: dataUtil.concatAndSortByX(this.state.mo2, ts, hemoPercent)},
           breathRate: {$set: dataUtil.concatAndSortByX(this.state.breathRate, ts, eqBreathingRate)},
           skinTemp: {$set: dataUtil.concatAndSortByX(this.state.skinTemp, ts, eqSkinTemp)},
-          aeroBattery: {$set: aeroBattery || -1},
           androidBattery: {$set: androidBattery || -1},
-          mo2Battery: {$set: mo2Battery || -1},
           radarBattery: {$set: radarBattery || -1},
           watchBattery: {$set: watchBattery || -1}
         }));
@@ -127,31 +118,20 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           <FlexCell>
             <BatteryLifeWidget
               min={0}
-              max={5}
-              batteryLife={this.state.aeroBattery}
-              deviceName="Aero" />
-          </FlexCell>
-          <FlexCell>
-            <BatteryLifeWidget
-              min={0}
-              max={100}
+              max={1}
               batteryLife={this.state.androidBattery}
               deviceName="Android" />
           </FlexCell>
+
           <FlexCell>
             <BatteryLifeWidget
-              min={0}
-              max={100}
-              batteryLife={this.state.mo2Battery}
-              deviceName="MO2" />
-          </FlexCell>
-          <FlexCell>
-            <BatteryLifeWidget
-              min={0}
+              lowNumbersAreFull={true}
+              min={1}
               max={5}
               batteryLife={this.state.radarBattery}
               deviceName="Radar" />
           </FlexCell>
+
           <FlexCell>
             <BatteryLifeWidget
               min={0}
