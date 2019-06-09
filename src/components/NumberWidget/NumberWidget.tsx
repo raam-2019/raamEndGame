@@ -13,14 +13,14 @@ export const NumberWidget: React.FC<INumberWidgetProps> = props => (
   <div className={`${styles.root} ${props.extraClassName || ''}`}>
     {props.numberPoints.length > 0 ? (
       <strong className={styles.numberStyle}>
-      {props.name === "temp" ? (
-        props.numberPoints[props.numberPoints.length - 1].y.toString().substring(0, 4) + '\xB0F'
-      ) : (
-        props.numberPoints[props.numberPoints.length - 1].y.toString().substring(0, 4) + '%'
-      )}
+        {props.name === "temp" ? (
+          props.numberPoints[props.numberPoints.length - 1].y.toString().substring(0, 4) + '\xB0F'
+        ) : (
+            props.numberPoints[props.numberPoints.length - 1].y.toString().substring(0, 4) + '%'
+          )}
       </strong>
     ) : (
-      <LoadingOverlay />
-    )}
+        <LoadingOverlay />
+      )}
   </div>
 );

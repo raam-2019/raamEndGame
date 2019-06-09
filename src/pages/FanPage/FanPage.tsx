@@ -23,6 +23,10 @@ import * as amplifyService from 'services/amplify';
 import {Routes} from 'pages/routes';
 import RaceTrackerMap from 'components/widgets/RaceTrackerMap/RaceTrackerMap';
 import {Subject} from 'rxjs';
+import {IPoint} from 'types/IPoint';
+import update from 'immutability-helper';
+import * as dataUtil from 'util/dataUtil';
+import {ISensorData} from 'types/subscriptionTypes';
 
 import imgTopoBkgd from 'assets/images/topographBackground.png';
 import imgPerfectRaceHeader from 'assets/images/perfectRaceHeader.png';
@@ -32,10 +36,7 @@ import imgQlikApp from 'assets/images/qlik-app@3x.png';
 import styles from './FanPage.module.css';
 import globalStyles from 'globalStyles.module.css';
 
-import {IPoint} from 'types/IPoint';
-import update from 'immutability-helper';
-import * as dataUtil from 'util/dataUtil';
-import {ISensorData} from 'types/subscriptionTypes';
+
 
 export interface IFanPageProps extends RouteComponentProps {}
 
@@ -125,7 +126,7 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
           </Heading>
 
           <Paragraph>
-            Dave is a RAAM veteran and winning is his quest. And he’s a man of the ascent. Dave’s history with RAAM spans 2004, ’05, ’06, ’08 and then, after a seven-year hiatus second-place finishes in both 2015 and 2016.
+            Dave is a RAAM veteran and winning is his quest. And he’s a man on the ascent. Dave’s history with RAAM spans 2004, ’05, ’06, ’08 and then, after a seven-year hiatus second-place finishes in both 2015 and 2016.
           </Paragraph>
         </FlexColumn>
       </Section>
@@ -198,8 +199,8 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
               rel="noopener noreferrer"
               target="_blank">
               <Img
-                src={imgQlikApp}
-                width="100%" />
+                extraClassName={styles.qlikAppImg}
+                src={imgQlikApp} />
             </a>
           </FlexCell>
         </FlexRow>
