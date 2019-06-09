@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {LegendColorPair} from 'types/LegendColorPair';
+import {ILegendColorPair} from 'types/ILegendColorPair';
 
 const ReactVis = require('react-vis');
 
 export interface ILegendProps {
-  legendItems: LegendColorPair[];
-  placement?: string;
+  legendItems: ILegendColorPair[];
+  placement?: 'horizontal'|'vertical';
 }
 
 export const Legend = (props: ILegendProps) => (

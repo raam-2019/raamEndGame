@@ -6,7 +6,7 @@ const ReactVis = require('react-vis');
 
 export interface IBasicAxisProps {
   axisLabel: string;
-  orientation?: string;
+  orientation?: 'left'|'right'|'top'|'bottom';
   fnTickFormat?: (tickValue: number, index: number) => string | number | React.ReactSVG;
 }
 
@@ -15,15 +15,12 @@ export interface IBasicAxisProps {
 export const BasicHorizontalAxis = (props: IBasicAxisProps) => (
   <ReactVis.XAxis
     tickFormat={props.fnTickFormat}
-    title={props.axisLabel}
-    />
-
+    title={props.axisLabel} />
 );
 
 export const BasicVerticalAxis = (props: IBasicAxisProps) => (
   <ReactVis.YAxis
     tickFormat={props.fnTickFormat}
     title={props.axisLabel}
-    orientation={props.orientation}
-    />
+    orientation={props.orientation} />
 );

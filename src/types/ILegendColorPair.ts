@@ -1,4 +1,4 @@
-export interface LegendColorPair {
+export interface ILegendColorPair {
   title: String;
   color: String;
 }
