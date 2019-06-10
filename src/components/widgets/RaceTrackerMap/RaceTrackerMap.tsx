@@ -23,7 +23,7 @@ import styles from './RaceTrackerMap.module.css';
 
 
 
-const TOKEN = "pk.eyJ1IjoicnNiYXVtYW5uIiwiYSI6ImNqdzg5aWxkYzF1azI0OW5uaWVmazhleXUifQ.XAm1dRGmXuRAMSQm0TJKXg";
+const TOKEN = "pk.eyJ1IjoicnNiYXVtYW5uIiwiYSI6ImNqd281d2M3bzF4MHczeXA5dm9xdXg4bjAifQ._vwACgp12mC4RBpuSYl1CA";
 
 
 

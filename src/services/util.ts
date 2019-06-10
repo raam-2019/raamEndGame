@@ -21,3 +21,15 @@ export interface IExecReturn<TData> {
 export function exec<TData>(subscriptionString: string) {
   return (API.graphql(graphqlOperation(subscriptionString)) as any) as IExecReturn<TData>;
 }
+
+
+
+export function query<TData>(queryString: string) {
+  return (API.graphql(graphqlOperation(queryString)) as Promise<TData>);
+}
+
+
+
+export function celsius2Fahrenheit(degCelsius: number) {
+  return 1.8 * degCelsius + 32;
+}
