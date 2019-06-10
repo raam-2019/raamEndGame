@@ -4,6 +4,7 @@ import {ISensorData} from 'types/subscriptionTypes';
 import {rider} from 'graphql/subscriptions';
 import {BehaviorSubject} from 'rxjs';
 import * as util from './util';
+import * as queries from 'graphql/queries';
 
 
 
@@ -14,7 +15,8 @@ const __subject = new BehaviorSubject<ISensorData[]>([]);
 export function configure(config: any) {
   Amplify.configure(config);
 
-  __subscribeToRiderUpdates();
+  __prefetchDataAndEmit()
+    .then(() => __subscribeToRiderUpdates());
 }
 
 
@@ -35,9 +37,7 @@ interface IRiderUpdateReturn {
 
 function __subscribeToRiderUpdates() {
   util.exec<IRiderUpdateReturn>(rider)
-
     .subscribe({
-
       next: result => {
         if (result.value.data) {
           const currentData = __subject.getValue();
@@ -50,6 +50,29 @@ function __subscribeToRiderUpdates() {
         console.error(err);
         __subject.error(err)
       }
+    });
+}
+
+
+
+interface IListAssetTableReturn {
+  data?: {
+    listAssetTable6ce042es: {
+      items: ISensorData[];
+    };
+  };
+}
+
+function __prefetchDataAndEmit() {
+  return util.query<IListAssetTableReturn>(queries.listAssetTable6ce042es)
+    .then(result => {
+      console.log(result);
+      if (!result.data) {
+        throw new Error('Error pre-fetching data. Please refresh the page.');
+      }
+
+      const convertedTemperatures = _.map(result.data.listAssetTable6ce042es.items, __convertTemperatures2Fahrenheit);
+      __subject.next(convertedTemperatures)
     });
 }
 

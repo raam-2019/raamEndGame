@@ -44,6 +44,38 @@ export const listAssetTable6ce042es = `query ListAssetTable6ce042es(
     items {
       id
       ts
+      watchPower
+      radarBattery
+      pcrr
+      totalVehicles
+      palt
+      hemoTotal
+      hemoPercent
+      watchBattery
+      watchSpeed
+      watchAltitude
+      aeroBattery
+      enduranceZone
+      ptot
+      watchHeartRate
+      watchPressure
+      cda
+      intervalZone
+      pacc
+      watchHeading
+      longitude
+      latitude
+      watchLocationQuality
+      eqBreathingRate
+      watchCadence
+      pair
+      eqCoreTemp
+      eqSkinTemp
+      eqHeartRate
+      aeroPressure
+      androidBattery
+      watchTemperature
+      mo2Battery
     }
     nextToken
   }
