@@ -5,6 +5,7 @@ import Amplify, {
 } from 'aws-amplify';
 import {ISensorData} from 'types/subscriptionTypes';
 import {rider} from 'graphql/subscriptions';
+import {listRaamalytics} from 'graphql/queries';
 import {BehaviorSubject} from 'rxjs';
 
 
@@ -17,6 +18,11 @@ export function configure(config: any) {
   Amplify.configure(config);
 
   __subscribeToRiderUpdates();
+}
+
+export async function getAnalytics(){
+  const data = await API.graphql(graphqlOperation(listRaamalytics));
+  return data
 }
 
 

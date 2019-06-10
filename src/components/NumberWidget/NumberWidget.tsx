@@ -3,7 +3,6 @@ import * as React from 'react';
 import {IPoint} from 'types/IPoint';
 import {LoadingOverlay} from 'components/LoadingOverlay/LoadingOverlay';
 import styles from "./NumberWidget.module.css";
-
 export interface INumberWidgetProps {
   numberPoints: IPoint[];
   extraClassName?: string;
