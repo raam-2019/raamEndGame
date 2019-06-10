@@ -4,6 +4,9 @@ import * as React from "react";
 import WebMercatorViewport from 'viewport-mercator-project';
 import bbox from '@turf/bbox';
 import * as turf from '@turf/turf'
+// import turf from '@turf/turf';
+ 
+ 
 
 import ReactMapGL, {
   NavigationControl,
@@ -27,7 +30,9 @@ import imgPersonPin from 'assets/images/personPin.png';
 import imgDavePlusPin from 'assets/images/personPinPlus.png';
 
 import styles from './RaceTrackerMap.module.css';
-// import { number } from 'prop-types';
+// import { line } from 'd3-shape';
+// import { distance } from 'gl-matrix/src/gl-matrix/vec2';
+
 
 
 
@@ -108,6 +113,12 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
   // I am calling this function which kind of returns the leaderboard (first to last, I think)
   // in each onclick function. From there I find the array index using Daves 
   // racer ID and then find the co ordinates of index +- 1. 
+
+  // First finding the distance of each racer from that current coordinate to End point (finishline coordinate) to see who is closest to end line.
+  // Then making a leader board sorted with distance (smallest distance first)  to finding ranking.
+  // We will know Dave racer id. With that we will find the array index Dave is at. To find who is infront or behind him can be found by +-1 with index.    
+
+
 
   private _rankRiders = (route: any, positions: any) => {
 
