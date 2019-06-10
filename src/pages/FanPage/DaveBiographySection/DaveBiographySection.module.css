@@ -1,46 +1,87 @@
 .root {
-  padding-top: 192px;
-  padding-bottom: 100px;
+  /* position: relative; */
+  padding-bottom: 216px;
 }
+
+  .root .whiteText {
+    color: white;
+  }
 
   .root .offsetImg {
     position: relative;
-    top: -250px;
+    height: 485px;
   }
 
-  .root .secondRowShift {
+  .root .doubleImageContainer {
     position: relative;
-    top: -175px;
-    
+    height: 559px;
+    max-width: 583px;
+    flex: 583px;
   }
 
-  .root .secondRowShift .doubleImageContainer {
-    position: relative;
-    height: 555px;
-  }
-
-  .root .secondRowShift .doubleImageContainer img:first-of-type {
+  .root .doubleImageContainer img:first-of-type {
     position: absolute;
-    top: 100px;
-    right: -60px;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    height: 83%;
+    transform: translate(-24px, -24px); /* The image didn't export from zeplin properly */ 
   }
 
-  .root .secondRowShift .doubleImageContainer img:last-of-type {
+  .root .doubleImageContainer img:last-of-type {
     position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 81%;
   }
 
-
-  .root .rowOffset {
-    position: relative;
-    top: -150px;
-  }
 
   .root .sendToBottom {
     position: relative;
-    top: 150px;
-    display: flex;
-    margin-left: 24px;
-
-    align-items: flex-end;
-    justify-content: flex-end;
+    padding-left: 24px;
   }
+
+  .crushingTurnImg {
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 300px;
+    max-width: calc(100% - 8px);
+  }
+
+
+
+  /* smartphones, iPhone, portrait 480x320 phones */
+  @media (min-width:320px) { 
+    .root .offsetImg {
+      height: unset;
+      width: calc(100vw - 8px);
+    }
+
+    .root .doubleImageContainer {
+      width: calc(100%-8px);
+    }
+
+    .root .crushingTurnImg {
+      margin-top: 24px;
+    }
+  }
+  
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
+  @media (min-width:481px) { }
+  
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
+  @media (min-width:641px) { 
+    .root .offsetImg {
+      width: unset;
+      height: 485px;
+    }
+  }
+  
+  /* tablet, landscape iPad, lo-res laptops ands desktops */ 
+  @media (min-width:961px) { }
+  
+  /* big landscape tablets, laptops, and desktops */ 
+  @media (min-width:1025px) { }
+  
+  /* hi-res laptops and desktops */ 
+  @media (min-width:1281px) { }

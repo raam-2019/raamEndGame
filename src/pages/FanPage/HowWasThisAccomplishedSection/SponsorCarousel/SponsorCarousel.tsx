@@ -15,10 +15,10 @@ import imgQlik from 'assets/images/sponsors/qlik.png';
 import imgUbix from 'assets/images/sponsors/ubix.png';
 import imgWid from 'assets/images/sponsors/wid.png';
 import {Paragraph} from 'components/Paragraph/Paragraph';
+import {FlexCell} from 'components/layout/FlexCell';
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import styles from './SponsorCarousel.module.css';
-import {FlexCell} from 'components/layout/FlexCell';
 
 
 
@@ -46,6 +46,7 @@ export class SponsorCarousel extends React.Component<object, ISponsorCarouselSta
         key={sponsor.webpageUrl}>
         <FlexCell>
           <img
+            alt="sponsor logo"
             className={styles.img}
             src={sponsor.logoUrl} />
         </FlexCell>

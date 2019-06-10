@@ -75,6 +75,28 @@
   opacity: 0.8;
 }
 
+.recenterMap {
+  position: absolute;
+  right: 55px;
+  bottom: 32px;
+  background: white;
+  border-radius: 8px;
+  border: none;
+
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  outline: none;
+
+  width: 30px;
+  height: 30px;
+
+  padding: 4px;
+}
+
+.recenterMap img {
+  height: 100%;
+  opacity: 0.8;
+}
+
 
 
 .map {

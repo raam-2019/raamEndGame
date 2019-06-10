@@ -9,6 +9,7 @@ import ReactMapGL, {
   NavigationControl,
   FlyToInterpolator,
   // LinearInterpolator
+  Popup
 } from "react-map-gl";
 import {
   defaultMapStyle,
@@ -20,19 +21,21 @@ import * as trackLeaderService from 'services/trackLeaders';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
+import reCenter from 'assets/images/recenter.png';
 import imgDaveMinusPin from 'assets/images/personPinMinus.png';
 import imgPersonPin from 'assets/images/personPin.png';
 import imgDavePlusPin from 'assets/images/personPinPlus.png';
-
 
 import styles from './RaceTrackerMap.module.css';
 // import { number } from 'prop-types';
 
 
 
-
 const TOKEN = "pk.eyJ1IjoicnNiYXVtYW5uIiwiYSI6ImNqdzg5aWxkYzF1azI0OW5uaWVmazhleXUifQ.XAm1dRGmXuRAMSQm0TJKXg";
 
+//More accurate route coordinate is in the file PolylineRoute. When using that the functions calling it becomes very 
+//show
+//For now i am using the simplified route provided by Ryan Baumann
 const route = {
   "type": "Feature", "properties": {}, "geometry": {
     "type": "MultiLineString", "coordinates": [[
@@ -48,10 +51,9 @@ export interface IRaceTrackerMapProps {
   davesLon: number;
 }
 
-class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
+export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
   private __unsubscribe = new Subject();
-
 
 
   constructor(props: any) {
@@ -70,7 +72,8 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
       },
 
       riderData: [],
-      calcData: {}
+      calcData: {},
+      popup: null
     };
   }
 
@@ -79,22 +82,8 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
   private _autoClickForInitialFitToBounds = () => {
 
     var line = turf.lineString([[-117.388839, 33.191634], [-76.321246, 38.934216]]);
-    // calculate the bounding box of the feature
-    // console.log('by autoclick:');
-    // console.log(line);
-
-
     const [minLng, minLat, maxLng, maxLat] = bbox(line);
-
-
-    // console.log('by autoclick:');
-    // console.log(minLng);
-    // console.log(minLat);
-    // console.log(maxLng);
-    // console.log(maxLat);
-
-
-
+ 
     // construct a viewport instance from the current state
     const viewport = new WebMercatorViewport(this.state.viewport);
     const { longitude, latitude, zoom } = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
@@ -129,7 +118,6 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     // Metadata about the distance in miles along the route
 
 
-    
     let rankedPositions = {
       "type": "FeatureCollection",
       "features": [] as any
@@ -141,10 +129,7 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     positions.forEach(function (rider: any) {
 
       let riderId = rider["trackleaders_racer_ID"][0];
-
-      // console.log("Before Sort");
-      // console.log(riderId);
-
+ 
       var aa = {
         lng: rider["message"][0]["longitude"][0],
         lat: rider["message"][0]["latitude"][0]
@@ -158,18 +143,11 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
       rankedPositions.features.push(position);
 
-
     });
 
-    // console.log("Before Sort");
-    // console.log(riderId);
     sortable.sort(function (a: any, b: any) {
       return a[1] - b[1];
     });
-
-
-
-
 
     rankedPositions.features.forEach(function (feat: any) {
       let rankInField = sortable.length;  // default to last place
@@ -184,14 +162,8 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     // sort rider id by distance along route
     // We will use distance (location) to order the rider id
 
-    // console.log("After Sort");
-    // console.log(sortable);
-
     sortable.sort((a: any, b: any) => b[1] > a[1]);
 
-    // console.log("After Ranked");
-    // console.log(sortable);
-    // This seems to be working
 
     return {
       rank: sortable,
@@ -201,99 +173,13 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
   }
 
 
-
-
-
   private _toggleRidersDaveMinusOne = () => {
-
-    // old code for finding shortest distance and flying there
-
-
-
-    // var data = this.state.calcData;
-
-    // var davesLoc = {
-    //   dLat: data[0].message[0].latitude[0],
-    //   dLong: data[0].message[0].longitude[0]
-    // }
-
-    // // console.log(davesLoc);
-
-
-    // var distArray: any = [];
-    // var distance: any = number;
-
-    // _.forEach(data, riderInfo => {
-
-
-
-    //   var from = turf.point([davesLoc.dLong, davesLoc.dLat]); // Dave
-    //   var to = turf.point([riderInfo.message[0].longitude[0], riderInfo.message[0].latitude[0]]);
-
-    //   // var options = { units: 'miles' };
-
-
-    //   distance = turf.distance(from, to);
-
-
-    //   //We will store the distance and coordinates of the target rider. With 
-    //   var distRacerObj = {
-    //     dist: distance,
-    //     lng: riderInfo.message[0].longitude[0],
-    //     lat: riderInfo.message[0].latitude[0]
-    //   } as any
-
-
-    //   distArray.push(distRacerObj);
-
-    // });
-
-    // //Sorting the array of distance. We will use this to find the id/coordinates number of the rider who created the smallest distance with Dave
-    // var byDist = distArray.slice(0);
-    // byDist.sort(function (a: any, b: any) {
-    //   return a.dist - b.dist;
-    // });
-
-
-    // var line = turf.lineString([[parseFloat(davesLoc.dLong), parseFloat(davesLoc.dLat)], [parseFloat(byDist[1].lng), parseFloat(byDist[1].lat)]]);
-    // console.log(line);
-
-    // // calculate the bounding box of the feature
-    // const [minLng, minLat, maxLng, maxLat] = bbox(line);
-
-    // // construct a viewport instance from the current state
-    // const viewport = new WebMercatorViewport(this.state.viewport);
-    // const { longitude, latitude, zoom } = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
-    //   padding: 200
-    // });
-
-    // this.setState({
-    //   viewport: {
-    //     ...this.state.viewport,
-    //     longitude,
-    //     latitude,
-    //     zoom,
-    //     transitionInterpolator: new FlyToInterpolator(),
-    //     transitionDuration: 1000
-    //   }
-    // });
-
-
-
-    //New code
-
-
+ 
     var data = this.state.calcData;
-
-
-    // console.log("_rankRiders(route, data)");
-    // console.log(this._rankRiders(route, data))
-
+ 
     var returnValue = this._rankRiders(route, data);
-    // console.log(returnValue);
 
     // Daves Racer id is 60 for experimental Purpose
-
     var cnt = 0;
     var index = 0;
 
@@ -304,102 +190,19 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
       }
 
       cnt++;
+
     });
 
-     
-
     var daveCoordinate: any = returnValue.positions.features[index].geometry.coordinates;
-    // console.log(daveCoordinate);
 
     var daveLng = daveCoordinate[0];
-    var daveLat= daveCoordinate[1];
-    // console.log(daveLng);
-    // console.log(daveLat);
-
+    var daveLat = daveCoordinate[1];
+ 
     var targetCoordinate = returnValue.positions.features[index + 1].geometry.coordinates;
-    // console.log(targetCoordinate);
-
+    
     var targetLng = targetCoordinate[0];
     var targetLat = targetCoordinate[1];
-    // console.log(targetLng);
-    // console.log(targetLat);
-   
-
-
-
-
-    var line = turf.lineString([[daveLng, daveLat], [targetLng, targetLat]]);
-    console.log(line);
-
-    // calculate the bounding box of the feature
-    const [minLng, minLat, maxLng, maxLat] = bbox(line);
-
-    // // // construct a viewport instance from the current state
-    const viewport = new WebMercatorViewport(this.state.viewport);
-    const { longitude, latitude } = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
-      padding: 200
-    });
-
-    this.setState({
-      viewport: {
-        ...this.state.viewport,
-        longitude,
-        latitude,
-        zoom : 7,
-        transitionInterpolator: new FlyToInterpolator(),
-        transitionDuration: 1000
-      }
-    });
-
-  };
-
-  private _toggleRidersDavePlusOne = () => {
-
-    var data = this.state.calcData;
-
-
-    // console.log("_rankRiders(route, data)");
-    // console.log(this._rankRiders(route, data))
-
-    var returnValue = this._rankRiders(route, data);
-    // console.log(returnValue);
-
-    // Daves Racer id is 60 for experimental Purpose
-
-    var cnt = 0;
-    var index = 0;
-
-    _.forEach(returnValue.rank, rank => {
-
-      if (rank[0] === "60") {
-        index = cnt;
-      }
-
-      cnt++;
-    });
-
-     
-
-    var daveCoordinate: any = returnValue.positions.features[index].geometry.coordinates;
-    // console.log(daveCoordinate);
-
-    var daveLng = daveCoordinate[0];
-    var daveLat= daveCoordinate[1];
-    // console.log(daveLng);
-    // console.log(daveLat);
-
-    var targetCoordinate = returnValue.positions.features[index - 1].geometry.coordinates;
-    // console.log(targetCoordinate);
-
-    var targetLng = targetCoordinate[0];
-    var targetLat = targetCoordinate[1];
-    // console.log(targetLng);
-    // console.log(targetLat);
-   
-
-
-
-
+ 
     var line = turf.lineString([[daveLng, daveLat], [targetLng, targetLat]]);
     console.log(line);
 
@@ -423,11 +226,58 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
       }
     });
 
+  };
 
+  private _toggleRidersDavePlusOne = () => {
 
+    var data = this.state.calcData;
+ 
+    var returnValue = this._rankRiders(route, data);
+ 
+    // Daves Racer id is 60 for experimental Purpose
+    var cnt = 0;
+    var index = 0;
 
+    _.forEach(returnValue.rank, rank => {
 
+      if (rank[0] === "60") {
+        index = cnt;
+      }
 
+      cnt++;
+
+    });
+
+    var daveCoordinate: any = returnValue.positions.features[index].geometry.coordinates;
+    var daveLng = daveCoordinate[0];
+    var daveLat = daveCoordinate[1];
+ 
+    var targetCoordinate = returnValue.positions.features[index - 1].geometry.coordinates;
+    var targetLng = targetCoordinate[0];
+    var targetLat = targetCoordinate[1];
+   
+    var line = turf.lineString([[daveLng, daveLat], [targetLng, targetLat]]);
+    console.log(line);
+
+    // calculate the bounding box of the feature
+    const [minLng, minLat, maxLng, maxLat] = bbox(line);
+
+    // // // construct a viewport instance from the current state
+    const viewport = new WebMercatorViewport(this.state.viewport);
+    const { longitude, latitude } = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
+      padding: 200
+    });
+
+    this.setState({
+      viewport: {
+        ...this.state.viewport,
+        longitude,
+        latitude,
+        zoom: 7,
+        transitionInterpolator: new FlyToInterpolator(),
+        transitionDuration: 1000
+      }
+    });
   };
 
 
@@ -459,6 +309,13 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
               ]
             },
             properties: {
+              description: {
+                RacerID: trackLeader['trackleaders_racer_ID'][0],
+                DeviceBatteryState: trackLeader.message[0]['batteryState'][0],
+                ts: (trackLeader.message[0]['timestamp'] === null ? trackLeader.message[0]['dateTime'] : trackLeader.message[0]['timestamp']),
+                lat: trackLeader.message[0]['latitude'],
+                lng: trackLeader.message[0]['longitude']
+              },
               speed: 10
             }
           };
@@ -487,17 +344,11 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         this.setState({ mapStyle });
       });
   };
-
-
-
-
-
+ 
   public componentWillUnmount = () => {
     this.__unsubscribe.next();
     this.__unsubscribe.complete();
   };
-
-
 
   public render = () => (
     <div className={styles.root}>
@@ -509,9 +360,19 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         onViewportChange={this.__handleViewportChange}
         onLoad={this._autoClickForInitialFitToBounds}
       >
+        onClick={this.__handleClick}>
+
+        {this.__renderPopup()}
         <NavigationControl
           className={styles.nav}
           onViewportChange={this.__handleViewportChange} />
+
+        <button
+          className={styles.recenterMap}
+          onClick={this._autoClickForInitialFitToBounds}
+        >
+          <Img src={reCenter} />
+        </button>
 
         <button
           className={styles.goToDaveMinusOne}
@@ -538,6 +399,64 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     </div>
   );
 
+  private __handleClick = (event: any) => {
+    const feature = event.features && event.features[0];
+
+    if (feature) {
+      if (feature.layer.id === "point") {
+        this.setState({
+          popup: {
+            lat: event.lngLat[1],
+            lng: event.lngLat[0],
+            description: feature.properties.description
+          }
+        })
+
+      }
+    }
+  };
+
+  private __renderPopup = () => {
+    const { popup } = this.state;
+
+    return (
+      popup && (
+        <Popup
+          tipSize={5}
+          anchor="top"
+          longitude={popup.lng}
+          latitude={popup.lat}
+          closeOnClick={false}
+          onClose={() => this.setState({ popup: null })}
+        >
+
+          {<div>
+            <h3>
+              Racer ID: {JSON.parse(popup.description).RacerID}
+            </h3>
+            <strong>
+              Device Battery State: {JSON.parse(popup.description).DeviceBatteryState}
+            </strong>
+            <br></br>
+            <strong>
+              Time Stamp: {JSON.parse(popup.description).ts}
+            </strong>
+            <br></br>
+            <strong>
+              Latitude: {JSON.parse(popup.description).lat}
+            </strong>
+            <br></br>
+            <strong>
+              Longitude: {JSON.parse(popup.description).lng}
+            </strong>
+          </div>}
+
+
+        </Popup>
+      )
+    );
+  }
+
 
 
   private __handleClickGoToCyclist = () => {
@@ -548,17 +467,11 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
       dLat: data[0].message[0].latitude[0],
       dLng: data[0].message[0].longitude[0]
     }
-
-    // console.log('by davesLocingoToCyclist:');
-    // console.log(davesLoc)
-
+ 
     const viewport = {
       ...this.state.viewport,
       latitude: parseFloat(davesLoc.dLat),
       longitude: parseFloat(davesLoc.dLng),
-
-      // latitude: this.props.davesLat,
-      // longitude: this.props.davesLon,
       zoom: 14,
       transitionDuration: 5000,
       transitionInterpolator: new FlyToInterpolator()
@@ -566,12 +479,8 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     this.setState({ viewport });
   };
 
-
-
   private __handleViewportChange = (viewport: any) => {
     this.setState({ viewport });
   };
 
 }
-
-export default RaceTrackerMap;

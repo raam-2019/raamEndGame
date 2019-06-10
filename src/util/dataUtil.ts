@@ -14,16 +14,16 @@ export function concatAndSortByX(currentPoints: IPoint[], x: number | null, y: n
 
 
 
-export function riderData2PointSeries(riderData: ISensorData[], xPropName: string, yPropName: string): IPoint[] {
+export function riderData2PointSeries(riderData: ISensorData[], xPropName: keyof ISensorData, yPropName: keyof ISensorData): IPoint[] {
   const xSeries = _.map(riderData, xPropName);
   const ySeries = _.map(riderData, yPropName);
 
   const points = _.zipWith(xSeries, ySeries, (x, y) => ({x, y}));
 
   return _.chain(points)
-    .filter(point => !_.isNull(point.x) && !_.isNull(point.y)) // Dont need null values in here
+    .filter(point => _.isNumber(point.x) && _.isNumber(point.y))
     .sortBy(point => point.x)
-    .value();
+    .value() as IPoint[]; // asserting on type because `_.isNumber` can't type out the strings and nulls
 }
 
 

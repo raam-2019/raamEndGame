@@ -15,8 +15,9 @@ export const FlexRow: React.FC<IFlexRowProps> = props => (
       display: 'flex',
       alignItems: props.alignItems,
       justifyContent: props.justifyContent,
+      // border: '1px solid blue',
       flexWrap: 'wrap'
-    }}>
+    } as React.CSSProperties}>
     {props.children}
   </div>
 );

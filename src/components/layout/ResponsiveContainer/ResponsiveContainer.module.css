@@ -1,26 +1,46 @@
 .root {
   height: 100%;
+  width: 100%;
+
+  margin-left: auto;
+  margin-right: auto;
 }
 
-@media only screen and (max-width: 1024px) {
-  .root {
-    margin-left: 72px;
-    margin-right: 72px;
-    width: 100%;
-  }
-}
-@media only screen and (max-width: 768px) {
+/* smartphones, iPhone, portrait 480x320 phones */
+@media (min-width:320px)  { 
   .root {
     margin-left: 4px;
     margin-right: 4px;
-    width: 100%;
   }
 }
 
-@media only screen and (min-width: 1024px) {
+/* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
+@media (min-width:481px)  { }
+
+/* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
+@media (min-width:641px)  { 
   .root {
-    margin-left: auto;
-    margin-right: auto;
-    width: 1024px
+    margin-left: 4px;
+    margin-right: 4px;
+    width: calc(100% - 8px);
   }
 }
+
+/* tablet, landscape iPad, lo-res laptops ands desktops */ 
+@media (min-width:961px)  {
+  .root {
+    width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* big landscape tablets, laptops, and desktops */ 
+@media (min-width:1025px) { 
+  .root {
+    width: 1024px;
+  }
+}
+
+/* hi-res laptops and desktops */ 
+@media (min-width:1281px) { }
