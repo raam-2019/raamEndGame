@@ -7,7 +7,7 @@ const ReactVis = require('react-vis');
 
 export interface IBasicLineSeriesProps {
   extraClassName?: string;
-  data: IPoint[];
+  data: IPoint[] | any;
   lineColor?: string;
   lineWidthPx?: number;
 }

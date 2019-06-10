@@ -7,6 +7,11 @@ import {BasicHorizontalAxis, BasicVerticalAxis} from 'components/widgets/shared/
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
 import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
 
+const Limits = {
+    a: 8,
+    b: 12
+}
+
 function timeCompare(a: { x: any; }, b: { x: any; }){
     let timeA = a.x;
     let timeB = b.x;
@@ -20,24 +25,13 @@ function timeCompare(a: { x: any; }, b: { x: any; }){
     return comparison;
 }
 
-function timeSplitter(points: any, a: any, b: any ){
-    points = points.sort(timeCompare);
-    let res = [];
-    for(let i = 0; i < points.length; i++){
-        if(points[i].x < b && points[i].x > a){
-            res.push(points[i]);
-        }
-    }
-    return res;
-}
-
 export interface IElevationWidgetProps extends IDefaultWidgetProps {
   elevation: IPoint[];
   timeImpactOfRest: IPoint[];
 }
 
 export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
-    <div>
+  <div>
   <XYPlotTemplate
     heightPx={props.heightPx}
     widthPx={props.widthPx}
@@ -45,12 +39,16 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
     title="Elevation over Predicted Time"
     useHorizontalGridLines={true}>
     {LinearAreaSeries({
-      data: props.elevation.sort(timeCompare),
+      data: props.elevation.sort(timeCompare).filter(function(input) {
+        return input.x < Limits.b && input.x > Limits.a
+      }),
       lineColor: 'orange',
       fillColor: '#FFCF9E'
     })}
     {LinearLineSeries({
-      data: props.timeImpactOfRest.sort(timeCompare),
+      data: props.timeImpactOfRest.sort(timeCompare).filter(function(input) {
+        return input.x < Limits.b && input.x > Limits.a
+      }),
       lineColor: 'green'
     })}
     {BasicHorizontalAxis({
@@ -63,9 +61,9 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
   <button onClick={()=>{
       console.log(props.timeImpactOfRest);
   }}>Hello 1</button>
-  <button onClick={()=>console.log(timeSplitter(props.timeImpactOfRest, 8, 12))}>Hello 2</button>
   <button onClick={()=>{
-      props.timeImpactOfRest = timeSplitter(props.timeImpactOfRest, 8, 12);
-  }}>Hello 3</button>
+      Limits.a = 1;
+      Limits.b = 10
+  }}>Hello 2</button>
   </div>
 );
