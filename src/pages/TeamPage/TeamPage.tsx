@@ -26,6 +26,8 @@ import imgTopoBkgd from 'assets/images/topographBackground.png';
 
 import styles from './TeamPage.module.css';
 
+import {SelectField} from 'components/fields/generic/SelectField';
+
 
 export interface ITeamPageProps extends RouteComponentProps {
 
@@ -43,7 +45,19 @@ interface ITeamPageState {
   androidBattery: number;
   radarBattery: number;
   watchBattery: number;
+
+  forecastingHours: number;
 }
+
+const selectValues =
+   [
+    { id: "hour1", displayValue: "1 Hour" },
+    { id: "hour2", displayValue: "2 Hours" },
+    { id: "hour4", displayValue: "4 Hours" },
+    { id: "hour8", displayValue: "8 Hours" },
+    { id: "hour16", displayValue: "16 Hours" }
+  ];
+
 
 export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
@@ -61,6 +75,8 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       androidBattery: -1,
       radarBattery: -1,
       watchBattery: -1,
+
+      forecastingHours: 16,
 
       elevation: [{x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
       {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
@@ -80,7 +96,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
   public componentDidMount = () => {
 
-  
+
     window.document.title = "#InternetOfDave - Team Page";
 
     amplifyService
@@ -125,6 +141,8 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         backgroundImage={imgTopoBkgd}
         extraClassName={styles.firstSection}>
         <Heading><RedWord>Device</RedWord> Health</Heading>
+
+
 
         <FlexRow justifyContent="space-between">
           <FlexCell>
@@ -179,6 +197,20 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           />
         </FlexCell>
 
+      </Section>
+
+      <Section>
+        <Heading><RedWord>#</RedWord>Performance</Heading>
+
+        <FlexRow justifyContent="flex-end">
+          <FlexCell flex="0">
+            <SelectField
+              options = {selectValues}
+              onChange = {this.__handleChange}
+              />
+          </FlexCell>
+        </FlexRow>
+
         <FlexCell>
           <ElevationWidget
             elevation={this.state.elevation}
@@ -186,11 +218,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
             widthPx={900}
           />
         </FlexCell>
-
-      </Section>
-
-      <Section>
-        <Heading><RedWord>#</RedWord>Performance</Heading>
 
         <LiveGraphWrapper
           width="300px"
@@ -201,6 +228,18 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       <Section>
         <Heading><RedWord>Course</RedWord> Awareness</Heading>
       </Section>
+
+      <Section backgroundColor="white">
+        <FlexRow justifyContent="flex-end">
+          <FlexCell flex="0">
+            <SelectField
+              options = {selectValues}
+              onChange = {this.__handleChange}
+              />
+          </FlexCell>
+        </FlexRow>
+      </Section>
+
     </PageTemplate>
   );
 
@@ -218,6 +257,33 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       radarBattery: radarBattery || -1,
       watchBattery: watchBattery || -1
     });
+  };
+
+  private __handleChange = (id: String) => {
+      switch(id) {
+        case 'hour1':
+          this.setState({forecastingHours: 1});
+          console.log(this.state.forecastingHours);
+          break;
+        case 'hour2':
+          this.setState({forecastingHours: 2});
+          console.log(this.state.forecastingHours);
+          break;
+        case 'hour4':
+          this.setState({forecastingHours: 4});
+          console.log(this.state.forecastingHours);
+          break;
+        case 'hour8':
+          this.setState({forecastingHours: 8});
+          console.log(this.state.forecastingHours);
+          break;
+        case 'hour16':
+          this.setState({forecastingHours: 16});
+          console.log(this.state.forecastingHours);
+          break;
+        default:
+          window.prompt("please acknowledge your error (say 'ok')");
+      }
   };
 
 }
