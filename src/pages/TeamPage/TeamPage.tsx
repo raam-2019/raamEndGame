@@ -143,7 +143,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       .onAnalyticsUpdate()
       .pipe(takeUntil(this.__unsubscribe))
       .subscribe(result => {
-        console.log(result);
+        // console.log(result);
       });
   };
 
@@ -160,7 +160,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       <Section
         backgroundImage={imgTopoBkgd}
         extraClassName={styles.firstSection}>
-        <Heading><RedWord>Device</RedWord> Health</Heading>
+    <Heading><RedWord>Device</RedWord> Health</Heading>
 
 
 
