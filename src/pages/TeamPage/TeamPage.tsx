@@ -52,12 +52,12 @@ interface ITeamPageState {
 
 const selectValues =
    [
-    { id: "hour4", displayValue: "4 Hour" },
-    { id: "hour8", displayValue: "8 Hours" },
-    { id: "hour16", displayValue: "16 Hours" },
-    { id: "hour24", displayValue: "24 Hours" },
-    { id: "hour36", displayValue: "36 Hours" },
-    { id: "hour48", displayValue: "48 Hours" }
+     { id: "hour4", displayValue: "4 Hour" },
+     { id: "hour8", displayValue: "8 Hours" },
+     { id: "hour16", displayValue: "16 Hours" },
+     { id: "hour24", displayValue: "24 Hours" },
+     { id: "hour36", displayValue: "36 Hours" },
+     { id: "hour48", displayValue: "48 Hours" }
   ];
 
 
@@ -97,11 +97,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
 
   public componentDidMount = () => {
-<<<<<<< HEAD
-
-
-=======
->>>>>>> cece8598af428d5dfcba3341aab3129c99e5d6df
     window.document.title = "#InternetOfDave - Team Page";
 
     amplifyService
@@ -208,7 +203,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         <Heading><RedWord>#</RedWord>Performance</Heading>
 
         <FlexRow justifyContent="flex-end">
-          <FlexCell flex="0">
+          <FlexCell flex="2">
             <SelectField
               options = {selectValues}
               onChange = {this.__handleChange}
@@ -264,35 +259,19 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
     });
   };
 
-  private __handleChange = (id: String) => {
-      switch(id) {
-        case 'hour4':
-          this.setState({forecastingHours: 4});
-          console.log(this.state.forecastingHours);
-          break;
-        case 'hour8':
-          this.setState({forecastingHours: 8});
-          console.log(this.state.forecastingHours);
-          break;
-        case 'hour16':
-          this.setState({forecastingHours: 16});
-          console.log(this.state.forecastingHours);
-          break;
-        case 'hour24':
-          this.setState({forecastingHours: 24});
-          console.log(this.state.forecastingHours);
-          break;
-        case 'hour36':
-          this.setState({forecastingHours: 36});
-          console.log(this.state.forecastingHours);
-          break;
-        case 'hour48':
-          this.setState({forecastingHours: 48});
-          console.log(this.state.forecastingHours);
-          break;
-        default:
-          window.prompt("please acknowledge your error (say 'ok')");
-      }
+  private __handleChange = (id: string) => {
+    const id2Hours: Record<string, number> = {
+     'hour4': 4,
+     'hour8': 8,
+     'hour16': 16,
+     'hour24': 24,
+     'hour36': 36,
+     'hour48': 48
+   };
+
+   this.setState({forecastingHours: id2Hours[id]});
+
+   console.log(this.state.forecastingHours);
   };
 
 }
