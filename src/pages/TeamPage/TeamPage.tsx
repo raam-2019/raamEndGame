@@ -90,7 +90,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           return;
         }
 
-        console.log(riderData);
         this.__setCurrentBatteryLevelState(riderData);
 
         this.setState(update(this.state, {
@@ -152,13 +151,15 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
     return (
       <PageTemplate {...this.props}>
-        <div style={{height: '200px'}}></div>
+        <div style={{height: '200px'}} />
+
         <BatteryWidgetSection
           phoneBattery={this.state.androidBattery}
           radarBattery={this.state.radarBattery}
           watchBattery={this.state.watchBattery} />
 
         <BiometricsSection
+          key={`biometrics-${this.state.selectedBiometricRangeId}`}
           selectedBiometricRangeId={this.state.selectedBiometricRangeId}
           ambientTemp={ambientTemp}
           breathRate={heartRate}
@@ -171,6 +172,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           onChangeBiometricsDuration={this.__handleChangeBiometricsDuration} />
 
         <CourseAwarenessSection
+          key={`courseAwareness-${this.state.selectedAwarenessRangeId}`}
           elevation={elevation}
           graphHeightPx={GRAPH_HEIGHT_PX}
           graphWidthPx={GRAPH_WIDTH_PX}
