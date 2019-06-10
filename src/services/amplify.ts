@@ -1,12 +1,9 @@
 import * as _ from 'lodash';
-import Amplify, {
-  API,
-  graphqlOperation
-} from 'aws-amplify';
+import Amplify from 'aws-amplify';
 import {ISensorData} from 'types/subscriptionTypes';
 import {rider} from 'graphql/subscriptions';
-import {listRaamalytics} from 'graphql/queries';
 import {BehaviorSubject} from 'rxjs';
+import * as util from './util';
 
 
 
@@ -20,30 +17,18 @@ export function configure(config: any) {
   __subscribeToRiderUpdates();
 }
 
-export async function getAnalytics(){
-  const data = await API.graphql(graphqlOperation(listRaamalytics));
-  return data
+
+
+interface IRiderUpdateReturn {
+  value: {
+    data?: {
+      rider: ISensorData;
+    };
+  };
 }
-
-
-
-export interface ISubscribeOptions<TData> {
-  next: (data: TData) => void;
-  error?: (error: unknown) => void;
-}
-
-export interface IExecReturn<TData> {
-  subscribe: (subscriber: ISubscribeOptions<TData>) => void;
-}
-
-export function exec<TData>(subscriptionString: string) {
-  return (API.graphql(graphqlOperation(subscriptionString)) as any) as IExecReturn<TData>;
-}
-
-
 
 function __subscribeToRiderUpdates() {
-  exec<{value: {data?: {rider: ISensorData;}}}>(rider)
+  util.exec<IRiderUpdateReturn>(rider)
 
     .subscribe({
 
