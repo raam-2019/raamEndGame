@@ -7,7 +7,7 @@ import {
   BasicVerticalAxis
 } from 'components/widgets/shared/BasicAxes';
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
-import * as constants from './shared/constants';
+import * as util from './shared/util';
 
 
 
@@ -39,7 +39,7 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
       data: props.data.sort(timeCompare),
       lineColor: 'orange',
       fillColor: '#FFCF9E',
-      lineWidthPx: constants.StrokeWidthPx
+      lineWidthPx: util.StrokeWidthPx
     })}
 
     {BasicHorizontalAxis({

@@ -15,6 +15,8 @@ import {EnduranceZoneWidget} from 'components/widgets/EnduranceZoneWidget';
 import {IPoint} from 'types/IPoint';
 import {AmbientTemperatureWidget} from 'components/widgets/AmbientTemperatureWidget';
 
+import globalStyles from 'globalStyles.module.css';
+
 
 
 const BIOMETRIC_SELECT_VALUES =
@@ -44,7 +46,7 @@ export interface IBiometricsSectionProps {
 }
 
 export const BiometricsSection: React.FC<IBiometricsSectionProps> = props => (
-  <Section>
+  <Section backgroundColor="#fafafa">
     <Heading><RedWord>#</RedWord>Biometrics</Heading>
     <FlexColumn>
       <InputRow>
@@ -57,7 +59,7 @@ export const BiometricsSection: React.FC<IBiometricsSectionProps> = props => (
         </StackedInputCell>
       </InputRow>
 
-      <FlexCell>
+      <FlexCell className={globalStyles.marginBottom}>
         <CoreTemperatureWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
           data={props.coreBodyTemp}
@@ -65,7 +67,7 @@ export const BiometricsSection: React.FC<IBiometricsSectionProps> = props => (
           heightPx={props.graphHeightPx} />
       </FlexCell>
 
-      <FlexCell>
+      <FlexCell className={globalStyles.marginBottom}>
         <AmbientTemperatureWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
           data={props.ambientTemp}
@@ -73,7 +75,7 @@ export const BiometricsSection: React.FC<IBiometricsSectionProps> = props => (
           heightPx={props.graphHeightPx} />
       </FlexCell>
 
-      <FlexCell>
+      <FlexCell className={globalStyles.marginBottom}>
         <HeartRateWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
           data={props.heartRate}
@@ -81,7 +83,7 @@ export const BiometricsSection: React.FC<IBiometricsSectionProps> = props => (
           heightPx={props.graphHeightPx} />
       </FlexCell>
 
-      <FlexCell>
+      <FlexCell className={globalStyles.marginBottom}>
         <BreathRateWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
           data={props.breathRate}
@@ -89,7 +91,7 @@ export const BiometricsSection: React.FC<IBiometricsSectionProps> = props => (
           heightPx={props.graphHeightPx} />
       </FlexCell>
 
-      <FlexCell>
+      <FlexCell className={globalStyles.marginBottom}>
         <EnduranceZoneWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
           data={props.enduranceZone}

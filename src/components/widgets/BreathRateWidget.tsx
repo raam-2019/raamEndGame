@@ -1,9 +1,12 @@
 import * as React from 'react';
+
 import {XYPlotTemplate} from 'components/widgets/shared/XYPlotTemplate';
 import {BasicHorizontalAxis, BasicVerticalAxis} from 'components/widgets/shared/BasicAxes';
 import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
 import {IDefaultWidgetProps} from 'components/widgets/shared/IDefaultWidgetProps';
-import * as constants from 'components/widgets/shared/constants';
+import * as util from 'components/widgets/shared/util';
+import {TimeTickMark} from 'components/widgets/shared/TimeTickMark';
+import {TickMark} from 'components/widgets/shared/TickMark';
 
 
 
@@ -19,16 +22,17 @@ export const BreathRateWidget: React.FC<IBreathRateWidgetProps> = props => (
     {LinearLineSeries({
       data: props.data,
       lineColor: 'rgb(144, 103, 167)',
-      lineWidthPx: constants.StrokeWidthPx
+      lineWidthPx: util.StrokeWidthPx
     })}
 
     {BasicHorizontalAxis({
-      axisLabel: "Time",
-      fnTickFormat: (t, index) => index
+      axisLabel: "Time (h:m:s ago)",
+      fnTickFormat: unixTime => TimeTickMark({unixTime})
     })}
 
     {BasicVerticalAxis({
-      axisLabel: "Rate"
+      axisLabel: "Rate",
+      fnTickFormat: value => TickMark({value})
     })}
   </XYPlotTemplate>
 );

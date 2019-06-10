@@ -140,7 +140,8 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       ];
 
     return (
-      <PageTemplate {...this.props}>
+      <PageTemplate {...this.props}
+        style={{backgroundColor: "#fafafa"}}>
         <div style={{height: '200px'}} />
 
         <BatteryWidgetSection
