@@ -103,12 +103,25 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         }));
       });
 
-      setInterval(function(){
-       amplifyService.getAnalytics().then(result => {
-        console.log(result);
-        })
+     var token:any = null;
+
+     setInterval(function(){
+        if(token == null){
+          amplifyService.getAnalytics().then((result:any) => {
+            console.log(result); 
+            token  = result.data.listRaamalytics.nextToken;
+          });
+        }else{
+          amplifyService.getAnalyticsTokened(token).then((result:any) => {
+            console.log(result); 
+            if(result.data.listRaamalytics.nextToken == null){
+            }else{
+              token  = result.data.listRaamalytics.nextToken;
+            }
+          });
+        }
       }
-      , 60000 )
+      , 5000 )
   };
 
 

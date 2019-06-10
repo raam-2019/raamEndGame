@@ -5,7 +5,7 @@ import Amplify, {
 } from 'aws-amplify';
 import {ISensorData} from 'types/subscriptionTypes';
 import {rider} from 'graphql/subscriptions';
-import {listRaamalytics} from 'graphql/queries';
+import {listRaamalytics, listRaamalytics_token} from 'graphql/queries';
 import {BehaviorSubject} from 'rxjs';
 
 
@@ -25,6 +25,10 @@ export async function getAnalytics(){
   return data
 }
 
+export async function getAnalyticsTokened(token:string){
+  const data = await API.graphql(graphqlOperation(listRaamalytics_token,{nextToken:token}));
+  return data
+}
 
 
 export interface ISubscribeOptions<TData> {
