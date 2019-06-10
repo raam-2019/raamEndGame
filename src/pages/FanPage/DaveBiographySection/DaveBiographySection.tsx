@@ -14,6 +14,7 @@ import imgDaveSmiling from 'assets/images/daveSmiling.png';
 import imgDaveCrushingATurn from 'assets/images/daveCrushingATurn.png';
 
 import styles from './DaveBiographySection.module.css';
+import {OffsetBackground} from 'components/OffsetBackground/OffsetBackground';
 
 
 
@@ -21,7 +22,9 @@ export interface IDaveBiographySectionProps {}
 
 export const DaveBiographySection: React.FC<IDaveBiographySectionProps> = props => (
   <Section extraClassName={styles.root}>
-    <div className={styles.offsetBackground} />
+    <OffsetBackground
+      backgroundColor="black"
+      offsetPx={75} />
 
     <FlexRow>
       <FlexCell>
@@ -44,7 +47,9 @@ export const DaveBiographySection: React.FC<IDaveBiographySectionProps> = props 
 
     <FlexRow>
       <FlexCell>
-        <SubHeading>From Pacific to Atlantic</SubHeading>
+        <SubHeading extraClassName={styles.whiteText}>
+          From Pacific to Atlantic
+        </SubHeading>
 
         <Paragraph theme="light">
           Called “the toughest test of endurance in the world” by Outside magazine, the 3,000-mile course crosses 4 mountain ranges, 3 deserts and 170,000 vertical feet of climbing.

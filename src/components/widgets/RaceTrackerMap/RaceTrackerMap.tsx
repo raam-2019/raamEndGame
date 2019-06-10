@@ -32,7 +32,7 @@ export interface IRaceTrackerMapProps {
   davesLon: number;
 }
 
-class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
+export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
   private __unsubscribe = new Subject();
 
@@ -231,5 +231,3 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
   };
 
 }
-
-export default RaceTrackerMap;

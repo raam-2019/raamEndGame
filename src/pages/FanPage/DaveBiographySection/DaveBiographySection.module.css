@@ -3,14 +3,8 @@
   padding-bottom: 216px;
 }
 
-  .root .offsetBackground {
-    z-index: -1;
-    position: absolute;
-    background: black;
-    left: 0;
-    top: 75px;
-    right: 0;
-    bottom: 0;
+  .root .whiteText {
+    color: white;
   }
 
   .root .offsetImg {
