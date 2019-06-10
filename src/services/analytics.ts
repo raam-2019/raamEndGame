@@ -7,7 +7,7 @@ import {
 
 
 
-export interface IAnalytics {
+export interface IAnalytic {
   key: String;
   model_run_tstamp?: String;
   course_bearing?: number;
@@ -35,7 +35,7 @@ export interface IAnalytics {
 
 export const UPDATE_INTERVAL_IN_MS = 1000 * 5;
 
-const __subject = new BehaviorSubject<IAnalytics[]>([]);
+const __subject = new BehaviorSubject<IAnalytic[]>([]);
 
 
 
