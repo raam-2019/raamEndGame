@@ -7,6 +7,7 @@ import {
   BasicVerticalAxis
 } from 'components/widgets/shared/BasicAxes';
 import {IDefaultWidgetProps} from 'components/widgets/shared/IDefaultWidgetProps';
+import * as constants from 'components/widgets/shared/constants';
 
 
 
@@ -19,6 +20,12 @@ export const HeartRateWidget: React.FC<IHeartRateWidgetProps> = props => (
     widthPx={props.widthPx}
     title="Heart Rate (bpm)"
     useHorizontalGridLines={true}>
+    {LinearLineSeries({
+      data: props.data,
+      lineColor: 'rgb(221, 94, 96)',
+      lineWidthPx: constants.StrokeWidthPx
+    })}
+
     {BasicHorizontalAxis({
       axisLabel: "Time",
       fnTickFormat: (t, index) => index
@@ -26,11 +33,6 @@ export const HeartRateWidget: React.FC<IHeartRateWidgetProps> = props => (
 
     {BasicVerticalAxis({
       axisLabel: "Rate"
-    })}
-
-    {LinearLineSeries({
-      data: props.data,
-      lineColor: 'red'
     })}
   </XYPlotTemplate>
 );
