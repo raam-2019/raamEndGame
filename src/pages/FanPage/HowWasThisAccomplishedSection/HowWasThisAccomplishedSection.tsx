@@ -27,6 +27,7 @@ import imgRayhanIslam from 'assets/images/teamMembers/rayhanIslam.jpeg';
 import imgSabrinaWulf from 'assets/images/teamMembers/sabrinaWulf.jpeg';
 import imgStevenWangen from 'assets/images/teamMembers/stevenWangen.jpeg';
 import imgWilliamMustari from 'assets/images/teamMembers/williamMustari.jpeg';
+import imgTeam from 'assets/images/Team288.jpg';
 
 import styles from './HowWasThisAccomplishedSection.module.css';
 import globalStyles from 'globalStyles.module.css';
@@ -74,30 +75,41 @@ export const HowWasThisAccomplishedSection: React.FC<IHowWasThisAccomplishedSect
           </Heading>
 
         <Paragraph theme="light">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lorem arcu, cursus id arcu tincidunt, pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lorem arcu, cursus id arcu.
-      </Paragraph>
+          This epic adventure is underwritten by volunteers and sponsors with something to prove. We use sports, fitness, medical, IoT, and AI as the centerpiece of a tech-enabled platform that powers breakthrough performances.
+        </Paragraph>
 
         <Heading extraClassName={globalStyles.whiteText}>
           Sponsors
-        <Line />
+          <Line />
         </Heading>
 
         <SponsorCarousel />
 
         <Heading extraClassName={globalStyles.whiteText}>
           Dave Haase
-        <Line />
+          <Line />
         </Heading>
 
         <SocialMediaFeed />
 
         <Heading extraClassName={globalStyles.whiteText}>
           The Team
-        <Line />
+          <Line />
         </Heading>
 
-        <FlexRow alignItems="flex-start">
+        <FlexRow>
           {elTeamMembers}
+        </FlexRow>
+
+        <Heading extraClassName={globalStyles.whiteText}>
+          The Race Crew
+          <Line />
+        </Heading>
+
+        <FlexRow>
+          <Img
+            src={imgTeam}
+            width="100%" />
         </FlexRow>
       </FlexColumn>
     </Section>
