@@ -7,11 +7,6 @@ import {BasicHorizontalAxis, BasicVerticalAxis} from 'components/widgets/shared/
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
 import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
 
-const Limits = {
-    a: 8,
-    b: 12
-}
-
 function timeCompare(a: { x: any; }, b: { x: any; }){
     let timeA = a.x;
     let timeB = b.x;
@@ -28,10 +23,10 @@ function timeCompare(a: { x: any; }, b: { x: any; }){
 export interface IElevationWidgetProps extends IDefaultWidgetProps {
   elevation: IPoint[];
   timeImpactOfRest: IPoint[];
+  forcastingHour: any;
 }
 
 export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
-  <div>
   <XYPlotTemplate
     heightPx={props.heightPx}
     widthPx={props.widthPx}
@@ -40,14 +35,14 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
     useHorizontalGridLines={true}>
     {LinearAreaSeries({
       data: props.elevation.sort(timeCompare).filter(function(input) {
-        return input.x < Limits.b && input.x > Limits.a
+        return input.x < props.forcastingHour && input.x > 0
       }),
       lineColor: 'orange',
       fillColor: '#FFCF9E'
     })}
     {LinearLineSeries({
       data: props.timeImpactOfRest.sort(timeCompare).filter(function(input) {
-        return input.x < Limits.b && input.x > Limits.a
+        return input.x < props.forcastingHour && input.x > 0
       }),
       lineColor: 'green'
     })}
@@ -58,12 +53,4 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
       axisLabel: "Elevation Level"
     })}
   </XYPlotTemplate>
-  <button onClick={()=>{
-      console.log(props.timeImpactOfRest);
-  }}>Hello 1</button>
-  <button onClick={()=>{
-      Limits.a = 1;
-      Limits.b = 10
-  }}>Hello 2</button>
-  </div>
 );
