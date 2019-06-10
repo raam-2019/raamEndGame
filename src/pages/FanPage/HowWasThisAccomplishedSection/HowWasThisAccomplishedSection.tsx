@@ -9,34 +9,59 @@ import {Paragraph} from 'components/Paragraph/Paragraph';
 import {Line} from 'components/Line/Line';
 import {SocialMediaFeed} from 'components/SocialMediaFeed/SocialMediaFeed';
 import {SponsorCarousel} from 'pages/FanPage/HowWasThisAccomplishedSection/SponsorCarousel/SponsorCarousel';
-
-import styles from './HowWasThisAccomplishedSection.module.css';
-import globalStyles from 'globalStyles.module.css';
 import {Img} from 'components/Img/Img';
 import {FlexCell} from 'components/layout/FlexCell';
 import {FlexRow} from 'components/layout/FlexRow';
+
+import imgAndrewDaniel from 'assets/images/teamMembers/andrewDaniel.jpeg';
+import imgAndrewGeng from 'assets/images/teamMembers/andrewGeng.jpeg';
+import imgChristopherPatterson from 'assets/images/teamMembers/christopherPatterson.jpeg';
+import imgDougBarton from 'assets/images/teamMembers/dougBarton.jpeg';
+import imgDouglasRobertson from 'assets/images/teamMembers/douglasRobertson.jpeg';
+import imgJonasKlare from 'assets/images/teamMembers/jonasKlare.jpeg';
+import imgMatthewCargille from 'assets/images/teamMembers/matthewCargille.jpeg';
+import imgMattWildman from 'assets/images/teamMembers/mattWildman.jpeg';
+import imgNafisFaisalKhanArrafi from 'assets/images/teamMembers/nafisFaisalKhanArrafi.jpeg';
+import imgPatriciaHernandezPhD from 'assets/images/teamMembers/patriciaHernandezPhD.jpeg';
+import imgRayhanIslam from 'assets/images/teamMembers/rayhanIslam.jpeg';
+import imgSabrinaWulf from 'assets/images/teamMembers/sabrinaWulf.jpeg';
+import imgStevenWangen from 'assets/images/teamMembers/stevenWangen.jpeg';
+import imgWilliamMustari from 'assets/images/teamMembers/williamMustari.jpeg';
+
+import styles from './HowWasThisAccomplishedSection.module.css';
+import globalStyles from 'globalStyles.module.css';
+
 
 
 export interface IHowWasThisAccomplishedSectionProps {}
 
 export const HowWasThisAccomplishedSection: React.FC<IHowWasThisAccomplishedSectionProps> = props => {
   const elTeamMembers = _.map(__teamMembers, teamMember => (
-    <div key={teamMember.linkedInUrl}>
-      <FlexCell className={styles.teamMember}>
-        <Img
-          renderUsingBkgd={true}
-          height="80px"
-          width="80px"
-          src={teamMember.linkedInUrl} />
-        <div >
+    <FlexCell
+      alignItems="center"
+      justifyContent="space-between"
+      key={teamMember.linkedInUrl}
+      className={styles.teamMember}>
+      <Img
+        extraClassName={styles.profilePicture}
+        height="100px"
+        width="100px"
+        src={teamMember.profilePictureUrl} />
+
+      <div>
+        <div className={styles.name}>
           {teamMember.name}
         </div>
 
-        <div className={styles.name}>
+        <div className={styles.titleText}>
           {teamMember.titleText}
         </div>
-      </FlexCell>
-    </div>
+      </div>
+
+      <a
+        className={styles.link}
+        href={teamMember.linkedInUrl}>LinkedIn</a>
+    </FlexCell>
   ));
 
   return (
@@ -71,7 +96,7 @@ export const HowWasThisAccomplishedSection: React.FC<IHowWasThisAccomplishedSect
         <Line />
         </Heading>
 
-        <FlexRow>
+        <FlexRow alignItems="flex-start">
           {elTeamMembers}
         </FlexRow>
       </FlexColumn>
@@ -91,85 +116,85 @@ interface ITeamMember {
 const __teamMembers: ITeamMember[] = [
   {
     name: 'Doug Barton',
-    profilePictureUrl: '',
+    profilePictureUrl: imgDougBarton,
     titleText: "President and CEO at UBIX.AI",
     linkedInUrl: 'https://www.linkedin.com/in/bartondoug/'
   },
   {
     name: 'Christopher Patterson',
-    profilePictureUrl: '',
+    profilePictureUrl: imgChristopherPatterson,
     titleText: "COO at Iron Forge Development",
     linkedInUrl: 'https://www.linkedin.com/in/christopher-patterson/'
   },
   {
     name: "Andrew Daniel",
-    profilePictureUrl: '',
+    profilePictureUrl: imgAndrewDaniel,
     titleText: "VP of Web at Iron Forge Development",
     linkedInUrl: 'https://www.linkedin.com/in/adaniel2/'
   },
   {
     name: "Douglas Robertson",
-    profilePictureUrl: '',
+    profilePictureUrl: imgDouglasRobertson,
     titleText: "Aeronautical Data Analyst",
     linkedInUrl: 'https://www.linkedin.com/in/dbrobert/'
   },
   {
     name: "Steven Wangen",
-    profilePictureUrl: '',
+    profilePictureUrl: imgStevenWangen,
     titleText: "Assistant Scientist at the Wisconsin Institute for Discovery",
     linkedInUrl: 'https://www.linkedin.com/in/steven-wangen/'
   },
   {
     name: "Jonas Klare",
-    profilePictureUrl: '',
+    profilePictureUrl: imgJonasKlare,
     titleText: "CS Student at UW-Madison",
     linkedInUrl: 'https://www.linkedin.com/in/jonasklare/'
   },
   {
     name: "Matt Wildman",
-    profilePictureUrl: '',
+    profilePictureUrl: imgMattWildman,
     titleText: "CS Student at UW-Madison",
     linkedInUrl: 'https://www.linkedin.com/in/matt-wildman/'
   },
   {
     name: "Rayhan Islam",
-    profilePictureUrl: '',
+    profilePictureUrl: imgRayhanIslam,
     titleText: "CS Master’s Candidate at Drexel University",
     linkedInUrl: 'https://www.linkedin.com/in/rayhan-islam-6690b5143/'
   },
   {
     name: "Andrew Geng",
-    profilePictureUrl: '',
+    profilePictureUrl: imgAndrewGeng,
     titleText: "CS Student at UW-Madison",
     linkedInUrl: 'https://www.linkedin.com/in/andrew-geng/'
   },
   {
     name: "Nafis Faisal Khan Arrafi",
-    profilePictureUrl: '',
+    profilePictureUrl: imgNafisFaisalKhanArrafi,
     titleText: "CS Student at UW-Madison",
     linkedInUrl: 'https://www.linkedin.com/in/nafis-faisal-khan-arrafi-876abb125/'
   },
   {
     name: "Matthew Cargille",
-    profilePictureUrl: '',
+    profilePictureUrl: imgMatthewCargille,
     titleText: "CS Student at UW-Madison",
     linkedInUrl: 'https://www.linkedin.com/in/mcargille/'
   },
   {
     name: "William Mustari",
-    profilePictureUrl: '',
+    profilePictureUrl: imgWilliamMustari,
     titleText: "CS Student at UW-Madison",
     linkedInUrl: 'https://www.linkedin.com/in/william-m-36335180/'
   },
   {
     name: "Patricia Hernandez, PhD",
-    profilePictureUrl: '',
+    profilePictureUrl: imgPatriciaHernandezPhD,
     titleText: "Assistant Professor at Marian University of Fond du Lac",
     linkedInUrl: 'https://www.linkedin.com/in/patricia-hernandez-phd-b421128/'
   },
   {
     name: "Sabrina Wulf",
-    profilePictureUrl: '',
+    profilePictureUrl: imgSabrinaWulf,
     titleText: "Bachelor of Science - Public Relations at Illinois State University",
     linkedInUrl: 'https://www.linkedin.com/in/sabrinawulf/ '
   }

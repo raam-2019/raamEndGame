@@ -7,11 +7,8 @@
   letter-spacing: 0.5px;
   padding: 12px;
   min-width: 180px;
-  max-width: 300px;
-  width: 25%;
 
-  height: 160px;
-  border: 1px solid white;
+  height: 220px;
   color: #ebebeb;
   font-weight: bold;
 
@@ -21,8 +18,23 @@
   font-size: 14px;
 }
 
-
   .teamMember .name {
+    margin-top: 12px;
+  }
+
+  .teamMember .titleText {
     color: #ababab;
     font-size: 10px;
+    margin-top: 4px;
+  }
+
+  .teamMember .profilePicture {
+    border-radius: 100%;
+  }
+
+
+  .teamMember .link {
+    text-decoration: underline;
+    color: #ababab;
+    font-size: 12px;
   }
