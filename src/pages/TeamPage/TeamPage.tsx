@@ -1,38 +1,29 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
+import moment from 'moment';
 import update from 'immutability-helper';
 import {RouteComponentProps} from 'react-router';
 import {PageTemplate} from 'components/layout/PageTemplate/PageTemplate';
-import {Heading} from 'components/Heading/Heading';
-import {Section} from 'components/layout/Section/Section';
-import {RedWord} from 'components/RedWord/RedWord';
 import * as amplifyService from 'services/amplify';
-import {HeartAndBreathRateWidget} from 'components/widgets/HeartAndBreathRateWidget';
-import {EnduranceZoneWidget} from 'components/widgets/EnduranceZoneWidget';
 import {IPoint} from 'types/IPoint';
-import {FlexRow} from 'components/layout/FlexRow';
-import {LiveGraphWrapper} from 'components/LiveGraphWrapper/LiveGraphWrapper';
-import {FlexCell} from 'components/layout/FlexCell';
-import {CoreAndSkinTemperatureWidget} from 'components/widgets/CoreAndSkinTemperatureWidget';
-import {ElevationWidget} from 'components/widgets/ElevationWidget';
 import * as dataUtil from 'util/dataUtil';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {BatteryLifeWidget} from 'components/BatteryLifeWidget/BatteryLifeWidget';
 import {ISensorData} from 'types/subscriptionTypes';
 import * as analyticsService from 'services/analytics';
-
-import imgTopoBkgd from 'assets/images/topographBackground.png';
-
-import styles from './TeamPage.module.css';
-
-import {SelectField} from 'components/fields/generic/SelectField';
+import {BatteryWidgetSection} from 'pages/TeamPage/BatteryWidgetSection/BatteryWidgetSection';
+import {BiometricsSection} from 'pages/TeamPage/BiometricsSection/BiometricsSection';
+import {CourseAwarenessSection} from 'pages/TeamPage/CourseAwarenessSection/CourseAwarenessSection';
 
 
-export interface ITeamPageProps extends RouteComponentProps {
 
-}
+const GRAPH_WIDTH_PX = 800;
+const GRAPH_HEIGHT_PX = 400;
+const NUM_POINTS_BEFORE_LOAD = 3;
+
+
+export interface ITeamPageProps extends RouteComponentProps {}
 
 interface ITeamPageState {
   coreBodyTemp: IPoint[];
@@ -41,25 +32,16 @@ interface ITeamPageState {
   mo2: IPoint[];
   skinTemp: IPoint[];
   enduranceZone: IPoint[];
+  ambientTemperature: IPoint[];
   elevation: IPoint[];
 
   androidBattery: number;
   radarBattery: number;
   watchBattery: number;
 
-  forecastingHours: number;
+  selectedAwarenessRangeId: string;
+  selectedBiometricRangeId: string;
 }
-
-const selectValues =
-   [
-     { id: "hour4", displayValue: "4 Hour" },
-     { id: "hour8", displayValue: "8 Hours" },
-     { id: "hour16", displayValue: "16 Hours" },
-     { id: "hour24", displayValue: "24 Hours" },
-     { id: "hour36", displayValue: "36 Hours" },
-     { id: "hour48", displayValue: "48 Hours" }
-  ];
-
 
 export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
@@ -71,26 +53,16 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       coreBodyTemp: [],
       heartRate: [],
       mo2: [],
+      ambientTemperature: [],
       breathRate: [],
       skinTemp: [],
       enduranceZone: [],
       androidBattery: -1,
       radarBattery: -1,
       watchBattery: -1,
-
-      forecastingHours: 24,
-
-      elevation: [{x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}]
+      selectedBiometricRangeId: '20',  // Must match "20" in `BiometricsSectiontsx` as the default value.... could be typed if we wanted.
+      selectedAwarenessRangeId: '20', // Must match some default value in `CourseAwarenessSection.tsx`
+      elevation: []
     };
   }
 
@@ -115,7 +87,9 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoTotal')},
           breathRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
           skinTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
-          enduranceZone: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'enduranceZone')}
+          enduranceZone: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'enduranceZone')},
+          ambientTemperature: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchTemperature')},
+          elevation: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'elevation')}
         }));
       });
       
@@ -155,113 +129,70 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
 
 
-  public render = () => (
-    <PageTemplate {...this.props}>
-      <Section
-        backgroundImage={imgTopoBkgd}
-        extraClassName={styles.firstSection}>
-    <Heading><RedWord>Device</RedWord> Health</Heading>
+  private __removeSeriesBeforeStartTime(dataSeries: IPoint[], startTime: moment.Moment) {
+    return _.filter(dataSeries, point => startTime.isBefore(moment.unix(point.x)))
+  }
 
 
+  public render = () => {
+    // There is an assumption here that `selectedBiometricRangeId` is always a string integer
+    const biometricStartTime = moment().subtract(moment.duration(+this.state.selectedBiometricRangeId, 'minutes'));
+    const courseAwarenessStartTime = moment().subtract(moment.duration(+this.state.selectedAwarenessRangeId, 'minutes'));
 
-        <FlexRow justifyContent="space-between">
-          <FlexCell>
-            <BatteryLifeWidget
-              min={0}
-              max={1}
-              batteryLife={this.state.androidBattery}
-              deviceName="Android" />
-          </FlexCell>
+    const [
+      ambientTemp,
+      breathRate,
+      coreBodyTemp,
+      enduranceZone,
+      heartRate
+    ] = [
+        this.__removeSeriesBeforeStartTime(this.state.ambientTemperature, biometricStartTime),
+        this.__removeSeriesBeforeStartTime(this.state.breathRate, biometricStartTime),
+        this.__removeSeriesBeforeStartTime(this.state.coreBodyTemp, biometricStartTime),
+        this.__removeSeriesBeforeStartTime(this.state.enduranceZone, biometricStartTime),
+        this.__removeSeriesBeforeStartTime(this.state.heartRate, biometricStartTime),
+      ];
 
-          <FlexCell>
-            <BatteryLifeWidget
-              lowNumbersAreFull={true}
-              min={1}
-              max={5}
-              batteryLife={this.state.radarBattery}
-              deviceName="Radar" />
-          </FlexCell>
+    const [
+      elevation
+    ] = [
+        this.__removeSeriesBeforeStartTime(this.state.elevation, courseAwarenessStartTime)
+      ];
 
-          <FlexCell>
-            <BatteryLifeWidget
-              min={0}
-              max={100}
-              batteryLife={this.state.watchBattery}
-              deviceName="Watch" />
-          </FlexCell>
-        </FlexRow>
+    return (
+      <PageTemplate {...this.props}
+        style={{backgroundColor: "#fafafa"}}>
+        <div style={{height: '200px'}} />
 
-        <Heading><RedWord>#</RedWord>Biometrics</Heading>
-        <FlexCell>
-          <CoreAndSkinTemperatureWidget
-            widthPx={900}
-            heightPx={300}
-            coreTempSeries={this.state.coreBodyTemp}
-            skinTempSeries={this.state.skinTemp} />
-        </FlexCell>
+        <BatteryWidgetSection
+          phoneBattery={this.state.androidBattery}
+          radarBattery={this.state.radarBattery}
+          watchBattery={this.state.watchBattery} />
 
-        <FlexCell>
-          <HeartAndBreathRateWidget
-            breathRateSeries={this.state.breathRate}
-            heartRateSeries={this.state.heartRate}
-            heightPx={300}
-            widthPx={900}
-          />
-        </FlexCell>
+        <BiometricsSection
+          key={`biometrics-${this.state.selectedBiometricRangeId}`}
+          selectedBiometricRangeId={this.state.selectedBiometricRangeId}
+          ambientTemp={ambientTemp}
+          breathRate={heartRate}
+          coreBodyTemp={coreBodyTemp}
+          enduranceZone={enduranceZone}
+          heartRate={breathRate}
+          graphHeightPx={GRAPH_HEIGHT_PX}
+          graphWidthPx={GRAPH_WIDTH_PX}
+          numPointsBeforeLoad={NUM_POINTS_BEFORE_LOAD}
+          onChangeBiometricsDuration={this.__handleChangeBiometricsDuration} />
 
-        <FlexCell>
-          <EnduranceZoneWidget
-            enduranceZone={this.state.enduranceZone}
-            heightPx={300}
-            widthPx={900}
-          />
-        </FlexCell>
-
-      </Section>
-
-      <Section>
-        <Heading><RedWord>#</RedWord>Performance</Heading>
-
-        <FlexRow justifyContent="flex-end">
-          <FlexCell flex="2">
-            <SelectField
-              options = {selectValues}
-              onChange = {this.__handleChange}
-              />
-          </FlexCell>
-        </FlexRow>
-
-        <FlexCell>
-          <ElevationWidget
-            elevation={this.state.elevation}
-            heightPx={300}
-            widthPx={900}
-          />
-        </FlexCell>
-
-        <LiveGraphWrapper
-          width="300px"
-          height="300px"
-          title="Power and Speed" />
-      </Section>
-
-      <Section>
-        <Heading><RedWord>Course</RedWord> Awareness</Heading>
-      </Section>
-
-      <Section backgroundColor="white">
-        <FlexRow justifyContent="flex-end">
-          <FlexCell flex="0">
-            <SelectField
-              options = {selectValues}
-              onChange = {this.__handleChange}
-              />
-          </FlexCell>
-        </FlexRow>
-      </Section>
-
-    </PageTemplate>
-  );
+        <CourseAwarenessSection
+          key={`courseAwareness-${this.state.selectedAwarenessRangeId}`}
+          elevation={elevation}
+          graphHeightPx={GRAPH_HEIGHT_PX}
+          graphWidthPx={GRAPH_WIDTH_PX}
+          numPointsBeforeLoad={NUM_POINTS_BEFORE_LOAD}
+          selectedAwarenessRangeId={this.state.selectedAwarenessRangeId}
+          onChangeCourseAwarenessDuration={this.__haveChangeCourseAwarenessDuration} />
+      </PageTemplate>
+    );
+  };
 
 
 
@@ -279,19 +210,14 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
     });
   };
 
-  private __handleChange = (id: string) => {
-    const id2Hours: Record<string, number> = {
-     'hour4': 4,
-     'hour8': 8,
-     'hour16': 16,
-     'hour24': 24,
-     'hour36': 36,
-     'hour48': 48
-   };
 
-   this.setState({forecastingHours: id2Hours[id]});
 
-   console.log(this.state.forecastingHours);
-  };
+  private __handleChangeBiometricsDuration = (selectedBiometricRangeId: string) =>
+    this.setState({selectedBiometricRangeId});
+
+
+
+  private __haveChangeCourseAwarenessDuration = (selectedAwarenessRangeId: string) =>
+    this.setState({selectedAwarenessRangeId});
 
 }

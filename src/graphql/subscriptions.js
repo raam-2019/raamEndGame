@@ -61,6 +61,7 @@ export const rider = `subscription Rider {
     androidBattery
     watchTemperature
     mo2Battery
+    elevation
   }
 }
 `;

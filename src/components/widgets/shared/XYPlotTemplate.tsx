@@ -2,8 +2,10 @@ import * as React from 'react';
 
 import {IStatus} from 'components/IStatus';
 import {LoadingOverlay} from 'components/LoadingOverlay/LoadingOverlay';
+import {Card} from 'components/Card/Card';
 
 const ReactVis = require('react-vis');
+
 
 
 const __gridLineStyle = {
@@ -25,7 +27,7 @@ export interface IXYPlotTemplateProps {
 }
 
 export const XYPlotTemplate: React.FC<IXYPlotTemplateProps> = props => (
-  <div>
+  <Card>
     <div>
       <h2>{props.title}</h2>
     </div>
@@ -42,10 +44,7 @@ export const XYPlotTemplate: React.FC<IXYPlotTemplateProps> = props => (
     {props.status === 'ready' && (
       <ReactVis.XYPlot
         height={props.heightPx}
-        width={props.widthPx}
-        margin={{left: 50}}
-        >
-
+        width={props.widthPx}>
         {props.useHorizontalGridLines && (
           <ReactVis.HorizontalGridLines style={__gridLineStyle} />
         )}
@@ -57,5 +56,5 @@ export const XYPlotTemplate: React.FC<IXYPlotTemplateProps> = props => (
         {props.children}
       </ReactVis.XYPlot>
     )}
-  </div>
+  </Card>
 );
