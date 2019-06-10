@@ -19,7 +19,7 @@ export const AnalyzeDataSection: React.FC<IAnalyzeDataSection> = props => (
     <FlexRow>
       <FlexCell>
         <SubHeading>
-          We must analyze data both old and new
+          Winners are historians and analysts.
         </SubHeading>
 
         <Paragraph theme="dark">
