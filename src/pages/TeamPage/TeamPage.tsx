@@ -51,11 +51,12 @@ interface ITeamPageState {
 
 const selectValues =
    [
-    { id: "hour1", displayValue: "1 Hour" },
-    { id: "hour2", displayValue: "2 Hours" },
-    { id: "hour4", displayValue: "4 Hours" },
+    { id: "hour4", displayValue: "4 Hour" },
     { id: "hour8", displayValue: "8 Hours" },
-    { id: "hour16", displayValue: "16 Hours" }
+    { id: "hour16", displayValue: "16 Hours" },
+    { id: "hour24", displayValue: "24 Hours" },
+    { id: "hour36", displayValue: "36 Hours" },
+    { id: "hour48", displayValue: "48 Hours" }
   ];
 
 
@@ -76,7 +77,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       radarBattery: -1,
       watchBattery: -1,
 
-      forecastingHours: 16,
+      forecastingHours: 24,
 
       elevation: [{x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
       {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
@@ -261,14 +262,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
   private __handleChange = (id: String) => {
       switch(id) {
-        case 'hour1':
-          this.setState({forecastingHours: 1});
-          console.log(this.state.forecastingHours);
-          break;
-        case 'hour2':
-          this.setState({forecastingHours: 2});
-          console.log(this.state.forecastingHours);
-          break;
         case 'hour4':
           this.setState({forecastingHours: 4});
           console.log(this.state.forecastingHours);
@@ -279,6 +272,18 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           break;
         case 'hour16':
           this.setState({forecastingHours: 16});
+          console.log(this.state.forecastingHours);
+          break;
+        case 'hour24':
+          this.setState({forecastingHours: 24});
+          console.log(this.state.forecastingHours);
+          break;
+        case 'hour36':
+          this.setState({forecastingHours: 36});
+          console.log(this.state.forecastingHours);
+          break;
+        case 'hour48':
+          this.setState({forecastingHours: 48});
           console.log(this.state.forecastingHours);
           break;
         default:
