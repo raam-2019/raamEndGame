@@ -9,10 +9,32 @@
   display: block;
 }
 
+.goToDaveMinusOne {
+  position: absolute;
+  right: 12px;
+  bottom: 140px;
+  background: white;
+  border-radius: 8px;
+  border: none;
+
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  outline: none;
+
+  width: 30px;
+  height: 30px;
+
+  padding: 4px;
+}
+
+.goToDaveMinusOne img {
+  height: 100%;
+  opacity: 0.8;
+}
+
 .goToDave {
   position: absolute;
   right: 12px;
-  bottom: 130px;
+  bottom: 175px;
   background: white;
   border-radius: 8px;
   border: none;
@@ -30,6 +52,52 @@
   height: 100%;
   opacity: 0.8;
 }
+
+.goToDavePlusOne {
+  position: absolute;
+  right: 12px;
+  bottom: 210px;
+  background: white;
+  border-radius: 8px;
+  border: none;
+
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  outline: none;
+
+  width: 30px;
+  height: 30px;
+
+  padding: 4px;
+}
+
+.goToDavePlusOne img {
+  height: 100%;
+  opacity: 0.8;
+}
+
+.recenterMap {
+  position: absolute;
+  right: 55px;
+  bottom: 32px;
+  background: white;
+  border-radius: 8px;
+  border: none;
+
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  outline: none;
+
+  width: 30px;
+  height: 30px;
+
+  padding: 4px;
+}
+
+.recenterMap img {
+  height: 100%;
+  opacity: 0.8;
+}
+
+
 
 .map {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
