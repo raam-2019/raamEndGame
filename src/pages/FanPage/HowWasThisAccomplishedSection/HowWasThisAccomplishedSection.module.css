@@ -1,3 +1,28 @@
 .root {
   padding-top: 106px;
+
 }
+
+.teamMember {
+  letter-spacing: 0.5px;
+  padding: 12px;
+  min-width: 180px;
+  max-width: 300px;
+  width: 25%;
+
+  height: 160px;
+  border: 1px solid white;
+  color: #ebebeb;
+  font-weight: bold;
+
+  margin-right: 12px;
+  margin-bottom: 12px;
+
+  font-size: 14px;
+}
+
+
+  .teamMember .name {
+    color: #ababab;
+    font-size: 10px;
+  }
