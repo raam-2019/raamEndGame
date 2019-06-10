@@ -21,6 +21,7 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {BatteryLifeWidget} from 'components/BatteryLifeWidget/BatteryLifeWidget';
 import {ISensorData} from 'types/subscriptionTypes';
+import * as analyticsService from 'services/analytics';
 
 import imgTopoBkgd from 'assets/images/topographBackground.png';
 
@@ -79,8 +80,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
 
   public componentDidMount = () => {
-
-  
     window.document.title = "#InternetOfDave - Team Page";
 
     amplifyService
@@ -103,12 +102,12 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         }));
       });
 
-      setInterval(function(){
-       amplifyService.getAnalytics().then(result => {
+    analyticsService
+      .onAnalyticsUpdate()
+      .pipe(takeUntil(this.__unsubscribe))
+      .subscribe(result => {
         console.log(result);
-        })
-      }
-      , 60000 )
+      });
   };
 
 
