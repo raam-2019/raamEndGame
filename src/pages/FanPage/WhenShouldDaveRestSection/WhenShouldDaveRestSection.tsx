@@ -7,7 +7,6 @@ import {RedWord} from 'components/RedWord/RedWord';
 import {Paragraph} from 'components/Paragraph/Paragraph';
 import {FlexRow} from 'components/layout/FlexRow';
 import {FlexCell} from 'components/layout/FlexCell';
-import {LiveGraphWrapper} from 'components/LiveGraphWrapper/LiveGraphWrapper';
 import {NumberWidget} from 'components/NumberWidget/NumberWidget';
 import {IPoint} from 'types/IPoint';
 
@@ -18,6 +17,7 @@ import styles from './WhenShouldDaveRestSection.module.css';
 
 
 export interface IWhenShouldDaveRestSectionProps {
+  heartRate: IPoint[];
   mo2: IPoint[];
   coreBodyTemp: IPoint[];
 }
@@ -40,8 +40,8 @@ export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps
         justifyContent="center">
         <NumberWidget
           extraClassName={styles.widget}
-          numberPoints={props.coreBodyTemp}
-          name="temp" />
+          numberPoints={props.heartRate}
+          unitText="" />
       </FlexCell>
 
       <FlexCell className={globalStyles.alignLeft}>
@@ -61,16 +61,17 @@ export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps
       <FlexCell>
         <NumberWidget
           extraClassName={styles.widget}
-          numberPoints={props.mo2}
-          name="percent" />
+          numberPoints={props.coreBodyTemp}
+          unitText={'\xB0F'} />
       </FlexCell>
     </FlexRow>
 
     <FlexRow className={styles.row}>
       <FlexCell>
-        <LiveGraphWrapper
+        <NumberWidget
           extraClassName={styles.widget}
-          title="Graph of Data 3" />
+          numberPoints={props.mo2}
+          unitText="" />
       </FlexCell>
 
       <FlexCell className={globalStyles.alignLeft}>
@@ -88,9 +89,11 @@ export const WhenShouldDaveRestSection: React.FC<IWhenShouldDaveRestSectionProps
       </FlexCell>
 
       <FlexCell>
-        <LiveGraphWrapper
+        {/* TODO Net effective wind e.g. "-4 mph" */}
+        <NumberWidget
           extraClassName={styles.widget}
-          title="Graph of Data 4" />
+          numberPoints={[]}
+          unitText="N/A" />
       </FlexCell>
     </FlexRow>
   </Section>

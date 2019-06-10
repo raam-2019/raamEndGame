@@ -62,17 +62,17 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       radarBattery: -1,
       watchBattery: -1,
 
-      elevation:[{x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}, 
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}, 
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}, 
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}]
+      elevation: [{x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}]
     };
   }
 
@@ -93,7 +93,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         this.setState(update(this.state, {
           heartRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchHeartRate')},
           coreBodyTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqCoreTemp')},
-          mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoPercent')},
+          mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoTotal')},
           breathRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
           skinTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
           enduranceZone: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'enduranceZone')}
@@ -144,38 +144,38 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         </FlexRow>
 
         <Heading><RedWord>#</RedWord>Biometrics</Heading>
-          <FlexCell>
-            <CoreAndSkinTemperatureWidget
-              widthPx={900}
-              heightPx={300}
-              coreTempSeries={this.state.coreBodyTemp}
-              skinTempSeries={this.state.skinTemp} />
-          </FlexCell>
+        <FlexCell>
+          <CoreAndSkinTemperatureWidget
+            widthPx={900}
+            heightPx={300}
+            coreTempSeries={this.state.coreBodyTemp}
+            skinTempSeries={this.state.skinTemp} />
+        </FlexCell>
 
-          <FlexCell>
-            <HeartAndBreathRateWidget
-              breathRateSeries={this.state.breathRate}
-              heartRateSeries={this.state.heartRate}
-              heightPx={300}
-              widthPx={900}
-            />
-          </FlexCell>
+        <FlexCell>
+          <HeartAndBreathRateWidget
+            breathRateSeries={this.state.breathRate}
+            heartRateSeries={this.state.heartRate}
+            heightPx={300}
+            widthPx={900}
+          />
+        </FlexCell>
 
-          <FlexCell>
-            <EnduranceZoneWidget
-              enduranceZone={this.state.enduranceZone}
-              heightPx={300}
-              widthPx={900}
-            />
-          </FlexCell>
+        <FlexCell>
+          <EnduranceZoneWidget
+            enduranceZone={this.state.enduranceZone}
+            heightPx={300}
+            widthPx={900}
+          />
+        </FlexCell>
 
-          <FlexCell>
-            <ElevationWidget
-              elevation={this.state.elevation}
-              heightPx={300}
-              widthPx={900}
-            />
-          </FlexCell>
+        <FlexCell>
+          <ElevationWidget
+            elevation={this.state.elevation}
+            heightPx={300}
+            widthPx={900}
+          />
+        </FlexCell>
 
       </Section>
 
