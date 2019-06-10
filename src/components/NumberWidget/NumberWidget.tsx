@@ -10,22 +10,23 @@ import styles from "./NumberWidget.module.css";
 
 export interface INumberWidgetProps {
   numberPoints: IPoint[];
-  extraClassName?: string;
   unitText: string;
+  numDecimalDigits: number;
 }
 
 export const NumberWidget: React.FC<INumberWidgetProps> = props => {
   const lastPoint = _.last(props.numberPoints);
 
-  if (!lastPoint) {
-    return <LoadingOverlay />;
-  }
-
   return (
-    <div className={`${styles.root} ${props.extraClassName || ''}`}>
-      <strong className={styles.numberStyle}>
-        {lastPoint.y}{props.unitText}
-      </strong>
+    <div className={styles.root}>
+      {lastPoint && (
+        <strong key={lastPoint.y} className={styles.numberStyle}>
+          {lastPoint.y.toFixed(props.numDecimalDigits)}
+          <div className={styles.unitText}>{props.unitText}</div>
+        </strong>
+      )}
+
+      {!lastPoint && <LoadingOverlay />}
     </div>
   );
 };
