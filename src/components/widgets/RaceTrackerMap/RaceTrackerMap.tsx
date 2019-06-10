@@ -53,7 +53,7 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         pitch: 0
       },
       riderData: [],
-      popup:null
+      popup: null
     };
   }
 
@@ -89,10 +89,10 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
               description: {
                 RacerID: trackLeader['trackleaders_racer_ID'][0],
                 DeviceBatteryState: trackLeader.message[0]['batteryState'][0],
-                ts: (trackLeader.message[0]['timestamp']==null ?trackLeader.message[0]['dateTime']:trackLeader.message[0]['timestamp']) ,
-                lat:trackLeader.message[0]['latitude'],
-                lng:trackLeader.message[0]['longitude']
-              },  
+                ts: (trackLeader.message[0]['timestamp'] === null ? trackLeader.message[0]['dateTime'] : trackLeader.message[0]['timestamp']),
+                lat: trackLeader.message[0]['latitude'],
+                lng: trackLeader.message[0]['longitude']
+              },
               speed: 10
             }
           };
@@ -137,8 +137,8 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         {...this.state.viewport}
         onViewportChange={this.__handleViewportChange}
         onClick={this.__handleClick}>
-        
-         {this.__renderPopup()}
+
+        {this.__renderPopup()}
         <NavigationControl
           className={styles.nav}
           onViewportChange={this.__handleViewportChange} />
@@ -152,25 +152,26 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     </div>
   );
 
-  private __handleClick = (event:any)  => {
+  private __handleClick = (event: any) => {
     const feature = event.features && event.features[0];
 
     if (feature) {
-        if(feature.layer.id == "point"){
-            this.setState({popup: {
-                lat: event.lngLat[1],
-                lng: event.lngLat[0],
-                description: feature.properties.description
-            } 
-          })
-         
-       }
+      if (feature.layer.id === "point") {
+        this.setState({
+          popup: {
+            lat: event.lngLat[1],
+            lng: event.lngLat[0],
+            description: feature.properties.description
+          }
+        })
+
+      }
     }
   };
 
-  private __renderPopup = () =>  {
+  private __renderPopup = () => {
     const {popup} = this.state;
- 
+
     return (
       popup && (
         <Popup
@@ -181,8 +182,8 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
           closeOnClick={false}
           onClose={() => this.setState({popup: null})}
         >
-        
-        { <div>
+
+          {<div>
             <h3>
               Racer ID: {JSON.parse(popup.description).RacerID}
             </h3>
@@ -201,8 +202,8 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
             <strong>
               Longitude: {JSON.parse(popup.description).lng}
             </strong>
-          </div> }
-         
+          </div>}
+
 
         </Popup>
       )
