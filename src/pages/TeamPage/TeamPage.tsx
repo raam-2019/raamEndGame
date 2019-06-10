@@ -51,13 +51,13 @@ interface ITeamPageState {
 }
 
 const selectValues =
-   [
-     { id: "hour4", displayValue: "4 Hour" },
-     { id: "hour8", displayValue: "8 Hours" },
-     { id: "hour16", displayValue: "16 Hours" },
-     { id: "hour24", displayValue: "24 Hours" },
-     { id: "hour36", displayValue: "36 Hours" },
-     { id: "hour48", displayValue: "48 Hours" }
+  [
+    {id: "hour4", displayValue: "4 Hour"},
+    {id: "hour8", displayValue: "8 Hours"},
+    {id: "hour16", displayValue: "16 Hours"},
+    {id: "hour24", displayValue: "24 Hours"},
+    {id: "hour36", displayValue: "36 Hours"},
+    {id: "hour48", displayValue: "48 Hours"}
   ];
 
 
@@ -140,7 +140,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       <Section
         backgroundImage={imgTopoBkgd}
         extraClassName={styles.firstSection}>
-    <Heading><RedWord>Device</RedWord> Health</Heading>
+        <Heading><RedWord>Device</RedWord> Health</Heading>
 
 
 
@@ -205,9 +205,9 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         <FlexRow justifyContent="flex-end">
           <FlexCell flex="2">
             <SelectField
-              options = {selectValues}
-              onChange = {this.__handleChange}
-              />
+              options={selectValues}
+              onChange={this.__handleChange}
+            />
           </FlexCell>
         </FlexRow>
 
@@ -233,9 +233,9 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         <FlexRow justifyContent="flex-end">
           <FlexCell flex="0">
             <SelectField
-              options = {selectValues}
-              onChange = {this.__handleChange}
-              />
+              options={selectValues}
+              onChange={this.__handleChange}
+            />
           </FlexCell>
         </FlexRow>
       </Section>
@@ -261,17 +261,15 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
   private __handleChange = (id: string) => {
     const id2Hours: Record<string, number> = {
-     'hour4': 4,
-     'hour8': 8,
-     'hour16': 16,
-     'hour24': 24,
-     'hour36': 36,
-     'hour48': 48
-   };
+      'hour4': 4,
+      'hour8': 8,
+      'hour16': 16,
+      'hour24': 24,
+      'hour36': 36,
+      'hour48': 48
+    };
 
-   this.setState({forecastingHours: id2Hours[id]});
-
-   console.log(this.state.forecastingHours);
+    this.setState({forecastingHours: id2Hours[id]});
   };
 
 }
