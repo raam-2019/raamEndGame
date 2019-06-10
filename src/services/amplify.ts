@@ -19,6 +19,12 @@ export function configure(config: any) {
 
 
 
+export function onRiderUpdate() {
+  return __subject.asObservable();
+}
+
+
+
 interface IRiderUpdateReturn {
   value: {
     data?: {
@@ -35,7 +41,8 @@ function __subscribeToRiderUpdates() {
       next: result => {
         if (result.value.data) {
           const currentData = __subject.getValue();
-          __subject.next(_.concat(currentData, result.value.data.rider));
+
+          __subject.next(_.concat(currentData, __convertTemperatures2Fahrenheit(result.value.data.rider)));
         }
       },
 
@@ -46,6 +53,21 @@ function __subscribeToRiderUpdates() {
     });
 }
 
-export function onRiderUpdate() {
-  return __subject.asObservable();
+
+
+function __convertTemperatures2Fahrenheit(data: ISensorData) {
+  const tempKeys: (keyof ISensorData)[] = ['eqCoreTemp', 'eqSkinTemp', 'watchTemperature'];
+
+  const tempData = _.chain(data)
+    .pickBy((value: any, key: string) => _.includes(tempKeys, key))
+    .mapValues(value => {
+      if (_.isNumber(value)) {
+        return util.celsius2Fahrenheit(value);
+      }
+
+      return value;
+    })
+    .value();
+
+  return _.assign(data, tempData);
 }
