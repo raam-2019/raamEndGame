@@ -16,7 +16,7 @@ export interface IBatteryWidgetSectionProps {
 }
 
 export const BatteryWidgetSection: React.FC<IBatteryWidgetSectionProps> = props => (
-  <Section>
+  <Section backgroundColor="#fafafa">
     <Heading><RedWord>Device</RedWord> Health</Heading>
 
     <FlexRow justifyContent="space-between">

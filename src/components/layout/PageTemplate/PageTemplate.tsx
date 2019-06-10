@@ -6,10 +6,14 @@ import {RouteComponentProps} from 'react-router';
 
 
 
-export interface IPageTemplateProps extends RouteComponentProps {}
+export interface IPageTemplateProps extends RouteComponentProps {
+  style?: React.CSSProperties;
+}
 
 export const PageTemplate: React.FC<IPageTemplateProps> = props => (
-  <div className={styles.root}>
+  <div
+    className={`${styles.root} ${styles.extraClassName}`}
+    style={props.style}>
     <AppToolbar {...props} />
     {props.children}
   </div>

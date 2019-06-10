@@ -12,6 +12,8 @@ import {FlexColumn} from 'components/layout/FlexColumn';
 import {InputRow} from 'components/form/InputRow/InputRow';
 import {StackedInputCell} from 'components/form/StackedInputCell/StackedInputCell';
 
+import globalStyles from 'globalStyles.module.css';
+
 
 
 const AWARENESS_SELECT_VALUES = [
@@ -36,7 +38,7 @@ export interface ICourseAwarenessSectionProps {
 }
 
 export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = props => (
-  <Section>
+  <Section backgroundColor="#fafafa">
     <Heading><RedWord>Course</RedWord> Awareness</Heading>
 
     <FlexColumn>
@@ -50,20 +52,16 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
         </StackedInputCell>
       </InputRow>
 
+      <FlexCell className={globalStyles.marginBottom}>
+        <ElevationWidget
+          numPointsBeforeLoad={props.numPointsBeforeLoad}
+          data={props.elevation}
+          heightPx={props.graphHeightPx}
+          widthPx={props.graphWidthPx} />
+      </FlexCell>
     </FlexColumn>
 
-    <ElevationWidget
-      numPointsBeforeLoad={props.numPointsBeforeLoad}
-      data={props.elevation}
-      heightPx={props.graphHeightPx}
-      widthPx={props.graphWidthPx} />
-
     <FlexRow justifyContent="flex-end">
-      <FlexCell>
-        <SelectField
-          options={AWARENESS_SELECT_VALUES}
-          onChange={props.onChangeCourseAwarenessDuration} />
-      </FlexCell>
     </FlexRow>
   </Section>
 );

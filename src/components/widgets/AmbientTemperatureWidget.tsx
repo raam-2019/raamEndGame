@@ -7,6 +7,9 @@ import {
 } from 'components/widgets/shared/BasicAxes';
 import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
 import {IDefaultWidgetProps} from 'components/widgets/shared/IDefaultWidgetProps';
+import * as util from 'components/widgets/shared/util';
+import {TimeTickMark} from 'components/widgets/shared/TimeTickMark';
+import {TickMark} from 'components/widgets/shared/TickMark';
 
 
 
@@ -19,18 +22,20 @@ export const AmbientTemperatureWidget: React.FC<IAmbientTemperatureWidgetProps> 
     widthPx={props.widthPx}
     title="Ambient Temperature (°F)"
     useHorizontalGridLines={true}>
+    {LinearLineSeries({
+      data: props.data,
+      lineColor: 'rgb(114, 147, 203)',
+      lineWidthPx: util.StrokeWidthPx
+    })}
+
     {BasicHorizontalAxis({
-      axisLabel: "Time",
-      fnTickFormat: (t, index) => index
+      axisLabel: "Time (h:m:s ago)",
+      fnTickFormat: unixTime => TimeTickMark({unixTime})
     })}
 
     {BasicVerticalAxis({
-      axisLabel: "°F"
-    })}
-
-    {LinearLineSeries({
-      data: props.data,
-      lineColor: 'red'
+      axisLabel: "°F",
+      fnTickFormat: value => TickMark({value})
     })}
   </XYPlotTemplate>
 );
