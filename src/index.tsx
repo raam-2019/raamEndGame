@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import * as amplifyService from 'services/amplify';
 import * as trackLeaderService from 'services/trackLeaders';
+import * as analyticsService from 'services/analytics';
 
 import config from './aws-exports';
 
@@ -12,6 +13,8 @@ import config from './aws-exports';
 
 amplifyService.configure(config);
 trackLeaderService.init();
+analyticsService.init();
+
 
 
 ReactDOM.render(<App />, document.getElementById('root'));
