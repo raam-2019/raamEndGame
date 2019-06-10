@@ -44,6 +44,7 @@ export const listAssetTable6ce042es = `query ListAssetTable6ce042es(
     items {
       id
       ts
+      elevation
       watchPower
       radarBattery
       pcrr

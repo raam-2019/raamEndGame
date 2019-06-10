@@ -33,4 +33,5 @@ export interface ISensorData {
   androidBattery: number | null;
   watchTemperature: number | null;
   mo2Battery: number | null;
+  elevation: number | null;
 }
