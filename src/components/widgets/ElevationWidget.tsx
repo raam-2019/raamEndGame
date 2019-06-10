@@ -63,8 +63,9 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
   <button onClick={()=>{
       console.log(props.timeImpactOfRest);
   }}>Hello 1</button>
+  <button onClick={()=>console.log(timeSplitter(props.timeImpactOfRest, 8, 12))}>Hello 2</button>
   <button onClick={()=>{
-      console.log(timeSplitter(props.timeImpactOfRest, 8, 12));
-  }}>Hello 2</button>
+      props.timeImpactOfRest = timeSplitter(props.timeImpactOfRest, 8, 12);
+  }}>Hello 3</button>
   </div>
 );

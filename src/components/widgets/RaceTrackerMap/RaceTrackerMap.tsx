@@ -3,7 +3,8 @@ import * as React from "react";
 
 import ReactMapGL, {
   NavigationControl,
-  FlyToInterpolator
+  FlyToInterpolator,
+  Popup
 } from "react-map-gl";
 import {
   defaultMapStyle,
@@ -18,6 +19,7 @@ import {Subject} from 'rxjs';
 import imgPersonPin from 'assets/images/personPin.png';
 
 import styles from './RaceTrackerMap.module.css';
+
 
 
 
@@ -50,8 +52,8 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         bearing: 0,
         pitch: 0
       },
-
-      riderData: []
+      riderData: [],
+      popup:null
     };
   }
 
@@ -84,6 +86,13 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
               ]
             },
             properties: {
+              description: {
+                RacerID: trackLeader['trackleaders_racer_ID'][0],
+                DeviceBatteryState: trackLeader.message[0]['batteryState'][0],
+                ts: (trackLeader.message[0]['timestamp']==null ?trackLeader.message[0]['dateTime']:trackLeader.message[0]['timestamp']) ,
+                lat:trackLeader.message[0]['latitude'],
+                lng:trackLeader.message[0]['longitude']
+              },  
               speed: 10
             }
           };
@@ -126,7 +135,10 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         mapboxApiAccessToken={TOKEN}
         mapStyle={this.state.mapStyle}
         {...this.state.viewport}
-        onViewportChange={this.__handleViewportChange}>
+        onViewportChange={this.__handleViewportChange}
+        onClick={this.__handleClick}>
+        
+         {this.__renderPopup()}
         <NavigationControl
           className={styles.nav}
           onViewportChange={this.__handleViewportChange} />
@@ -139,6 +151,63 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
       </ReactMapGL>
     </div>
   );
+
+  private __handleClick = (event:any)  => {
+    const feature = event.features && event.features[0];
+
+    if (feature) {
+        if(feature.layer.id === "point"){
+            this.setState({popup: {
+                lat: event.lngLat[1],
+                lng: event.lngLat[0],
+                description: feature.properties.description
+            } 
+          })
+         
+       }
+    }
+  };
+
+  private __renderPopup = () =>  {
+    const {popup} = this.state;
+ 
+    return (
+      popup && (
+        <Popup
+          tipSize={5}
+          anchor="top"
+          longitude={popup.lng}
+          latitude={popup.lat}
+          closeOnClick={false}
+          onClose={() => this.setState({popup: null})}
+        >
+        
+        { <div>
+            <h3>
+              Racer ID: {JSON.parse(popup.description).RacerID}
+            </h3>
+            <strong>
+              Device Battery State: {JSON.parse(popup.description).DeviceBatteryState}
+            </strong>
+            <br></br>
+            <strong>
+              Time Stamp: {JSON.parse(popup.description).ts}
+            </strong>
+            <br></br>
+            <strong>
+              Latitude: {JSON.parse(popup.description).lat}
+            </strong>
+            <br></br>
+            <strong>
+              Longitude: {JSON.parse(popup.description).lng}
+            </strong>
+          </div> }
+         
+
+        </Popup>
+      )
+    );
+  }
 
 
 

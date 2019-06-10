@@ -92,7 +92,10 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
 
   public componentDidMount = () => {
+
+  
     window.document.title = "#InternetOfDave - Team Page";
+
     amplifyService
       .onRiderUpdate()
       .pipe(takeUntil(this.__unsubscribe))
@@ -106,12 +109,17 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         this.setState(update(this.state, {
           heartRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchHeartRate')},
           coreBodyTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqCoreTemp')},
-          mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoPercent')},
+          mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoTotal')},
           breathRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
           skinTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
           enduranceZone: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'enduranceZone')}
         }));
       });
+      setInterval(function(){
+       amplifyService.getAnalytics().then(result => {
+        console.log(result);
+        });
+      }, 20000 );
   };
 
 
@@ -157,40 +165,43 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         </FlexRow>
 
         <Heading><RedWord>#</RedWord>Biometrics</Heading>
-          <FlexCell>
-            <CoreAndSkinTemperatureWidget
-              widthPx={900}
-              heightPx={300}
-              coreTempSeries={this.state.coreBodyTemp}
-              skinTempSeries={this.state.skinTemp} />
-          </FlexCell>
+        <FlexCell>
+          <CoreAndSkinTemperatureWidget
+            widthPx={900}
+            heightPx={300}
+            coreTempSeries={this.state.coreBodyTemp}
+            skinTempSeries={this.state.skinTemp} />
+        </FlexCell>
 
-          <FlexCell>
-            <HeartAndBreathRateWidget
-              breathRateSeries={this.state.breathRate}
-              heartRateSeries={this.state.heartRate}
-              heightPx={300}
-              widthPx={900}
-            />
-          </FlexCell>
+        <FlexCell>
+          <HeartAndBreathRateWidget
+            breathRateSeries={this.state.breathRate}
+            heartRateSeries={this.state.heartRate}
+            heightPx={300}
+            widthPx={900}
+          />
+        </FlexCell>
 
-          <FlexCell>
-            <EnduranceZoneWidget
-              enduranceZone={this.state.enduranceZone}
-              heightPx={300}
-              widthPx={900}
-            />
-          </FlexCell>
+        <FlexCell>
+          <EnduranceZoneWidget
+            enduranceZone={this.state.enduranceZone}
+            heightPx={300}
+            widthPx={900}
+          />
+        </FlexCell>
 
-          <FlexCell>
-            <ElevationWidget
-              elevation={this.state.elevation}
-              timeImpactOfRest={this.state.timeImpactOfRest}
-              heightPx={300}
-              widthPx={900}
-            />
-          </FlexCell>
+        <FlexCell>
+          <ElevationWidget
+            elevation={this.state.elevation}
+            timeImpactOfRest ={this.state.timeImpactOfRest}
+            heightPx={300}
+            widthPx={900}
+          />
+        </FlexCell>
+
       </Section>
+
+      <button onClick={()=>this.state.elevation.push({x: 40, y:10})}>Click ME!!!</button>
 
       <Section>
         <Heading><RedWord>#</RedWord>Performance</Heading>
