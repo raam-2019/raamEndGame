@@ -20,12 +20,24 @@ function timeCompare(a: { x: any; }, b: { x: any; }){
     return comparison;
 }
 
+function timeSplitter(points: any, a: any, b: any ){
+    points = points.sort(timeCompare);
+    let res = [];
+    for(let i = 0; i < points.length; i++){
+        if(points[i].x < b && points[i].x > a){
+            res.push(points[i]);
+        }
+    }
+    return res;
+}
+
 export interface IElevationWidgetProps extends IDefaultWidgetProps {
   elevation: IPoint[];
   timeImpactOfRest: IPoint[];
 }
 
 export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
+    <div>
   <XYPlotTemplate
     heightPx={props.heightPx}
     widthPx={props.widthPx}
@@ -48,4 +60,11 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
       axisLabel: "Elevation Level"
     })}
   </XYPlotTemplate>
+  <button onClick={()=>{
+      console.log(props.timeImpactOfRest);
+  }}>Hello 1</button>
+  <button onClick={()=>{
+      console.log(timeSplitter(props.timeImpactOfRest, 8, 12));
+  }}>Hello 2</button>
+  </div>
 );

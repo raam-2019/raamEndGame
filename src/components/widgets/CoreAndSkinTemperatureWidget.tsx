@@ -32,7 +32,6 @@ export const CoreAndSkinTemperatureWidget: React.FC<ICoreAndSkinTemperatureWidge
       axisLabel: "Time",
       fnTickFormat: (t, index) => index
     })}
-
     {BasicVerticalAxis({
       axisLabel: "Temp (C)"
     })}

@@ -190,7 +190,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
               widthPx={900}
             />
           </FlexCell>
-
       </Section>
 
       <Section>
