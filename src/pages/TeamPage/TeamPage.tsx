@@ -27,6 +27,8 @@ import imgTopoBkgd from 'assets/images/topographBackground.png';
 
 import styles from './TeamPage.module.css';
 
+import {SelectField} from 'components/fields/generic/SelectField';
+
 
 export interface ITeamPageProps extends RouteComponentProps {
 
@@ -44,7 +46,20 @@ interface ITeamPageState {
   androidBattery: number;
   radarBattery: number;
   watchBattery: number;
+
+  forecastingHours: number;
 }
+
+const selectValues =
+   [
+     { id: "hour4", displayValue: "4 Hour" },
+     { id: "hour8", displayValue: "8 Hours" },
+     { id: "hour16", displayValue: "16 Hours" },
+     { id: "hour24", displayValue: "24 Hours" },
+     { id: "hour36", displayValue: "36 Hours" },
+     { id: "hour48", displayValue: "48 Hours" }
+  ];
+
 
 export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
@@ -62,6 +77,8 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       androidBattery: -1,
       radarBattery: -1,
       watchBattery: -1,
+
+      forecastingHours: 24,
 
       elevation: [{x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
       {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
@@ -125,6 +142,8 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         extraClassName={styles.firstSection}>
         <Heading><RedWord>Device</RedWord> Health</Heading>
 
+
+
         <FlexRow justifyContent="space-between">
           <FlexCell>
             <BatteryLifeWidget
@@ -178,6 +197,20 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           />
         </FlexCell>
 
+      </Section>
+
+      <Section>
+        <Heading><RedWord>#</RedWord>Performance</Heading>
+
+        <FlexRow justifyContent="flex-end">
+          <FlexCell flex="2">
+            <SelectField
+              options = {selectValues}
+              onChange = {this.__handleChange}
+              />
+          </FlexCell>
+        </FlexRow>
+
         <FlexCell>
           <ElevationWidget
             elevation={this.state.elevation}
@@ -185,11 +218,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
             widthPx={900}
           />
         </FlexCell>
-
-      </Section>
-
-      <Section>
-        <Heading><RedWord>#</RedWord>Performance</Heading>
 
         <LiveGraphWrapper
           width="300px"
@@ -200,6 +228,18 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       <Section>
         <Heading><RedWord>Course</RedWord> Awareness</Heading>
       </Section>
+
+      <Section backgroundColor="white">
+        <FlexRow justifyContent="flex-end">
+          <FlexCell flex="0">
+            <SelectField
+              options = {selectValues}
+              onChange = {this.__handleChange}
+              />
+          </FlexCell>
+        </FlexRow>
+      </Section>
+
     </PageTemplate>
   );
 
@@ -217,6 +257,21 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       radarBattery: radarBattery || -1,
       watchBattery: watchBattery || -1
     });
+  };
+
+  private __handleChange = (id: string) => {
+    const id2Hours: Record<string, number> = {
+     'hour4': 4,
+     'hour8': 8,
+     'hour16': 16,
+     'hour24': 24,
+     'hour36': 36,
+     'hour48': 48
+   };
+
+   this.setState({forecastingHours: id2Hours[id]});
+
+   console.log(this.state.forecastingHours);
   };
 
 }
