@@ -21,10 +21,13 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {BatteryLifeWidget} from 'components/BatteryLifeWidget/BatteryLifeWidget';
 import {ISensorData} from 'types/subscriptionTypes';
+import * as analyticsService from 'services/analytics';
 
 import imgTopoBkgd from 'assets/images/topographBackground.png';
 
 import styles from './TeamPage.module.css';
+
+import {SelectField} from 'components/fields/generic/SelectField';
 
 
 export interface ITeamPageProps extends RouteComponentProps {
@@ -43,7 +46,20 @@ interface ITeamPageState {
   androidBattery: number;
   radarBattery: number;
   watchBattery: number;
+
+  forecastingHours: number;
 }
+
+const selectValues =
+   [
+     { id: "hour4", displayValue: "4 Hour" },
+     { id: "hour8", displayValue: "8 Hours" },
+     { id: "hour16", displayValue: "16 Hours" },
+     { id: "hour24", displayValue: "24 Hours" },
+     { id: "hour36", displayValue: "36 Hours" },
+     { id: "hour48", displayValue: "48 Hours" }
+  ];
+
 
 export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
@@ -62,25 +78,25 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       radarBattery: -1,
       watchBattery: -1,
 
-      elevation:[{x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}, 
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}, 
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}, 
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
-        {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}]
+      forecastingHours: 24,
+
+      elevation: [{x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100},
+      {x: Math.floor(Math.random() * (+24 - +0)) + +0, y: Math.floor(Math.random() * (+100 - +1000)) + +100}]
     };
   }
 
 
 
   public componentDidMount = () => {
-
-  
     window.document.title = "#InternetOfDave - Team Page";
 
     amplifyService
@@ -96,32 +112,39 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         this.setState(update(this.state, {
           heartRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchHeartRate')},
           coreBodyTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqCoreTemp')},
-          mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoPercent')},
+          mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoTotal')},
           breathRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
           skinTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
           enduranceZone: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'enduranceZone')}
         }));
       });
+      
+    //  var token:any = null;
 
-     var token:any = null;
+    //  setInterval(function(){
+    //     if(token == null){
+    //       amplifyService.getAnalytics().then((result:any) => {
+    //         console.log(result); 
+    //         token  = result.data.listRaamalytics.nextToken;
+    //       });
+    //     }else{
+    //       amplifyService.getAnalyticsTokened(token).then((result:any) => {
+    //         console.log(result); 
+    //         if(result.data.listRaamalytics.nextToken == null){
+    //         }else{
+    //           token  = result.data.listRaamalytics.nextToken;
+    //         }
+    //       });
+    //     }
+    //   }
+    //   , 5000 )
 
-     setInterval(function(){
-        if(token == null){
-          amplifyService.getAnalytics().then((result:any) => {
-            console.log(result); 
-            token  = result.data.listRaamalytics.nextToken;
-          });
-        }else{
-          amplifyService.getAnalyticsTokened(token).then((result:any) => {
-            console.log(result); 
-            if(result.data.listRaamalytics.nextToken == null){
-            }else{
-              token  = result.data.listRaamalytics.nextToken;
-            }
-          });
-        }
-      }
-      , 5000 )
+    analyticsService
+      .onAnalyticsUpdate()
+      .pipe(takeUntil(this.__unsubscribe))
+      .subscribe(result => {
+        console.log(result);
+      });
   };
 
 
@@ -138,6 +161,8 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         backgroundImage={imgTopoBkgd}
         extraClassName={styles.firstSection}>
         <Heading><RedWord>Device</RedWord> Health</Heading>
+
+
 
         <FlexRow justifyContent="space-between">
           <FlexCell>
@@ -167,43 +192,52 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         </FlexRow>
 
         <Heading><RedWord>#</RedWord>Biometrics</Heading>
-          <FlexCell>
-            <CoreAndSkinTemperatureWidget
-              widthPx={900}
-              heightPx={300}
-              coreTempSeries={this.state.coreBodyTemp}
-              skinTempSeries={this.state.skinTemp} />
-          </FlexCell>
+        <FlexCell>
+          <CoreAndSkinTemperatureWidget
+            widthPx={900}
+            heightPx={300}
+            coreTempSeries={this.state.coreBodyTemp}
+            skinTempSeries={this.state.skinTemp} />
+        </FlexCell>
 
-          <FlexCell>
-            <HeartAndBreathRateWidget
-              breathRateSeries={this.state.breathRate}
-              heartRateSeries={this.state.heartRate}
-              heightPx={300}
-              widthPx={900}
-            />
-          </FlexCell>
+        <FlexCell>
+          <HeartAndBreathRateWidget
+            breathRateSeries={this.state.breathRate}
+            heartRateSeries={this.state.heartRate}
+            heightPx={300}
+            widthPx={900}
+          />
+        </FlexCell>
 
-          <FlexCell>
-            <EnduranceZoneWidget
-              enduranceZone={this.state.enduranceZone}
-              heightPx={300}
-              widthPx={900}
-            />
-          </FlexCell>
-
-          <FlexCell>
-            <ElevationWidget
-              elevation={this.state.elevation}
-              heightPx={300}
-              widthPx={900}
-            />
-          </FlexCell>
+        <FlexCell>
+          <EnduranceZoneWidget
+            enduranceZone={this.state.enduranceZone}
+            heightPx={300}
+            widthPx={900}
+          />
+        </FlexCell>
 
       </Section>
 
       <Section>
         <Heading><RedWord>#</RedWord>Performance</Heading>
+
+        <FlexRow justifyContent="flex-end">
+          <FlexCell flex="2">
+            <SelectField
+              options = {selectValues}
+              onChange = {this.__handleChange}
+              />
+          </FlexCell>
+        </FlexRow>
+
+        <FlexCell>
+          <ElevationWidget
+            elevation={this.state.elevation}
+            heightPx={300}
+            widthPx={900}
+          />
+        </FlexCell>
 
         <LiveGraphWrapper
           width="300px"
@@ -214,6 +248,18 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       <Section>
         <Heading><RedWord>Course</RedWord> Awareness</Heading>
       </Section>
+
+      <Section backgroundColor="white">
+        <FlexRow justifyContent="flex-end">
+          <FlexCell flex="0">
+            <SelectField
+              options = {selectValues}
+              onChange = {this.__handleChange}
+              />
+          </FlexCell>
+        </FlexRow>
+      </Section>
+
     </PageTemplate>
   );
 
@@ -231,6 +277,21 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       radarBattery: radarBattery || -1,
       watchBattery: watchBattery || -1
     });
+  };
+
+  private __handleChange = (id: string) => {
+    const id2Hours: Record<string, number> = {
+     'hour4': 4,
+     'hour8': 8,
+     'hour16': 16,
+     'hour24': 24,
+     'hour36': 36,
+     'hour48': 48
+   };
+
+   this.setState({forecastingHours: id2Hours[id]});
+
+   console.log(this.state.forecastingHours);
   };
 
 }

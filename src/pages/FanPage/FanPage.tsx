@@ -87,7 +87,7 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
         this.setState(update(this.state, {
           heartRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchHeartRate')},
           coreBodyTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqCoreTemp')},
-          mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoPercent')},
+          mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoTotal')},
           breathRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
           skinTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
         }));
@@ -209,6 +209,7 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
 
 
       <WhenShouldDaveRestSection
+        heartRate={this.state.heartRate}
         mo2={this.state.mo2}
         coreBodyTemp={this.state.coreBodyTemp} />
 
