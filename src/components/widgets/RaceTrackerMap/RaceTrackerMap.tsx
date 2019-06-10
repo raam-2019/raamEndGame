@@ -115,13 +115,21 @@ class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
   };
 
 
+
+  // I am calling this function which kind of returns the leaderboard (first to last, I think)
+  // in each onclick function. From there I find the array index using Daves 
+  // racer ID and then find the co ordinates of index +- 1. 
+
   private _rankRiders = (route: any, positions: any) => {
+
     //Calculates rider position order given a route 
     // Accepts a linestring or multilinestring feature
     // and a geojson feature collection of point rider positions to rank
     // Returns a geojson format object with features in order of ranking, including
     // Metadata about the distance in miles along the route
 
+
+    
     let rankedPositions = {
       "type": "FeatureCollection",
       "features": [] as any
