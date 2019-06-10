@@ -44,7 +44,7 @@ export const XYPlotTemplate: React.FC<IXYPlotTemplateProps> = props => (
         height={props.heightPx}
         width={props.widthPx}
         margin={{left: 50}}
-        >
+      >
 
         {props.useHorizontalGridLines && (
           <ReactVis.HorizontalGridLines style={__gridLineStyle} />

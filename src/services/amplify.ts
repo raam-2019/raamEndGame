@@ -41,8 +41,15 @@ function __subscribeToRiderUpdates() {
       next: result => {
         if (result.value.data) {
           const currentData = __subject.getValue();
+          const conv = __convertTemperatures2Fahrenheit(result.value.data.rider);
 
-          __subject.next(_.concat(currentData, __convertTemperatures2Fahrenheit(result.value.data.rider)));
+          __subject.next(
+            _.chain(currentData)
+              .concat(conv)
+              .uniqBy('ts')
+              .sortBy('ts')
+              .value()
+          );
         }
       },
 
@@ -66,7 +73,6 @@ interface IListAssetTableReturn {
 function __prefetchDataAndEmit() {
   return util.query<IListAssetTableReturn>(queries.listAssetTable6ce042es)
     .then(result => {
-      console.log(result);
       if (!result.data) {
         throw new Error('Error pre-fetching data. Please refresh the page.');
       }

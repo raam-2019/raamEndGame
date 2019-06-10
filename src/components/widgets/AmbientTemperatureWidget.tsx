@@ -1,36 +1,36 @@
 import * as React from 'react';
 
-import {BasicVerticalBarSeries} from "components/widgets/shared/BasicBarChart";
 import {XYPlotTemplate} from 'components/widgets/shared/XYPlotTemplate';
-import {IDefaultWidgetProps} from 'components/widgets/shared/IDefaultWidgetProps';
 import {
   BasicHorizontalAxis,
   BasicVerticalAxis
 } from 'components/widgets/shared/BasicAxes';
+import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
+import {IDefaultWidgetProps} from 'components/widgets/shared/IDefaultWidgetProps';
 
 
 
-export interface IEnduranceZoneWidgetProps extends IDefaultWidgetProps {}
+export interface IAmbientTemperatureWidgetProps extends IDefaultWidgetProps {}
 
-export const EnduranceZoneWidget: React.FC<IEnduranceZoneWidgetProps> = props => (
+export const AmbientTemperatureWidget: React.FC<IAmbientTemperatureWidgetProps> = props => (
   <XYPlotTemplate
     status={props.data.length < props.numPointsBeforeLoad ? "loading" : "ready"}
     heightPx={props.heightPx}
     widthPx={props.widthPx}
-    title="Endurance Zone MO2"
+    title="Ambient Temperature (°F)"
     useHorizontalGridLines={true}>
-    {BasicVerticalBarSeries({
-      data: props.data,
-      color: 'green'
-    })}
-
     {BasicHorizontalAxis({
       axisLabel: "Time",
       fnTickFormat: (t, index) => index
     })}
 
     {BasicVerticalAxis({
-      axisLabel: "Endurance Zone"
+      axisLabel: "°F"
+    })}
+
+    {LinearLineSeries({
+      data: props.data,
+      lineColor: 'red'
     })}
   </XYPlotTemplate>
 );
