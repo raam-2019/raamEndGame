@@ -30,11 +30,8 @@ export interface ICourseAwarenessSectionProps {
   graphWidthPx: number;
   graphHeightPx: number;
   numPointsBeforeLoad: number;
-
   selectedAwarenessRangeId: string;
-
   elevation: IPoint[];
-
   tailwindnow:IPoint[];
   tailwind2hrs:IPoint[];
 

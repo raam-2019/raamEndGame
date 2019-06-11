@@ -33,7 +33,7 @@ export function analyticData2PointSeries(analyticData: IAnalytic[], xPropName: k
   const ySeries = _.map(analyticData, yPropName);
   const points = _.zipWith(xSeries, ySeries, (x, y) => ({x, y}));
 
-  console.log(points);
+  console.log(points)
 
   return _.chain(points)
     .filter(point => _.isNumber(point.x) && _.isNumber(point.y))
