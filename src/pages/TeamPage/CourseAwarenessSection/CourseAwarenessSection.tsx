@@ -58,7 +58,6 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
         </StackedInputCell>
       </InputRow>
 
-
       <FlexCell className={globalStyles.marginBottom}>
         <ElevationWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
@@ -66,7 +65,6 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
           heightPx={props.graphHeightPx}
           widthPx={props.graphWidthPx} />
       </FlexCell>
-
 
       <FlexCell className={globalStyles.marginBottom}>
         <WindForecastWidget
@@ -77,8 +75,6 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
           heightPx={props.graphHeightPx}
           widthPx={props.graphWidthPx} />
       </FlexCell>
-
-
     </FlexColumn>
   </Section>
 );

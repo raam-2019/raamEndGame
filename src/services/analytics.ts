@@ -1,5 +1,9 @@
+import * as _ from 'lodash';
 import {BehaviorSubject} from "rxjs";
-import {listRaamalytics,listRaamalytics_token} from "graphql/queries";
+import {
+  listRaamalytics,
+  listRaamalytics_token
+} from "graphql/queries";
 import {
   API,
   graphqlOperation
@@ -37,8 +41,7 @@ export interface IAnalytic {
 export const UPDATE_INTERVAL_IN_MS = 1000 * 5;
 
 const __subject = new BehaviorSubject<IAnalytic[]>([]);
-
-var token:any = null;
+let __token = '';
 
 
 export function init() {
@@ -53,35 +56,27 @@ export function onAnalyticsUpdate() {
 
 
 async function __getData() {
+  let serverResult: any;
 
   try {
-    if(token == null){
-      const data = await API.graphql(graphqlOperation(listRaamalytics)) as any;
-      token  = data.data.listRaamalytics.nextToken;
+    if (!__token) {
+      serverResult = await API.graphql(graphqlOperation(listRaamalytics)) as any;
+      __token = serverResult.data.listRaamalytics.nextToken;
 
-      data.data.listRaamalytics.items.forEach((element:any) => {
-        element["predicted_arrival_time"] = moment(element["predicted_arrival_time"]).unix();
-        element["wind_speed_plus_2hr"] = parseFloat(element["wind_speed_plus_2hr"]);
-      });
-
-    __subject.next(data.data.listRaamalytics.items);
-
-    }else{
-      const data = await API.graphql(graphqlOperation(listRaamalytics_token,{nextToken:token})) as any;
-        if(data.data.listRaamalytics.nextToken == null){
-          //let it be at the last token if the next token is null
-        }else{
-          token  = data.data.listRaamalytics.nextToken;
-        }
-       // element["model_run_tstamp"] = moment(element["model_run_tstamp"]).unix()
-       data.data.listRaamalytics.items.forEach((element:any) => {
-        element["predicted_arrival_time"] = moment(element["predicted_arrival_time"]).unix();
-        element["wind_speed_plus_2hr"] = parseFloat(element["wind_speed_plus_2hr"]);
-      });
-
-        __subject.next(data.data.listRaamalytics.items);
+    } else {
+      serverResult = await API.graphql(graphqlOperation(listRaamalytics_token, {nextToken: __token})) as any;
+      if (serverResult.data.listRaamalytics.nextToken !== null) {
+        __token = serverResult.data.listRaamalytics.nextToken;
+      }
     }
-  
+
+    _.forEach(serverResult.data.listRaamalytics.items, item => {
+      item["predicted_arrival_time"] = moment(item["predicted_arrival_time"]).unix();
+      item["wind_speed_plus_2hr"] = parseFloat(item["wind_speed_plus_2hr"]);
+    });
+
+    __subject.next(serverResult.data.listRaamalytics.items);
+
   } catch (err) {
     console.error(err);
   }
