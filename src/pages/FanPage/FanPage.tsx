@@ -35,6 +35,7 @@ interface IFanPageState {
   breathRate: IPoint[];
   mo2: IPoint[];
   skinTemp: IPoint[];
+  watchSpeed: IPoint[];
 }
 
 export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
@@ -51,7 +52,8 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
       heartRate: [],
       mo2: [],
       breathRate: [],
-      skinTemp: []
+      skinTemp: [],
+      watchSpeed: [],
     };
   }
 
@@ -75,6 +77,7 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
           mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoTotal')},
           breathRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
           skinTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
+          watchSpeed: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchSpeed')},
         }));
       });
   };
@@ -101,7 +104,7 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
         mo2={this.state.mo2}
         coreBodyTemp={this.state.coreBodyTemp}
         heartRate={this.state.heartRate}
-        speed={[]} />
+        speed={this.state.watchSpeed} />
 
       <AnalyzeDataSection />
       <HowWasThisAccomplishedSection />
