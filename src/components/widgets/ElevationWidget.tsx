@@ -8,6 +8,7 @@ import {
 } from 'components/widgets/shared/BasicAxes';
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
 import * as util from './shared/util';
+import {AfterTimeTickMark} from "./shared/TimeTickMark";
 
 
 
@@ -43,7 +44,8 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
     })}
 
     {BasicHorizontalAxis({
-      axisLabel: "Time (Minutes)",
+      axisLabel: "Time (h:m:s ago)",
+      fnTickFormat: t => AfterTimeTickMark({unixTime: t})
     })}
 
     {BasicVerticalAxis({

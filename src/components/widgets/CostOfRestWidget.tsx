@@ -8,7 +8,7 @@ import {
 } from 'components/widgets/shared/BasicAxes';
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
 import * as util from './shared/util';
-
+import {AfterTimeTickMark} from 'components/widgets/shared/TimeTickMark';
 
 
 function timeCompare(a: {x: any;}, b: {x: any;}) {
@@ -23,7 +23,6 @@ function timeCompare(a: {x: any;}, b: {x: any;}) {
   }
   return comparison;
 }
-
 
 export interface ICostOfRestWidgetProps extends IDefaultWidgetProps {}
 
@@ -43,7 +42,8 @@ export const CostOfRestWidget: React.FC<ICostOfRestWidgetProps> = props => (
     })}
 
     {BasicHorizontalAxis({
-      axisLabel: "Time (Minutes)",
+      axisLabel: "Time (h:m:s ago)",
+      fnTickFormat: t => AfterTimeTickMark({unixTime: t})
     })}
 
     {BasicVerticalAxis({

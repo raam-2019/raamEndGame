@@ -97,6 +97,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           ambientTemperature: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchTemperature')},
           elevation: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'elevation')}
         }));
+
       });
       
 
@@ -119,7 +120,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
     this.__unsubscribe.next();
     this.__unsubscribe.complete();
   };
-
 
   private __removeSeriesBeforeStartTime(dataSeries: IPoint[], startTime: moment.Moment) {
     return _.filter(dataSeries, point => startTime.isBefore(moment.unix(point.x)))
