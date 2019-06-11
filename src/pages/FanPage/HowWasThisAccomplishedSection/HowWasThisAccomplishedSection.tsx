@@ -15,7 +15,6 @@ import {FlexRow} from 'components/layout/FlexRow';
 
 import imgAndrewDaniel from 'assets/images/teamMembers/andrewDaniel.jpeg';
 import imgAndrewGeng from 'assets/images/teamMembers/andrewGeng.jpeg';
-import imgChristopherPatterson from 'assets/images/teamMembers/christopherPatterson.jpeg';
 import imgDougBarton from 'assets/images/teamMembers/dougBarton.jpeg';
 import imgDouglasRobertson from 'assets/images/teamMembers/douglasRobertson.jpeg';
 import imgJonasKlare from 'assets/images/teamMembers/jonasKlare.jpeg';
@@ -27,6 +26,7 @@ import imgRayhanIslam from 'assets/images/teamMembers/rayhanIslam.jpeg';
 import imgSabrinaWulf from 'assets/images/teamMembers/sabrinaWulf.jpeg';
 import imgStevenWangen from 'assets/images/teamMembers/stevenWangen.jpeg';
 import imgWilliamMustari from 'assets/images/teamMembers/williamMustari.jpeg';
+import imgSumnerWebster from 'assets/images/teamMembers/sumnerWebster.jpeg';
 import imgTeam from 'assets/images/Team288.jpg';
 
 import styles from './HowWasThisAccomplishedSection.module.css';
@@ -108,8 +108,8 @@ export const HowWasThisAccomplishedSection: React.FC<IHowWasThisAccomplishedSect
 
         <FlexRow>
           <Img
-            src={imgTeam}
-            width="100%" />
+            extraClassName={styles.teamImg}
+            src={imgTeam} />
         </FlexRow>
       </FlexColumn>
     </Section>
@@ -133,10 +133,10 @@ const __teamMembers: ITeamMember[] = [
     linkedInUrl: 'https://www.linkedin.com/in/bartondoug/'
   },
   {
-    name: 'Christopher Patterson',
-    profilePictureUrl: imgChristopherPatterson,
-    titleText: "COO at Iron Forge Development",
-    linkedInUrl: 'https://www.linkedin.com/in/christopher-patterson/'
+    name: 'Sumner Webster',
+    profilePictureUrl: imgSumnerWebster,
+    titleText: "CEO of Iron Forge Development",
+    linkedInUrl: 'https://www.linkedin.com/in/sumnerwebster/'
   },
   {
     name: "Andrew Daniel",
