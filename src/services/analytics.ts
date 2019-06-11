@@ -1,5 +1,5 @@
 import {BehaviorSubject} from "rxjs";
-import {listRaamalytics} from "graphql/queries";
+import {listRaamalytics,listRaamalytics_token} from "graphql/queries";
 import {
   API,
   graphqlOperation
@@ -37,6 +37,7 @@ export const UPDATE_INTERVAL_IN_MS = 1000 * 5;
 
 const __subject = new BehaviorSubject<IAnalytic[]>([]);
 
+var token:any = null;
 
 
 export function init() {
@@ -50,11 +51,26 @@ export function onAnalyticsUpdate() {
 }
 
 
-
 async function __getData() {
+
   try {
-    const data = await API.graphql(graphqlOperation(listRaamalytics)) as any;
+    if(token == null){
+      const data = await API.graphql(graphqlOperation(listRaamalytics)) as any;
+     // console.log(data);
+      token  = data.data.listRaamalytics.nextToken;
     __subject.next(data.data.listRaamalytics.items);
+
+    }else{
+      const data = await API.graphql(graphqlOperation(listRaamalytics_token,{nextToken:token})) as any;
+     // console.log(data);
+        if(data.data.listRaamalytics.nextToken == null){
+          //let it be at the last token if the next token is null
+        }else{
+          token  = data.data.listRaamalytics.nextToken;
+        }
+        __subject.next(data.data.listRaamalytics.items);
+    }
+  
   } catch (err) {
     console.error(err);
   }

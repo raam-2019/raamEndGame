@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import Amplify from 'aws-amplify';
 import {ISensorData} from 'types/subscriptionTypes';
 import {rider} from 'graphql/subscriptions';
+// import {listRaamalytics, listRaamalytics_token} from 'graphql/queries';
 import {BehaviorSubject} from 'rxjs';
 import * as util from './util';
 import * as queries from 'graphql/queries';
@@ -25,6 +26,21 @@ export function onRiderUpdate() {
   return __subject.asObservable();
 }
 
+// export async function getAnalytics(){
+//   const data = await API.graphql(graphqlOperation(listRaamalytics));
+//   return data
+// }
+
+// export async function getAnalyticsTokened(token:string){
+//   const data = await API.graphql(graphqlOperation(listRaamalytics_token,{nextToken:token}));
+//   return data
+// }
+
+
+export interface ISubscribeOptions<TData> {
+  next: (data: TData) => void;
+  error?: (error: unknown) => void;
+}
 
 
 interface IRiderUpdateReturn {
