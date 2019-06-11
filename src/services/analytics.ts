@@ -62,7 +62,7 @@ async function __getData() {
 
       data.data.listRaamalytics.items.forEach((element:any) => {
         element["predicted_arrival_time"] = moment(element["predicted_arrival_time"]).unix();
-        element["wind_speed_plus_2hr"] = parseInt(element["wind_speed_plus_2hr"]);
+        element["wind_speed_plus_2hr"] = parseFloat(element["wind_speed_plus_2hr"]);
       });
 
       console.log(data.data.listRaamalytics.items);
@@ -80,7 +80,7 @@ async function __getData() {
        // element["model_run_tstamp"] = moment(element["model_run_tstamp"]).unix()
        data.data.listRaamalytics.items.forEach((element:any) => {
         element["predicted_arrival_time"] = moment(element["predicted_arrival_time"]).unix();
-        element["wind_speed_plus_2hr"] = parseInt(element["wind_speed_plus_2hr"]);
+        element["wind_speed_plus_2hr"] = parseFloat(element["wind_speed_plus_2hr"]);
       });
 
       console.log(data.data.listRaamalytics.items);
