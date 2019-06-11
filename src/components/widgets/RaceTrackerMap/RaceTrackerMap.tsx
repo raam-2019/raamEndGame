@@ -370,7 +370,6 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         {...this.state.viewport}
         onViewportChange={this.__handleViewportChange}
         onLoad={this._autoClickForInitialFitToBounds}
-      >
         onClick={this.__handleClick}>
 
         {this.__renderPopup()}

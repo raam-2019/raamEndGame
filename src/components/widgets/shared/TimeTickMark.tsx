@@ -12,3 +12,7 @@ export interface ITimeTickMarkProps {
 export const TimeTickMark = (props: ITimeTickMarkProps) => (
   <tspan style={{fontSize: '10px'}}>{duration2MinutesAndSeconds(moment().diff(moment.unix(props.unixTime)))}</tspan>
 );
+
+export const AfterTimeTickMark = (props: ITimeTickMarkProps) => (
+  <tspan style={{fontSize: '10px'}}>{duration2MinutesAndSeconds(moment().diff(-moment.unix(props.unixTime)))}</tspan>
+);

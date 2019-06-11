@@ -6,10 +6,7 @@ import {BehaviorSubject} from 'rxjs';
 import * as util from './util';
 import * as queries from 'graphql/queries';
 
-
-
 const __subject = new BehaviorSubject<ISensorData[]>([]);
-
 
 
 export function configure(config: any) {
@@ -19,12 +16,10 @@ export function configure(config: any) {
     .then(() => __subscribeToRiderUpdates());
 }
 
-
-
-export function onRiderUpdate() {
-  return __subject.asObservable();
+export interface ISubscribeOptions<TData> {
+  next: (data: TData) => void;
+  error?: (error: unknown) => void;
 }
-
 
 
 interface IRiderUpdateReturn {
@@ -37,12 +32,14 @@ interface IRiderUpdateReturn {
 
 function __subscribeToRiderUpdates() {
   util.exec<IRiderUpdateReturn>(rider)
+
     .subscribe({
+
       next: result => {
         if (result.value.data) {
           const currentData = __subject.getValue();
+          //__subject.next(_.concat(currentData, result.value.data.rider));
           const conv = __convertTemperatures2Fahrenheit(result.value.data.rider);
-
           __subject.next(
             _.chain(currentData)
               .concat(conv)
@@ -59,8 +56,6 @@ function __subscribeToRiderUpdates() {
       }
     });
 }
-
-
 
 interface IListAssetTableReturn {
   data?: {
@@ -99,4 +94,8 @@ function __convertTemperatures2Fahrenheit(data: ISensorData) {
     .value();
 
   return _.assign(data, tempData);
+}
+
+export function onRiderUpdate() {
+  return __subject.asObservable();
 }

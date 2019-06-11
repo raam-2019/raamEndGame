@@ -74,6 +74,7 @@ export const BiometricsSection: React.FC<IBiometricsSectionProps> = props => (
           widthPx={props.graphWidthPx}
           heightPx={props.graphHeightPx} />
       </FlexCell>
+      <button onClick={()=>console.log(props)}>Hello World</button>
 
       <FlexCell className={globalStyles.marginBottom}>
         <HeartRateWidget
