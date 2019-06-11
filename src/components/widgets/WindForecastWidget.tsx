@@ -8,6 +8,8 @@ import {
 } from 'components/widgets/shared/BasicAxes';
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
 import * as util from './shared/util';
+import {IPoint} from 'types/IPoint';
+import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
 
 
 export interface IWindForecastWidget extends IDefaultWidgetProps {
