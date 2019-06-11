@@ -52,6 +52,7 @@ export function onAnalyticsUpdate() {
 
 
 async function __getData() {
+
   try {
     if(token == null){
       const data = await API.graphql(graphqlOperation(listRaamalytics)) as any;

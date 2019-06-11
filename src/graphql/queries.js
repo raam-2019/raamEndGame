@@ -86,7 +86,7 @@ export const listAssetTable6ce042es = `query ListAssetTable6ce042es(
 export const listRaamalytics_token = `query Raaamalytics (
   $nextToken: String
 ) {
-  listRaamalytics(limit:100, nextToken: $nextToken){
+  listRaamalytics(limit:1, nextToken: $nextToken){
     items {
       key
       model_run_tstamp
@@ -118,7 +118,7 @@ export const listRaamalytics_token = `query Raaamalytics (
 `;
 
 export const listRaamalytics = `query Raaamalytics {
-  listRaamalytics(limit:50){
+  listRaamalytics(limit:1){
     items {
       key
       model_run_tstamp
