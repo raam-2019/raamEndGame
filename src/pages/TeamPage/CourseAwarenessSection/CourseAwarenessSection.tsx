@@ -3,8 +3,7 @@ import * as React from 'react';
 import {Section} from 'components/layout/Section/Section';
 import {Heading} from 'components/Heading/Heading';
 import {RedWord} from 'components/RedWord/RedWord';
-import {ElevationWidget} from 'components/widgets/ElevationWidget';
-import {CostOfRestWidget} from 'components/widgets/CostOfRestWidget';
+
 import {FlexCell} from 'components/layout/FlexCell';
 import {SelectField} from 'components/form/fields/SelectField';
 import {IPoint} from 'types/IPoint';
@@ -12,9 +11,16 @@ import {FlexColumn} from 'components/layout/FlexColumn';
 import {InputRow} from 'components/form/InputRow/InputRow';
 import {StackedInputCell} from 'components/form/StackedInputCell/StackedInputCell';
 
+//widgets
+import {ElevationWidget} from 'components/widgets/ElevationWidget';
+//import {CostOfRestWidget} from 'components/widgets/CostOfRestWidget';
+import {WindForecastWidget} from 'components/widgets/WindForecastWidget';
+//import {FutureCostWidget} from 'components/widgets/FutureCostWidget';
+//import {FutureTempWidget} from 'components/widgets/FutureTempWidget';
+//import {FutureHumidityWidget} from 'components/widgets/FutureHumidityWidget';
+
+
 import globalStyles from 'globalStyles.module.css';
-
-
 
 const AWARENESS_SELECT_VALUES = [
   {id: "120", displayValue: "2 hours"},
@@ -52,29 +58,64 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
         </StackedInputCell>
       </InputRow>
 
+
       <FlexCell className={globalStyles.marginBottom}>
-        <CostOfRestWidget
+        <ElevationWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
+          data={props.elevation}
+          heightPx={props.graphHeightPx}
+          widthPx={props.graphWidthPx} />
+      </FlexCell>
+
+
+      <FlexCell className={globalStyles.marginBottom}>
+        <WindForecastWidget
+          numPointsBeforeLoad={props.numPointsBeforeLoad}
+          elevationData={props.elevation}
+          forecastedWind={props.tailwind2hrs}
           data={props.tailwindnow}
           heightPx={props.graphHeightPx}
           widthPx={props.graphWidthPx} />
       </FlexCell>
 
-      <FlexCell className={globalStyles.marginBottom}>
-        <ElevationWidget
-          numPointsBeforeLoad={props.numPointsBeforeLoad}
-          data={props.elevation}
-          heightPx={props.graphHeightPx}
-          widthPx={props.graphWidthPx} />
-      </FlexCell>
 
-      <FlexCell className={globalStyles.marginBottom}>
-        <ElevationWidget
-          numPointsBeforeLoad={props.numPointsBeforeLoad}
-          data={props.elevation}
-          heightPx={props.graphHeightPx}
-          widthPx={props.graphWidthPx} />
-      </FlexCell>
     </FlexColumn>
   </Section>
 );
+
+//TODO
+/**
+CURRENT FEATURES:
+  Elevation data isn't scaling right.
+*/
+
+/* We will want these later
+//This is the good stuff that we REALLY want.
+<FlexCell className={globalStyles.marginBottom}>
+  <FutureCostWidget
+    numPointsBeforeLoad={props.numPointsBeforeLoad}
+    elevationData={props.elevation}
+    data={props.time_cost_of_rest}
+    heightPx={props.graphHeightPx}
+    widthPx={props.graphWidthPx} />
+</FlexCell>
+
+<FlexCell className={globalStyles.marginBottom}>
+  <FutureTempWidget
+    numPointsBeforeLoad={props.numPointsBeforeLoad}
+    elevationData={props.elevation}
+    data={props.predicted_temperature}
+    heightPx={props.graphHeightPx}
+    widthPx={props.graphWidthPx} />
+</FlexCell>
+
+//Unsure if we will be able to get this.
+<FlexCell className={globalStyles.marginBottom}>
+  <FutureHumidityWidget
+    numPointsBeforeLoad={props.numPointsBeforeLoad}
+    elevationData={props.elevation}
+    data={props.predicted_humidity}
+    heightPx={props.graphHeightPx}
+    widthPx={props.graphWidthPx} />
+</FlexCell>
+*/
