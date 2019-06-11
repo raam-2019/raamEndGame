@@ -151,7 +151,9 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
     ] = [
         this.__removeSeriesBeforeStartTime(this.state.elevation, courseAwarenessStartTime)
       ];
-
+      console.log(this.state.elevation);
+      console.log(elevation);
+      console.log("^^^");
       const [
         tailwindnow,
         tailwind2hrs
