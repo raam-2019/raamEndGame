@@ -34,7 +34,7 @@ interface ITeamPageState {
   enduranceZone: IPoint[];
   ambientTemperature: IPoint[];
   elevation: IPoint[];
-
+  
   androidBattery: number;
   radarBattery: number;
   watchBattery: number;
