@@ -10,14 +10,11 @@ import {IPoint} from 'types/IPoint';
 import {FlexColumn} from 'components/layout/FlexColumn';
 import {InputRow} from 'components/form/InputRow/InputRow';
 import {StackedInputCell} from 'components/form/StackedInputCell/StackedInputCell';
-
-//widgets
 import {ElevationWidget} from 'components/widgets/ElevationWidget';
-//import {CostOfRestWidget} from 'components/widgets/CostOfRestWidget';
 import {WindForecastWidget} from 'components/widgets/WindForecastWidget';
-//import {FutureCostWidget} from 'components/widgets/FutureCostWidget';
-//import {FutureTempWidget} from 'components/widgets/FutureTempWidget';
-//import {FutureHumidityWidget} from 'components/widgets/FutureHumidityWidget';
+import {FutureCostWidget} from 'components/widgets/FutureCostWidget';
+import {FutureTempWidget} from 'components/widgets/FutureTempWidget';
+import {FutureHumidityWidget} from 'components/widgets/FutureHumidityWidget';
 
 
 import globalStyles from 'globalStyles.module.css';
@@ -36,9 +33,15 @@ export interface ICourseAwarenessSectionProps {
   graphHeightPx: number;
   numPointsBeforeLoad: number;
   selectedAwarenessRangeId: string;
-  elevation: IPoint[];
+  predictedTimeXElevation: IPoint[];
+  predictedHeadwindXForecastedHeadwind: IPoint[];
+
   tailwindnow: IPoint[];
   tailwind2hrs: IPoint[];
+
+  predictedHumidity: IPoint[];
+  predictedTemperature: IPoint[];
+  timeCostOfRest: IPoint[];
 
   onChangeCourseAwarenessDuration: (id: string) => void;
 }
@@ -61,7 +64,16 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
       <FlexCell className={globalStyles.marginBottom}>
         <ElevationWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
-          data={props.elevation}
+          data={props.predictedTimeXElevation}
+          heightPx={props.graphHeightPx}
+          widthPx={props.graphWidthPx} />
+      </FlexCell>
+
+      <FlexCell className={globalStyles.marginBottom}>
+        <FutureCostWidget
+          numPointsBeforeLoad={props.numPointsBeforeLoad}
+          elevationData={props.predictedTimeXElevation}
+          data={props.timeCostOfRest}
           heightPx={props.graphHeightPx}
           widthPx={props.graphWidthPx} />
       </FlexCell>
@@ -69,49 +81,30 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
       <FlexCell className={globalStyles.marginBottom}>
         <WindForecastWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
-          elevationData={props.elevation}
+          elevationData={props.predictedTimeXElevation}
           forecastedWind={props.tailwind2hrs}
           data={props.tailwindnow}
+          heightPx={props.graphHeightPx}
+          widthPx={props.graphWidthPx} />
+      </FlexCell>
+
+      <FlexCell className={globalStyles.marginBottom}>
+        <FutureTempWidget
+          numPointsBeforeLoad={props.numPointsBeforeLoad}
+          elevationData={props.predictedTimeXElevation}
+          data={props.predictedTemperature}
+          heightPx={props.graphHeightPx}
+          widthPx={props.graphWidthPx} />
+      </FlexCell>
+
+      <FlexCell className={globalStyles.marginBottom}>
+        <FutureHumidityWidget
+          numPointsBeforeLoad={props.numPointsBeforeLoad}
+          elevationData={props.predictedTimeXElevation}
+          data={props.predictedHumidity}
           heightPx={props.graphHeightPx}
           widthPx={props.graphWidthPx} />
       </FlexCell>
     </FlexColumn>
   </Section>
 );
-
-//TODO
-/**
-CURRENT FEATURES:
-  Elevation data isn't scaling right.
-*/
-
-/* We will want these later
-//This is the good stuff that we REALLY want.
-<FlexCell className={globalStyles.marginBottom}>
-  <FutureCostWidget
-    numPointsBeforeLoad={props.numPointsBeforeLoad}
-    elevationData={props.elevation}
-    data={props.time_cost_of_rest}
-    heightPx={props.graphHeightPx}
-    widthPx={props.graphWidthPx} />
-</FlexCell>
-
-<FlexCell className={globalStyles.marginBottom}>
-  <FutureTempWidget
-    numPointsBeforeLoad={props.numPointsBeforeLoad}
-    elevationData={props.elevation}
-    data={props.predicted_temperature}
-    heightPx={props.graphHeightPx}
-    widthPx={props.graphWidthPx} />
-</FlexCell>
-
-//Unsure if we will be able to get this.
-<FlexCell className={globalStyles.marginBottom}>
-  <FutureHumidityWidget
-    numPointsBeforeLoad={props.numPointsBeforeLoad}
-    elevationData={props.elevation}
-    data={props.predicted_humidity}
-    heightPx={props.graphHeightPx}
-    widthPx={props.graphWidthPx} />
-</FlexCell>
-*/

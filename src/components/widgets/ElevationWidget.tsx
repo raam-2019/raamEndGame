@@ -9,6 +9,7 @@ import {
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
 import * as util from './shared/util';
 import {AfterTimeTickMark} from "./shared/TimeTickMark";
+import {TickMark} from 'components/widgets/shared/TickMark';
 
 
 //Date should be sorted now.
@@ -34,7 +35,8 @@ export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
     })}
 
     {BasicVerticalAxis({
-      axisLabel: "Elevation Level"
+      axisLabel: "Elevation Level",
+      fnTickFormat: t => TickMark({value: t})
     })}
   </XYPlotTemplate>
 );

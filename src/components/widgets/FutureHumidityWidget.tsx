@@ -11,6 +11,7 @@ import * as util from './shared/util';
 import {IPoint} from 'types/IPoint';
 import {AfterTimeTickMark} from 'components/widgets/shared/TimeTickMark';
 import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
+import {TickMark} from 'components/widgets/shared/TickMark';
 
 
 export interface IFutureHumidityWidget extends IDefaultWidgetProps {
@@ -24,7 +25,7 @@ export const FutureHumidityWidget: React.FC<IFutureHumidityWidget> = props => (
     heightPx={props.heightPx}
     widthPx={props.widthPx}
     status={props.data.length > 2 && props.data.length > 2 ? 'ready' : 'loading'}
-    title="Temperature over Elevation"
+    title="Predicted Humidity (not valid yet)"
     useHorizontalGridLines={true}>
 
     {LinearAreaSeries({
@@ -34,19 +35,20 @@ export const FutureHumidityWidget: React.FC<IFutureHumidityWidget> = props => (
       lineWidthPx: util.StrokeWidthPx
     })}
 
-    {LinearLineSeries ({
+    {LinearLineSeries({
       data: props.data,
       lineColor: 'blue',
       lineWidthPx: util.StrokeWidthPx
     })}
 
     {BasicHorizontalAxis({
-      axisLabel: "Time (Minutes)",
+      axisLabel: "Predicted Arrival Time (min)",
       fnTickFormat: t => AfterTimeTickMark({unixTime: t})
     })}
 
     {BasicVerticalAxis({
-      axisLabel: "Humidity %"
+      axisLabel: "Humidity %",
+      fnTickFormat: value => TickMark({value})
     })}
   </XYPlotTemplate>
 );

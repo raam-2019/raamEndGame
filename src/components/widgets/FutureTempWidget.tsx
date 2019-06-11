@@ -11,6 +11,7 @@ import * as util from './shared/util';
 import {IPoint} from 'types/IPoint';
 import {AfterTimeTickMark} from 'components/widgets/shared/TimeTickMark';
 import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
+import {TickMark} from 'components/widgets/shared/TickMark';
 
 
 export interface IFutureTempWidget extends IDefaultWidgetProps {
@@ -24,7 +25,7 @@ export const FutureTempWidget: React.FC<IFutureTempWidget> = props => (
     heightPx={props.heightPx}
     widthPx={props.widthPx}
     status={props.data.length > 2 && props.data.length > 2 ? 'ready' : 'loading'}
-    title="Temperature over Elevation"
+    title="Predicted Temperature over Elevation (not valid yet)"
     useHorizontalGridLines={true}>
 
     {LinearAreaSeries({
@@ -34,19 +35,20 @@ export const FutureTempWidget: React.FC<IFutureTempWidget> = props => (
       lineWidthPx: util.StrokeWidthPx
     })}
 
-    {LinearLineSeries ({
+    {LinearLineSeries({
       data: props.data,
       lineColor: 'red',
       lineWidthPx: util.StrokeWidthPx
     })}
 
     {BasicHorizontalAxis({
-      axisLabel: "Time (Minutes)",
+      axisLabel: "Predicted Arrival Time (Minutes)",
       fnTickFormat: t => AfterTimeTickMark({unixTime: t})
     })}
 
     {BasicVerticalAxis({
-      axisLabel: "Temperature"
+      axisLabel: "Temperature",
+      fnTickFormat: t => TickMark({value: t})
     })}
   </XYPlotTemplate>
 );

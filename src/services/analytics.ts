@@ -12,7 +12,7 @@ import moment from 'moment';
 
 
 
-export interface IAnalytic {
+export interface IAnalyticsData {
   key: String;
   model_run_tstamp?: String;
   course_bearing?: number;
@@ -40,7 +40,7 @@ export interface IAnalytic {
 
 export const UPDATE_INTERVAL_IN_MS = 1000 * 5;
 
-const __subject = new BehaviorSubject<IAnalytic[]>([]);
+const __subject = new BehaviorSubject<IAnalyticsData[]>([]);
 let __token = '';
 
 

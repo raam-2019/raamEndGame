@@ -1,6 +1,8 @@
 import * as _ from 'lodash';
 
 import {IPoint} from 'types/IPoint';
+import {ISensorData} from 'types/subscriptionTypes';
+import {IAnalyticsData} from 'services/analytics';
 
 
 
@@ -13,9 +15,21 @@ export function concatAndSortByX(currentPoints: IPoint[], x: number | null, y: n
 
 
 
-export function riderData2PointSeries(riderData: any, xPropName: any, yPropName: any): IPoint[] {
-  const xSeries = _.map(riderData, xPropName);
-  const ySeries = _.map(riderData, yPropName);
+export function sensorData2PointSeries(sensorData: ISensorData[], xPropName: keyof ISensorData, yPropName: keyof ISensorData) {
+  return __obj2PointSeries(sensorData, xPropName, yPropName);
+}
+
+
+
+export function analyticData2PointSeries(analyticData: IAnalyticsData[], xPropName: keyof IAnalyticsData, yPropName: keyof IAnalyticsData) {
+  return __obj2PointSeries(analyticData, xPropName, yPropName);
+}
+
+
+
+function __obj2PointSeries(data: any, xPropName: any, yPropName: any): IPoint[] {
+  const xSeries = _.map(data, xPropName);
+  const ySeries = _.map(data, yPropName);
   const points = _.zipWith(xSeries, ySeries, (x, y) => ({x, y}));
 
   return _.chain(points)
@@ -23,6 +37,8 @@ export function riderData2PointSeries(riderData: any, xPropName: any, yPropName:
     .sortBy(point => point.x)
     .value() as IPoint[]; // asserting on type because `_.isNumber` can't type out the strings and nulls
 }
+
+
 
 function __genValueToConcatWith(x: number | null, y: number | null) {
   return (x && y) ?

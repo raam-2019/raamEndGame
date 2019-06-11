@@ -11,6 +11,7 @@ import * as util from './shared/util';
 import {IPoint} from 'types/IPoint';
 import {AfterTimeTickMark} from 'components/widgets/shared/TimeTickMark';
 import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
+import {TickMark} from 'components/widgets/shared/TickMark';
 
 
 export interface IWindForecastWidget extends IDefaultWidgetProps {
@@ -35,13 +36,13 @@ export const WindForecastWidget: React.FC<IWindForecastWidget> = props => (
       lineWidthPx: util.StrokeWidthPx
     })}
 
-    {LinearLineSeries ({
+    {LinearLineSeries({
       data: props.forecastedWind,
       lineColor: 'red',
       lineWidthPx: util.StrokeWidthPx
     })}
 
-    {LinearLineSeries ({
+    {LinearLineSeries({
       data: props.data,
       lineColor: 'blue',
       lineWidthPx: util.StrokeWidthPx
@@ -53,7 +54,8 @@ export const WindForecastWidget: React.FC<IWindForecastWidget> = props => (
     })}
 
     {BasicVerticalAxis({
-      axisLabel: "Headwind Speed"
+      axisLabel: "Headwind Speed",
+      fnTickFormat: t => TickMark({value: t})
     })}
   </XYPlotTemplate>
 );

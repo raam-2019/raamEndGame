@@ -27,7 +27,7 @@ import imgSabrinaWulf from 'assets/images/teamMembers/sabrinaWulf.jpeg';
 import imgStevenWangen from 'assets/images/teamMembers/stevenWangen.jpeg';
 import imgWilliamMustari from 'assets/images/teamMembers/williamMustari.jpeg';
 import imgSumnerWebster from 'assets/images/teamMembers/sumnerWebster.jpeg';
-import imgTeam from 'assets/images/Team288.jpg';
+import imgTeam from 'assets/images/teamPhoto.jpg';
 
 import styles from './HowWasThisAccomplishedSection.module.css';
 import globalStyles from 'globalStyles.module.css';
