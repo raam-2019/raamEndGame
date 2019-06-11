@@ -64,7 +64,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       radarBattery: -1,
       watchBattery: -1,
       selectedBiometricRangeId: '20',  // Must match "20" in `BiometricsSectiontsx` as the default value.... could be typed if we wanted.
-      selectedAwarenessRangeId: '20', // Must match some default value in `CourseAwarenessSection.tsx`
+      selectedAwarenessRangeId: '1440', // Must match some default value in `CourseAwarenessSection.tsx`
       elevation: [],
       tailwindnow: [],
       tailwind2hrs: [],
@@ -99,7 +99,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         }));
 
       });
-      
+
 
     analyticsService
       .onAnalyticsUpdate()
@@ -124,7 +124,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
   private __removeSeriesBeforeStartTime(dataSeries: IPoint[], startTime: moment.Moment) {
     return _.filter(dataSeries, point => startTime.isBefore(moment.unix(point.x)))
   }
-  
+
   private __addSeriesAfterEndTime(dataSeries: IPoint[], endTime: moment.Moment) {
     return _.filter(dataSeries, point => endTime.isAfter(moment.unix(point.x)))
   }
@@ -194,7 +194,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           elevation={elevation}
 
           tailwindnow={tailwindnow}
-          tailwind2hrs={tailwind2hrs} 
+          tailwind2hrs={tailwind2hrs}
 
           graphHeightPx={GRAPH_HEIGHT_PX}
           graphWidthPx={GRAPH_WIDTH_PX}
