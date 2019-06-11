@@ -9,7 +9,7 @@ import {
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
 import * as util from './shared/util';
 import {IPoint} from 'types/IPoint';
-import {TimeTickMark} from 'components/widgets/shared/TimeTickMark';
+import {AfterTimeTickMark} from 'components/widgets/shared/TimeTickMark';
 import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
 
 
@@ -49,7 +49,7 @@ export const WindForecastWidget: React.FC<IWindForecastWidget> = props => (
 
     {BasicHorizontalAxis({
       axisLabel: "Time (Minutes)",
-      fnTickFormat: t => TimeTickMark({unixTime: t})
+      fnTickFormat: t => AfterTimeTickMark({unixTime: t})
     })}
 
     {BasicVerticalAxis({
