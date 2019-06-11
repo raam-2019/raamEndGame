@@ -57,7 +57,6 @@ async function __getData() {
   try {
     if(token == null){
       const data = await API.graphql(graphqlOperation(listRaamalytics)) as any;
-     // console.log(data);
       token  = data.data.listRaamalytics.nextToken;
 
       data.data.listRaamalytics.items.forEach((element:any) => {
@@ -65,13 +64,10 @@ async function __getData() {
         element["wind_speed_plus_2hr"] = parseFloat(element["wind_speed_plus_2hr"]);
       });
 
-      console.log(data.data.listRaamalytics.items);
-
     __subject.next(data.data.listRaamalytics.items);
 
     }else{
       const data = await API.graphql(graphqlOperation(listRaamalytics_token,{nextToken:token})) as any;
-     // console.log(data);
         if(data.data.listRaamalytics.nextToken == null){
           //let it be at the last token if the next token is null
         }else{
@@ -82,8 +78,6 @@ async function __getData() {
         element["predicted_arrival_time"] = moment(element["predicted_arrival_time"]).unix();
         element["wind_speed_plus_2hr"] = parseFloat(element["wind_speed_plus_2hr"]);
       });
-
-      console.log(data.data.listRaamalytics.items);
 
         __subject.next(data.data.listRaamalytics.items);
     }

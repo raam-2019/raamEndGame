@@ -106,8 +106,8 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       .pipe(takeUntil(this.__unsubscribe))
       .subscribe(result => {
         this.setState(update(this.state, {
-          tailwindnow: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_speed_m_per_s')},
-          tailwind2hrs: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_speed_plus_2hr')},
+          tailwindnow: {$set: dataUtil.riderData2PointSeries(result, 'predicted_arrival_time', 'wind_speed_m_per_s')},
+          tailwind2hrs: {$set: dataUtil.riderData2PointSeries(result, 'predicted_arrival_time', 'wind_speed_plus_2hr')},
         }));
 
         console.log(this.state.tailwindnow);
