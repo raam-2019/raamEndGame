@@ -109,14 +109,8 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           tailwindnow: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_speed_m_per_s')},
           tailwind2hrs: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_speed_plus_2hr')},
         }));
-<<<<<<< HEAD
-        console.log(this.state.tailwindnow);
-
-=======
-
         console.log(this.state.tailwindnow);
         console.log(this.state.tailwind2hrs);
->>>>>>> 7e8842bf45ccb068a6acca0fdf0e9434fd3cf5e7
       });
   };
 
