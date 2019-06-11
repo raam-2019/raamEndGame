@@ -65,7 +65,7 @@ async function __getData() {
         element["wind_speed_plus_2hr"] = parseFloat(element["wind_speed_plus_2hr"]);
       });
 
-      console.log(data.data.listRaamalytics.items);
+      // console.log(data.data.listRaamalytics.items);
 
     __subject.next(data.data.listRaamalytics.items);
 
@@ -83,7 +83,7 @@ async function __getData() {
         element["wind_speed_plus_2hr"] = parseFloat(element["wind_speed_plus_2hr"]);
       });
 
-      console.log(data.data.listRaamalytics.items);
+      // console.log(data.data.listRaamalytics.items);
 
         __subject.next(data.data.listRaamalytics.items);
     }

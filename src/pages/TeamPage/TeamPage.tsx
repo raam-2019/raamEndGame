@@ -110,23 +110,17 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           tailwind2hrs: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_speed_plus_2hr')},
         }));
 
-        console.log(this.state.tailwindnow);
-        console.log(this.state.tailwind2hrs);
       });
   };
-
 
   public componentWillUnmount = () => {
     this.__unsubscribe.next();
     this.__unsubscribe.complete();
   };
 
-
-
   private __removeSeriesBeforeStartTime(dataSeries: IPoint[], startTime: moment.Moment) {
     return _.filter(dataSeries, point => startTime.isBefore(moment.unix(point.x)))
   }
-
 
   public render = () => {
     // There is an assumption here that `selectedBiometricRangeId` is always a string integer
@@ -204,7 +198,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
   };
 
 
-
   private __setCurrentBatteryLevelState = (riderData: ISensorData[]) => {
     const lastData = _.last(riderData);
     if (!lastData) {
@@ -218,7 +211,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       watchBattery: watchBattery || -1
     });
   };
-
 
 
   private __handleChangeBiometricsDuration = (selectedBiometricRangeId: string) =>
