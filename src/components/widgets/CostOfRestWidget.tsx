@@ -12,23 +12,13 @@ import {AfterTimeTickMark} from 'components/widgets/shared/TimeTickMark';
 
 
 function timeCompare(a: {x: any;}, b: {x: any;}) {
-  let timeA = a.x;
-  let timeB = b.x;
-  let comparison = 0;
-
-  if (timeA > timeB) {
-    comparison = 1;
-  } else if (timeA < timeB) {
-    comparison = -1;
-  }
-  return comparison;
+  return a.x - b.x;
 }
 
 export interface ICostOfRestWidgetProps extends IDefaultWidgetProps {}
 
 export const CostOfRestWidget: React.FC<ICostOfRestWidgetProps> = props => (
     <XYPlotTemplate
-    {...console.log(props)}
     heightPx={props.heightPx}
     widthPx={props.widthPx}
     status={props.data.length > 2 && props.data.length > 2 ? 'ready' : 'loading'}
