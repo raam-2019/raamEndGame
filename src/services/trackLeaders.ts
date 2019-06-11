@@ -4,12 +4,9 @@ import {BehaviorSubject} from "rxjs";
 import {Parser} from 'xml2js';
 import {DOMParser} from 'xmldom';
 
-
-
 export const UPDATE_INTERVAL_IN_MS = 1000 * 60;
 
 const __subject = new BehaviorSubject<any | null>(null);
-
 
 
 export function init() {
@@ -51,7 +48,6 @@ function __fetchResults() {
       console.error(err);
     });
 }
-
 
 
 function __readStream(streamReader: ReadableStreamDefaultReader<Uint8Array>) {

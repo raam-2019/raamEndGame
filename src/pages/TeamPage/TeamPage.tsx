@@ -34,7 +34,10 @@ interface ITeamPageState {
   enduranceZone: IPoint[];
   ambientTemperature: IPoint[];
   elevation: IPoint[];
-  
+  tailwindnow:IPoint[];
+  tailwind2hrs:IPoint[];
+  costofrest:IPoint[];
+
   androidBattery: number;
   radarBattery: number;
   watchBattery: number;
@@ -62,7 +65,10 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       watchBattery: -1,
       selectedBiometricRangeId: '20',  // Must match "20" in `BiometricsSectiontsx` as the default value.... could be typed if we wanted.
       selectedAwarenessRangeId: '20', // Must match some default value in `CourseAwarenessSection.tsx`
-      elevation: []
+      elevation: [],
+      tailwindnow: [],
+      tailwind2hrs: [],
+      costofrest: []
     };
   }
 
@@ -91,13 +97,21 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           ambientTemperature: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchTemperature')},
           elevation: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'elevation')}
         }));
+
       });
+      
 
     analyticsService
       .onAnalyticsUpdate()
       .pipe(takeUntil(this.__unsubscribe))
       .subscribe(result => {
-        // console.log(result);
+        this.setState(update(this.state, {
+          tailwindnow: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_speed_m_per_s')},
+          tailwind2hrs: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_speed_plus_2hr')},
+        }));
+
+        console.log(this.state.tailwindnow);
+        console.log(this.state.tailwind2hrs);
       });
   };
 
@@ -143,6 +157,17 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         this.__addSeriesAfterEndTime(this.state.elevation, courseAwarenessEndTime)
       ];
 
+      const [
+        tailwindnow,
+        tailwind2hrs
+
+      ] = [
+          this.__addSeriesAfterEndTime(this.state.tailwindnow, courseAwarenessEndTime),
+          this.__addSeriesAfterEndTime(this.state.tailwind2hrs, courseAwarenessEndTime)
+        ];
+
+
+
     return (
       <PageTemplate {...this.props}
         style={{backgroundColor: "#fafafa"}}>
@@ -169,6 +194,10 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         <CourseAwarenessSection
           key={`courseAwareness-${this.state.selectedAwarenessRangeId}`}
           elevation={elevation}
+
+          tailwindnow={tailwindnow}
+          tailwind2hrs={tailwind2hrs} 
+
           graphHeightPx={GRAPH_HEIGHT_PX}
           graphWidthPx={GRAPH_WIDTH_PX}
           numPointsBeforeLoad={NUM_POINTS_BEFORE_LOAD}
