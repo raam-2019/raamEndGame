@@ -12,6 +12,7 @@ import {IPoint} from 'types/IPoint';
 import {FlexColumn} from 'components/layout/FlexColumn';
 import {InputRow} from 'components/form/InputRow/InputRow';
 import {StackedInputCell} from 'components/form/StackedInputCell/StackedInputCell';
+import {WindForecastWidget} from 'components/widgets/WindForecastWidget'
 
 import globalStyles from 'globalStyles.module.css';
 
@@ -73,6 +74,16 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
         <ElevationWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
           data={props.elevation}
+          heightPx={props.graphHeightPx}
+          widthPx={props.graphWidthPx} />
+      </FlexCell>
+
+      <FlexCell className={globalStyles.marginBottom}>
+        <WindForecastWidget
+          numPointsBeforeLoad={props.numPointsBeforeLoad}
+          elevationData={props.elevation}
+          data={props.tailwindnow}
+          forecastedWind={props.tailwind2hrs}
           heightPx={props.graphHeightPx}
           widthPx={props.graphWidthPx} />
       </FlexCell>
