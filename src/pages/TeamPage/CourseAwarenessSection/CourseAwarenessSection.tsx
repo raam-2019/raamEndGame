@@ -69,7 +69,6 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
           widthPx={props.graphWidthPx} />
       </FlexCell>
 
-<<<<<<< HEAD
       <FlexCell className={globalStyles.marginBottom}>
         <ElevationWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
@@ -77,11 +76,6 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
           heightPx={props.graphHeightPx}
           widthPx={props.graphWidthPx} />
       </FlexCell>
-=======
->>>>>>> 64e689d917f40b8af792ffbe696877099e97616e
     </FlexColumn>
-
-    <FlexRow justifyContent="flex-end">
-    </FlexRow>
   </Section>
 );
