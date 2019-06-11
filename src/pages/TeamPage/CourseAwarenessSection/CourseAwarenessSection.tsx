@@ -17,12 +17,12 @@ import globalStyles from 'globalStyles.module.css';
 
 
 const AWARENESS_SELECT_VALUES = [
-  {id: "5", displayValue: "5 minutes"},
-  {id: "20", displayValue: "20 minutes"},
-  {id: "60", displayValue: "1 hour"},
+  {id: "120", displayValue: "2 hours"},
   {id: "240", displayValue: "4 hours"},
-  {id: "360", displayValue: "6 hours"},
-  {id: "480", displayValue: "8 hours"}
+  {id: "480", displayValue: "8 hours"},
+  {id: "960", displayValue: "16 hours"},
+  {id: "1440", displayValue: "24 hours"},
+  {id: "2880", displayValue: "48 hours"}
 ];
 
 export interface ICourseAwarenessSectionProps {
@@ -51,6 +51,14 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
             onChange={props.onChangeCourseAwarenessDuration} />
         </StackedInputCell>
       </InputRow>
+
+      <FlexCell className={globalStyles.marginBottom}>
+        <ElevationWidget
+          numPointsBeforeLoad={props.numPointsBeforeLoad}
+          data={props.elevation}
+          heightPx={props.graphHeightPx}
+          widthPx={props.graphWidthPx} />
+      </FlexCell>
 
       <FlexCell className={globalStyles.marginBottom}>
         <ElevationWidget

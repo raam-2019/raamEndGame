@@ -61,7 +61,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       radarBattery: -1,
       watchBattery: -1,
       selectedBiometricRangeId: '20',  // Must match "20" in `BiometricsSectiontsx` as the default value.... could be typed if we wanted.
-      selectedAwarenessRangeId: '20', // Must match some default value in `CourseAwarenessSection.tsx`
+      selectedAwarenessRangeId: '1440', // Must match some default value in `CourseAwarenessSection.tsx`
       elevation: []
     };
   }
