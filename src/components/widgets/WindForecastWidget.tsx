@@ -9,10 +9,7 @@ import {
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
 import * as util from './shared/util';
 import {IPoint} from 'types/IPoint';
-<<<<<<< HEAD
 import {TimeTickMark} from 'components/widgets/shared/TimeTickMark';
-=======
->>>>>>> 41a61bafe3bf428be974c84c75492aab816df968
 import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
 
 
