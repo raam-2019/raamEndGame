@@ -113,11 +113,15 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
     return _.filter(dataSeries, point => startTime.isBefore(moment.unix(point.x)))
   }
 
+  private __addSeriesAfterEndTime(dataSeries: IPoint[], endTime: moment.Moment) {
+    return _.filter(dataSeries, point => endTime.isAfter(moment.unix(point.x)))
+  }
 
   public render = () => {
     // There is an assumption here that `selectedBiometricRangeId` is always a string integer
     const biometricStartTime = moment().subtract(moment.duration(+this.state.selectedBiometricRangeId, 'minutes'));
-    const courseAwarenessStartTime = moment().subtract(moment.duration(+this.state.selectedAwarenessRangeId, 'minutes'));
+
+    const courseAwarenessEndTime = moment().add(moment.duration(+this.state.selectedAwarenessRangeId, 'minutes'));
 
     const [
       ambientTemp,
@@ -136,7 +140,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
     const [
       elevation
     ] = [
-        this.__removeSeriesBeforeStartTime(this.state.elevation, courseAwarenessStartTime)
+        this.__addSeriesAfterEndTime(this.state.elevation, courseAwarenessEndTime)
       ];
 
     return (
