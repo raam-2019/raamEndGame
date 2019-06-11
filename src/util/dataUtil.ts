@@ -16,7 +16,6 @@ export function concatAndSortByX(currentPoints: IPoint[], x: number | null, y: n
 
 
 export function riderData2PointSeries(riderData: ISensorData[], xPropName: keyof ISensorData, yPropName: keyof ISensorData): IPoint[] {
-  
   const xSeries = _.map(riderData, xPropName);
   const ySeries = _.map(riderData, yPropName);
   const points = _.zipWith(xSeries, ySeries, (x, y) => ({x, y}));

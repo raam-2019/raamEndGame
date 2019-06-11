@@ -97,7 +97,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           ambientTemperature: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchTemperature')},
           elevation: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'elevation')}
         }));
-
       });
       
 
@@ -122,11 +121,10 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
   };
 
 
-
   private __removeSeriesBeforeStartTime(dataSeries: IPoint[], startTime: moment.Moment) {
     return _.filter(dataSeries, point => startTime.isBefore(moment.unix(point.x)))
   }
-
+  
   private __addSeriesAfterEndTime(dataSeries: IPoint[], endTime: moment.Moment) {
     return _.filter(dataSeries, point => endTime.isAfter(moment.unix(point.x)))
   }
@@ -144,11 +142,11 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       enduranceZone,
       heartRate
     ] = [
-        this.__removeSeriesBeforeStartTime(this.state.ambientTemperature, biometricStartTime),
-        this.__removeSeriesBeforeStartTime(this.state.breathRate, biometricStartTime),
-        this.__removeSeriesBeforeStartTime(this.state.coreBodyTemp, biometricStartTime),
-        this.__removeSeriesBeforeStartTime(this.state.enduranceZone, biometricStartTime),
-        this.__removeSeriesBeforeStartTime(this.state.heartRate, biometricStartTime),
+      this.__removeSeriesBeforeStartTime(this.state.ambientTemperature, biometricStartTime),
+      this.__removeSeriesBeforeStartTime(this.state.breathRate, biometricStartTime),
+      this.__removeSeriesBeforeStartTime(this.state.coreBodyTemp, biometricStartTime),
+      this.__removeSeriesBeforeStartTime(this.state.enduranceZone, biometricStartTime),
+      this.__removeSeriesBeforeStartTime(this.state.heartRate, biometricStartTime),
       ];
 
     const [
@@ -191,6 +189,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           numPointsBeforeLoad={NUM_POINTS_BEFORE_LOAD}
           onChangeBiometricsDuration={this.__handleChangeBiometricsDuration} />
 
+          <button onClick={()=>console.log(this.state)}>Hello World This is It</button>
         <CourseAwarenessSection
           key={`courseAwareness-${this.state.selectedAwarenessRangeId}`}
           elevation={elevation}
