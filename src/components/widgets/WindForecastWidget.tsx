@@ -48,6 +48,7 @@ export const WindForecastWidget: React.FC<IWindForecastWidget> = props => (
 
     {BasicHorizontalAxis({
       axisLabel: "Time (Minutes)",
+      fnTickFormat: t => TimeTickMark({unixTime: t})
     })}
 
     {BasicVerticalAxis({
