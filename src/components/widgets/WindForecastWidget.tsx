@@ -9,6 +9,7 @@ import {
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
 import * as util from './shared/util';
 import {IPoint} from 'types/IPoint';
+import {TimeTickMark} from 'components/widgets/shared/TimeTickMark';
 import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
 
 
