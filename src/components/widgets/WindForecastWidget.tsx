@@ -26,7 +26,7 @@ export const WindForecastWidget: React.FC<IElevationWidgetProps> = props => (
     useHorizontalGridLines={true}>
 
     {LinearAreaSeries({
-      data: props.elevationData;
+      data: props.elevationData,
       lineColor: 'orange',
       fillColor: '#FFCF9E',
       lineWidthPx: util.StrokeWidthPx
