@@ -189,7 +189,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           numPointsBeforeLoad={NUM_POINTS_BEFORE_LOAD}
           onChangeBiometricsDuration={this.__handleChangeBiometricsDuration} />
 
-          <button onClick={()=>console.log(this.state)}>Hello World This is It</button>
         <CourseAwarenessSection
           key={`courseAwareness-${this.state.selectedAwarenessRangeId}`}
           elevation={elevation}
