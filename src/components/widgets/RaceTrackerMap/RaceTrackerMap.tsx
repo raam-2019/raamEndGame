@@ -5,8 +5,8 @@ import WebMercatorViewport from 'viewport-mercator-project';
 import bbox from '@turf/bbox';
 import * as turf from '@turf/turf'
 // import turf from '@turf/turf';
- 
- 
+
+
 
 import ReactMapGL, {
   NavigationControl,
@@ -18,11 +18,11 @@ import {
   defaultMapStyle,
   pointLayer
 } from "./MapStyle";
-import { fromJS } from "immutable";
-import { Img } from 'components/Img/Img';
+import {fromJS} from "immutable";
+import {Img} from 'components/Img/Img';
 import * as trackLeaderService from 'services/trackLeaders';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 import reCenter from 'assets/images/recenter.png';
 import imgDaveMinusPin from 'assets/images/personPinMinus.png';
@@ -88,10 +88,10 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
     var line = turf.lineString([[-117.388839, 33.191634], [-76.321246, 38.934216]]);
     const [minLng, minLat, maxLng, maxLat] = bbox(line);
- 
+
     // construct a viewport instance from the current state
     const viewport = new WebMercatorViewport(this.state.viewport);
-    const { longitude, latitude, zoom } = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
+    const {longitude, latitude, zoom} = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
       padding: 40
     });
 
@@ -137,10 +137,10 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     let sortable: any = [];
 
 
-    positions.forEach(function (rider: any) {
+    positions.forEach(function(rider: any) {
 
       let riderId = rider["trackleaders_racer_ID"][0];
- 
+
       var aa = {
         lng: rider["message"][0]["longitude"][0],
         lat: rider["message"][0]["latitude"][0]
@@ -156,13 +156,13 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
     });
 
-    sortable.sort(function (a: any, b: any) {
+    sortable.sort(function(a: any, b: any) {
       return a[1] - b[1];
     });
 
-    rankedPositions.features.forEach(function (feat: any) {
+    rankedPositions.features.forEach(function(feat: any) {
       let rankInField = sortable.length;  // default to last place
-      sortable.forEach(function (rank: any) {
+      sortable.forEach(function(rank: any) {
         if (rank[0] === feat.properties.riderId) {
           feat.properties.rank = rankInField
         }
@@ -185,9 +185,9 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
 
   private _toggleRidersDaveMinusOne = () => {
- 
+
     var data = this.state.calcData;
- 
+
     var returnValue = this._rankRiders(route, data);
 
     // Daves Racer id is 60 for experimental Purpose
@@ -208,12 +208,12 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
     var daveLng = daveCoordinate[0];
     var daveLat = daveCoordinate[1];
- 
+
     var targetCoordinate = returnValue.positions.features[index + 1].geometry.coordinates;
-    
+
     var targetLng = targetCoordinate[0];
     var targetLat = targetCoordinate[1];
- 
+
     var line = turf.lineString([[daveLng, daveLat], [targetLng, targetLat]]);
     console.log(line);
 
@@ -222,7 +222,7 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
     // // // construct a viewport instance from the current state
     const viewport = new WebMercatorViewport(this.state.viewport);
-    const { longitude, latitude } = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
+    const {longitude, latitude} = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
       padding: 200
     });
 
@@ -242,9 +242,9 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
   private _toggleRidersDavePlusOne = () => {
 
     var data = this.state.calcData;
- 
+
     var returnValue = this._rankRiders(route, data);
- 
+
     // Daves Racer id is 60 for experimental Purpose
     var cnt = 0;
     var index = 0;
@@ -262,11 +262,11 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     var daveCoordinate: any = returnValue.positions.features[index].geometry.coordinates;
     var daveLng = daveCoordinate[0];
     var daveLat = daveCoordinate[1];
- 
+
     var targetCoordinate = returnValue.positions.features[index - 1].geometry.coordinates;
     var targetLng = targetCoordinate[0];
     var targetLat = targetCoordinate[1];
-   
+
     var line = turf.lineString([[daveLng, daveLat], [targetLng, targetLat]]);
     console.log(line);
 
@@ -275,7 +275,7 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
     // // // construct a viewport instance from the current state
     const viewport = new WebMercatorViewport(this.state.viewport);
-    const { longitude, latitude } = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
+    const {longitude, latitude} = viewport.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
       padding: 200
     });
 
@@ -310,6 +310,10 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
         } as any;
 
         _.forEach(trackleaders, trackLeader => {
+          if (!trackLeader.message || _.isEmpty(trackLeader.message)) {
+            return;
+          }
+
           const pointData = {
             type: "Feature",
             geometry: {
@@ -330,18 +334,19 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
               speed: 10
             }
           };
+
           geojsonWrapper.features.push(pointData);
         });
 
         //Passing trackleader data to the toggle function
-        this.setState({ calcData: trackleaders })
+        this.setState({calcData: trackleaders})
 
-        let { mapStyle } = this.state;
+        let {mapStyle} = this.state;
         if (!mapStyle.hasIn(["sources", "point"])) {
           mapStyle = mapStyle
             .setIn(
               ["sources", "point"],
-              fromJS({ type: "geojson", data: geojsonWrapper })
+              fromJS({type: "geojson", data: geojsonWrapper})
             )
             .set("layers", mapStyle.get("layers").push(pointLayer));
         }
@@ -352,10 +357,10 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
           geojsonWrapper
         );
 
-        this.setState({ mapStyle });
+        this.setState({mapStyle});
       });
   };
- 
+
   public componentWillUnmount = () => {
     this.__unsubscribe.next();
     this.__unsubscribe.complete();
@@ -427,7 +432,7 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
   };
 
   private __renderPopup = () => {
-    const { popup } = this.state;
+    const {popup} = this.state;
 
     return (
       popup && (
@@ -437,7 +442,7 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
           longitude={popup.lng}
           latitude={popup.lat}
           closeOnClick={false}
-          onClose={() => this.setState({ popup: null })}
+          onClose={() => this.setState({popup: null})}
         >
 
           {<div>
@@ -477,7 +482,7 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
       dLat: data[0].message[0].latitude[0],
       dLng: data[0].message[0].longitude[0]
     }
- 
+
     const viewport = {
       ...this.state.viewport,
       latitude: parseFloat(davesLoc.dLat),
@@ -486,11 +491,11 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
       transitionDuration: 5000,
       transitionInterpolator: new FlyToInterpolator()
     };
-    this.setState({ viewport });
+    this.setState({viewport});
   };
 
   private __handleViewportChange = (viewport: any) => {
-    this.setState({ viewport });
+    this.setState({viewport});
   };
 
 }

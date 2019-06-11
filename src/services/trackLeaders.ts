@@ -22,7 +22,7 @@ export function asObservable() {
 
 
 function __fetchResults() {
-  fetch('https://cors-anywhere.herokuapp.com/http://trackleaders.com/spot/transam19/fullfeed.xml')
+  fetch('https://cors-anywhere.herokuapp.com/http://trackleaders.com/spot/raam19/fullfeed.xml')
 
     .then(response => {
       if (response.body && !response.body.locked) {
