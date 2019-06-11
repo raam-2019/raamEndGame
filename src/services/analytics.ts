@@ -4,6 +4,7 @@ import {
   API,
   graphqlOperation
 } from "aws-amplify";
+import moment from 'moment';
 
 
 
@@ -58,6 +59,13 @@ async function __getData() {
       const data = await API.graphql(graphqlOperation(listRaamalytics)) as any;
      // console.log(data);
       token  = data.data.listRaamalytics.nextToken;
+
+      data.data.listRaamalytics.items.forEach((element:any) => {
+        element["model_run_tstamp"] = moment(element["model_run_tstamp"]).unix();
+      });
+
+      console.log(data.data.listRaamalytics.items);
+
     __subject.next(data.data.listRaamalytics.items);
 
     }else{
@@ -68,6 +76,12 @@ async function __getData() {
         }else{
           token  = data.data.listRaamalytics.nextToken;
         }
+       // element["model_run_tstamp"] = moment(element["model_run_tstamp"]).unix()
+       data.data.listRaamalytics.items.forEach((element:any) => {
+        element["model_run_tstamp"] = moment(element["model_run_tstamp"]).unix();
+      });
+      console.log(data.data.listRaamalytics.items);
+
         __subject.next(data.data.listRaamalytics.items);
     }
   
