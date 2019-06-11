@@ -8,6 +8,8 @@ import {
 } from 'components/widgets/shared/BasicAxes';
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
 import * as util from './shared/util';
+import {IPoint} from 'types/IPoint';
+import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
 
 
 export interface IWindForecastWidget extends IDefaultWidgetProps {
@@ -17,7 +19,7 @@ export interface IWindForecastWidget extends IDefaultWidgetProps {
 //TODO(klare): add in and statements into the status.
 //TODO(klare): integrate actual live data and see how it looks.
 
-export const WindForecastWidget: React.FC<IElevationWidgetProps> = props => (
+export const WindForecastWidget: React.FC<IWindForecastWidget> = props => (
   <XYPlotTemplate
     heightPx={props.heightPx}
     widthPx={props.widthPx}
@@ -26,7 +28,7 @@ export const WindForecastWidget: React.FC<IElevationWidgetProps> = props => (
     useHorizontalGridLines={true}>
 
     {LinearAreaSeries({
-      data: props.elevationData;
+      data: props.elevationData,
       lineColor: 'orange',
       fillColor: '#FFCF9E',
       lineWidthPx: util.StrokeWidthPx
