@@ -5,7 +5,6 @@ import {Heading} from 'components/Heading/Heading';
 import {RedWord} from 'components/RedWord/RedWord';
 import {ElevationWidget} from 'components/widgets/ElevationWidget';
 import {CostOfRestWidget} from 'components/widgets/CostOfRestWidget';
-import {FlexRow} from 'components/layout/FlexRow';
 import {FlexCell} from 'components/layout/FlexCell';
 import {SelectField} from 'components/form/fields/SelectField';
 import {IPoint} from 'types/IPoint';
@@ -32,8 +31,8 @@ export interface ICourseAwarenessSectionProps {
   numPointsBeforeLoad: number;
   selectedAwarenessRangeId: string;
   elevation: IPoint[];
-  tailwindnow:IPoint[];
-  tailwind2hrs:IPoint[];
+  tailwindnow: IPoint[];
+  tailwind2hrs: IPoint[];
 
   onChangeCourseAwarenessDuration: (id: string) => void;
 }
@@ -52,7 +51,7 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
             onChange={props.onChangeCourseAwarenessDuration} />
         </StackedInputCell>
       </InputRow>
-     
+
       <FlexCell className={globalStyles.marginBottom}>
         <CostOfRestWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
