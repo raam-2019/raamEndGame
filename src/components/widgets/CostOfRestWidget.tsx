@@ -29,7 +29,6 @@ export interface ICostOfRestWidgetProps extends IDefaultWidgetProps {}
 
 export const CostOfRestWidget: React.FC<ICostOfRestWidgetProps> = props => (
     <XYPlotTemplate
-    {...console.log(props)}
     heightPx={props.heightPx}
     widthPx={props.widthPx}
     status={props.data.length > 2 && props.data.length > 2 ? 'ready' : 'loading'}

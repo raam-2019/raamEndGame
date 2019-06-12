@@ -97,7 +97,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           ambientTemperature: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchTemperature')},
           elevation: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'elevation')}
         }));
-
       });
       
 
@@ -121,11 +120,16 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
   private __removeSeriesBeforeStartTime(dataSeries: IPoint[], startTime: moment.Moment) {
     return _.filter(dataSeries, point => startTime.isBefore(moment.unix(point.x)))
   }
+  
+  private __addSeriesAfterEndTime(dataSeries: IPoint[], endTime: moment.Moment) {
+    return _.filter(dataSeries, point => endTime.isAfter(moment.unix(point.x)))
+  }
 
   public render = () => {
     // There is an assumption here that `selectedBiometricRangeId` is always a string integer
     const biometricStartTime = moment().subtract(moment.duration(+this.state.selectedBiometricRangeId, 'minutes'));
-    const courseAwarenessStartTime = moment().subtract(moment.duration(+this.state.selectedAwarenessRangeId, 'minutes'));
+
+    const courseAwarenessEndTime = moment().add(moment.duration(+this.state.selectedAwarenessRangeId, 'minutes'));
 
     const [
       ambientTemp,
@@ -134,17 +138,17 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       enduranceZone,
       heartRate
     ] = [
-        this.__removeSeriesBeforeStartTime(this.state.ambientTemperature, biometricStartTime),
-        this.__removeSeriesBeforeStartTime(this.state.breathRate, biometricStartTime),
-        this.__removeSeriesBeforeStartTime(this.state.coreBodyTemp, biometricStartTime),
-        this.__removeSeriesBeforeStartTime(this.state.enduranceZone, biometricStartTime),
-        this.__removeSeriesBeforeStartTime(this.state.heartRate, biometricStartTime),
+      this.__removeSeriesBeforeStartTime(this.state.ambientTemperature, biometricStartTime),
+      this.__removeSeriesBeforeStartTime(this.state.breathRate, biometricStartTime),
+      this.__removeSeriesBeforeStartTime(this.state.coreBodyTemp, biometricStartTime),
+      this.__removeSeriesBeforeStartTime(this.state.enduranceZone, biometricStartTime),
+      this.__removeSeriesBeforeStartTime(this.state.heartRate, biometricStartTime),
       ];
 
     const [
       elevation
     ] = [
-        this.__removeSeriesBeforeStartTime(this.state.elevation, courseAwarenessStartTime)
+        this.__addSeriesAfterEndTime(this.state.elevation, courseAwarenessEndTime)
       ];
 
       const [
@@ -152,8 +156,8 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         tailwind2hrs
 
       ] = [
-          this.__removeSeriesBeforeStartTime(this.state.tailwindnow, courseAwarenessStartTime),
-          this.__removeSeriesBeforeStartTime(this.state.tailwind2hrs, courseAwarenessStartTime)
+          this.__addSeriesAfterEndTime(this.state.tailwindnow, courseAwarenessEndTime),
+          this.__addSeriesAfterEndTime(this.state.tailwind2hrs, courseAwarenessEndTime)
         ];
 
 
