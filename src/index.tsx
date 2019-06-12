@@ -6,12 +6,14 @@ import * as serviceWorker from './serviceWorker';
 import * as amplifyService from 'services/amplify';
 import * as trackLeaderService from 'services/trackLeaders';
 import * as analyticsService from 'services/analytics';
+import * as costOfRestService from 'services/costOfRest';
 
 import config from './aws-exports';
 
 
 
 amplifyService.configure(config);
+costOfRestService.init();
 trackLeaderService.init();
 analyticsService.init();
 

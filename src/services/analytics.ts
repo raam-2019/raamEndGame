@@ -9,6 +9,7 @@ import {
   graphqlOperation
 } from "aws-amplify";
 import moment from 'moment';
+import {POLLING_INTERVAL_IN_MS} from 'services/util';
 
 
 
@@ -38,14 +39,14 @@ export interface IAnalyticsData {
   wind_speed_plus_2hr_confidence_level?: String;
 }
 
-export const UPDATE_INTERVAL_IN_MS = 1000 * 5;
+
 
 const __subject = new BehaviorSubject<IAnalyticsData[]>([]);
 let __token = '';
 
 
 export function init() {
-  setInterval(() => __getData(), UPDATE_INTERVAL_IN_MS);
+  setInterval(() => __getData(), POLLING_INTERVAL_IN_MS);
 }
 
 

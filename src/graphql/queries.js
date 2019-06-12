@@ -9,7 +9,7 @@ export const getTodo = `query GetTodo($id: ID!) {
   }
 }
 `;
-  export const listTodos = `query ListTodos(
+export const listTodos = `query ListTodos(
     $filter: ModelTodoFilterInput
     $limit: Int
     $nextToken: String
@@ -145,6 +145,21 @@ export const listRaamalytics = `query Raaamalytics {
       wind_speed_plus_2hr_confidence_level
     }
     nextToken
+  }
+}
+`;
+
+
+
+export const listCostOfRests = `query ListCostOfRests {
+  listCostOfRests {
+    items {
+      key
+      prediction_tstamp
+      cost_of_rest_s
+      model_run
+      segment_id
+    }
   }
 }
 `;

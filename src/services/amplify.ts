@@ -72,12 +72,13 @@ interface IListAssetTableReturn {
 
 function __prefetchDataAndEmit() {
   return util.query<IListAssetTableReturn>(queries.listAssetTable6ce042es)
-    .then(result => {
-      if (!result.data) {
+
+    .then(listAssetTableResult => {
+      if (!listAssetTableResult.data) {
         throw new Error('Error pre-fetching data. Please refresh the page.');
       }
 
-      const convertedTemperatures = _.map(result.data.listAssetTable6ce042es.items, __convertTemperatures2Fahrenheit);
+      const convertedTemperatures = _.map(listAssetTableResult.data.listAssetTable6ce042es.items, __convertTemperatures2Fahrenheit);
       __subject.next(convertedTemperatures)
     });
 }

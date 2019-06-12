@@ -5,6 +5,9 @@ import {
 
 
 
+export const POLLING_INTERVAL_IN_MS = 5000;
+
+
 export interface ISubscribeOptions<TData> {
   next: (data: TData) => void;
   error?: (error: unknown) => void;

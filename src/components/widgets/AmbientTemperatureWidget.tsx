@@ -13,10 +13,15 @@ import {TickMark} from 'components/widgets/shared/TickMark';
 
 
 
-export interface IAmbientTemperatureWidgetProps extends IDefaultWidgetProps {}
+export interface IAmbientTemperatureWidgetProps extends IDefaultWidgetProps {
+  startUnixTime?: number;
+  endUnixTime?: number;
+}
 
 export const AmbientTemperatureWidget: React.FC<IAmbientTemperatureWidgetProps> = props => (
   <XYPlotTemplate
+    xMin={props.startUnixTime}
+    xMax={props.endUnixTime}
     status={props.data.length < props.numPointsBeforeLoad ? "loading" : "ready"}
     heightPx={props.heightPx}
     widthPx={props.widthPx}
