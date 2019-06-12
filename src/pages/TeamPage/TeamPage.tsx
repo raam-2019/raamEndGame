@@ -18,7 +18,7 @@ import {CourseAwarenessSection} from 'pages/TeamPage/CourseAwarenessSection/Cour
 
 
 
-const GRAPH_WIDTH_PX = 800;
+const GRAPH_WIDTH_PX = 750;
 const GRAPH_HEIGHT_PX = 400;
 const NUM_POINTS_BEFORE_LOAD = 3;
 
@@ -125,18 +125,17 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
     this.__unsubscribe.complete();
   };
 
-  // private __removeSeriesBeforeStartTime(dataSeries: IPoint[], startTime: moment.Moment) {
-  //   return _.filter(dataSeries, point => startTime.isBefore(moment.unix(point.x)))
-  // }
+
 
   private __addSeriesAfterEndTime(dataSeries: IPoint[], endTime: moment.Moment) {
     return _.filter(dataSeries, point => endTime.isAfter(moment.unix(point.x)))
-  }
+  };
+
+
 
   public render = () => {
     // There is an assumption here that `selectedBiometricRangeId` is always a string integer
     const biometricStartTime = moment().subtract(moment.duration(+this.state.selectedBiometricRangeId, 'minutes')).unix();
-
     const courseAwarenessEndTime = moment().add(moment.duration(+this.state.selectedAwarenessRangeId, 'minutes'));
 
     const [
