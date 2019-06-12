@@ -137,9 +137,12 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     let sortable: any = [];
 
 
-    positions.forEach(function(rider: any) {
-
+    positions.forEach((rider: any) => {
       let riderId = rider["trackleaders_racer_ID"][0];
+
+      if (!riderId) {
+        return;
+      }
 
       var aa = {
         lng: rider["message"][0]["longitude"][0],
@@ -153,34 +156,30 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
       position.properties.riderId = riderId;
 
       rankedPositions.features.push(position);
-
     });
 
     sortable.sort(function(a: any, b: any) {
       return a[1] - b[1];
     });
 
-    rankedPositions.features.forEach(function(feat: any) {
+    _.forEach(rankedPositions.features, feature => {
       let rankInField = sortable.length;  // default to last place
-      sortable.forEach(function(rank: any) {
-        if (rank[0] === feat.properties.riderId) {
-          feat.properties.rank = rankInField
+      _.forEach(sortable, rank => {
+        if (rank[0] === feature.properties.riderId) {
+          feature.properties.rank = rankInField
         }
         rankInField -= 1; //increase place by 1
-      })
-    })
+      });
+    });
 
     // sort rider id by distance along route
     // We will use distance (location) to order the rider id
-
     sortable.sort((a: any, b: any) => b[1] > a[1]);
-
 
     return {
       rank: sortable,
       positions: rankedPositions
-    }
-
+    };
   }
 
 
@@ -475,18 +474,10 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
 
   private __handleClickGoToCyclist = () => {
-
-    var data = this.state.calcData;
-
-    var davesLoc = {
-      dLat: data[0].message[0].latitude[0],
-      dLng: data[0].message[0].longitude[0]
-    }
-
     const viewport = {
       ...this.state.viewport,
-      latitude: parseFloat(davesLoc.dLat),
-      longitude: parseFloat(davesLoc.dLng),
+      latitude: this.props.davesLat,
+      longitude: this.props.davesLon,
       zoom: 14,
       transitionDuration: 5000,
       transitionInterpolator: new FlyToInterpolator()

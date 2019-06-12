@@ -90,6 +90,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           return;
         }
 
+        console.log(riderData);
         this.__setCurrentBatteryLevelState(riderData);
 
         this.setState(update(this.state, {
@@ -116,9 +117,6 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           predictedTemperature: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_direction_plus_2hr')},
           timeCostOfRest: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_direction_plus_2hr')}  // TODO {AD} this needs to be temperature
         }));
-
-        console.log(this.state.currentTailWind);
-        console.log(this.state.tailWindIn2Hours);
       });
   };
 

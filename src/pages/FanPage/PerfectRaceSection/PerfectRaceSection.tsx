@@ -98,7 +98,7 @@ export const PerfectRaceSection: React.FC<IPerfectRaceSectionProps> = props => (
           <NumberWidget
             numDecimalDigits={2}
             numberPoints={props.mo2}
-            unitText="" />
+            unitText="%" />
         </FlexCell>
       </FlexRow>
 

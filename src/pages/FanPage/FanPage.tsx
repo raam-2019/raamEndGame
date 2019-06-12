@@ -74,7 +74,7 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
         this.setState(update(this.state, {
           heartRate: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqHeartRate')},
           coreBodyTemp: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqCoreTemp')},
-          mo2: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'hemoTotal')},
+          mo2: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'hemoPercent')},
           breathRate: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
           skinTemp: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
           watchSpeed: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'watchSpeed')},
