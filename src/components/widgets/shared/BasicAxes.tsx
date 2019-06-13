@@ -16,7 +16,7 @@ export const BasicHorizontalAxis = (props: IBasicAxisProps) => (
   <ReactVis.XAxis
     position="middle"
     orientation="bottom"
-    tickTotal={12}
+    tickTotal={11}
     tickFormat={props.fnTickFormat}
     title={props.axisLabel} />
 );

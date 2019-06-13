@@ -12,6 +12,7 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {ISensorData} from 'types/subscriptionTypes';
 import * as analyticsService from 'services/analytics';
+import * as costOfRestService from 'services/costOfRest';
 import {BatteryWidgetSection} from 'pages/TeamPage/BatteryWidgetSection/BatteryWidgetSection';
 import {BiometricsSection} from 'pages/TeamPage/BiometricsSection/BiometricsSection';
 import {CourseAwarenessSection} from 'pages/TeamPage/CourseAwarenessSection/CourseAwarenessSection';
@@ -114,9 +115,23 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           tailWindIn2Hours: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_direction_plus_2hr')},
           predictedHumidity: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_direction_plus_2hr')}, // TODO {AD} this needs to be humidity
           predictedTemperature: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_direction_plus_2hr')},
-          timeCostOfRest: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_direction_plus_2hr')}  // TODO {AD} this needs to be temperature
+          // timeCostOfRest: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_direction_plus_2hr')}  // TODO {AD} this needs to be temperature
         }));
       });
+
+      costOfRestService
+      .asObservable()
+      .pipe(takeUntil(this.__unsubscribe))
+      .subscribe(result => {
+   
+        this.setState(update(this.state, {
+          timeCostOfRest: {$set: dataUtil.analyticCostRestData2PointSeries(result, 'predictionUnixTime', 'costOfRestSeconds')}  // TODO {AD} this needs to be temperature
+        }));
+        console.log(this.state.timeCostOfRest)
+      });
+
+
+
   };
 
 
@@ -141,7 +156,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
     const [
       // elevation,
       currentTailWind,
-      tailWindIn2Hours
+      tailWindIn2Hours,
     ] = [
         this.__addSeriesAfterEndTime(this.state.elevation, courseAwarenessEndTime),
         this.__addSeriesAfterEndTime(this.state.currentTailWind, courseAwarenessEndTime),

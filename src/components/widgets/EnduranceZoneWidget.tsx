@@ -10,10 +10,15 @@ import {
 
 
 
-export interface IEnduranceZoneWidgetProps extends IDefaultWidgetProps {}
+export interface IEnduranceZoneWidgetProps extends IDefaultWidgetProps {
+  startUnixTime?: number;
+  endUnixTime?: number;
+}
 
 export const EnduranceZoneWidget: React.FC<IEnduranceZoneWidgetProps> = props => (
   <XYPlotTemplate
+    xMin={props.startUnixTime}
+    xMax={props.endUnixTime}
     status={props.data.length < props.numPointsBeforeLoad ? "loading" : "ready"}
     heightPx={props.heightPx}
     widthPx={props.widthPx}

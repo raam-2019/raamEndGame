@@ -4,7 +4,7 @@ import * as React from "react";
 import WebMercatorViewport from 'viewport-mercator-project';
 import bbox from '@turf/bbox';
 import * as turf from '@turf/turf'
-// import turf from '@turf/turf';
+
 
 
 
@@ -29,10 +29,8 @@ import imgDaveMinusPin from 'assets/images/personPinMinus.png';
 import imgPersonPin from 'assets/images/personPin.png';
 import imgDavePlusPin from 'assets/images/personPinPlus.png';
 
+import 'mapbox-gl/dist/mapbox-gl.css';
 import styles from './RaceTrackerMap.module.css';
-// import { line } from 'd3-shape';
-// import { distance } from 'gl-matrix/src/gl-matrix/vec2';
-
 
 
 
@@ -195,7 +193,7 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
     _.forEach(returnValue.rank, rank => {
 
-      if (rank[0] === "60") {
+      if (rank[0] === "52") {
         index = cnt;
       }
 
@@ -214,7 +212,6 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     var targetLat = targetCoordinate[1];
 
     var line = turf.lineString([[daveLng, daveLat], [targetLng, targetLat]]);
-    console.log(line);
 
     // calculate the bounding box of the feature
     const [minLng, minLat, maxLng, maxLat] = bbox(line);
@@ -250,7 +247,7 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
     _.forEach(returnValue.rank, rank => {
 
-      if (rank[0] === "60") {
+      if (rank[0] === "52") {
         index = cnt;
       }
 
@@ -267,7 +264,6 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
     var targetLat = targetCoordinate[1];
 
     var line = turf.lineString([[daveLng, daveLat], [targetLng, targetLat]]);
-    console.log(line);
 
     // calculate the bounding box of the feature
     const [minLng, minLat, maxLng, maxLat] = bbox(line);
@@ -443,8 +439,7 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
           closeOnClick={false}
           onClose={() => this.setState({popup: null})}
         >
-
-          {<div>
+          <div>
             <h3>
               Racer ID: {JSON.parse(popup.description).RacerID}
             </h3>
@@ -463,9 +458,7 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
             <strong>
               Longitude: {JSON.parse(popup.description).lng}
             </strong>
-          </div>}
-
-
+          </div>
         </Popup>
       )
     );
@@ -474,14 +467,22 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
 
   private __handleClickGoToCyclist = () => {
+    const data = this.state.calcData;
+    
+
+    if (_.isEmpty(data) || !_.isArray(data.message) || _.isEmpty(data.message[0])) {
+      return;
+    }
+
     const viewport = {
       ...this.state.viewport,
-      latitude: this.props.davesLat,
-      longitude: this.props.davesLon,
+      latitude: parseFloat(data[0].message[0].latitude[0]),
+      longitude: parseFloat(data[0].message[0].longitude[0]),
       zoom: 14,
       transitionDuration: 5000,
       transitionInterpolator: new FlyToInterpolator()
     };
+    
     this.setState({viewport});
   };
 

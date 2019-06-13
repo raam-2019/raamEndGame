@@ -2,7 +2,8 @@ import * as _ from 'lodash';
 
 import {IPoint} from 'types/IPoint';
 import {ISensorData} from 'types/subscriptionTypes';
-import {IAnalyticsData} from 'services/analytics';
+import {IAnalyticsCostRestData, IAnalyticsData} from 'services/analytics';
+
 
 
 
@@ -25,6 +26,9 @@ export function analyticData2PointSeries(analyticData: IAnalyticsData[], xPropNa
   return __obj2PointSeries(analyticData, xPropName, yPropName);
 }
 
+export function analyticCostRestData2PointSeries(analyticData: IAnalyticsCostRestData[], xPropName: keyof IAnalyticsCostRestData, yPropName: keyof IAnalyticsCostRestData) {
+  return __obj2PointSeries(analyticData, xPropName, yPropName);
+}
 
 
 function __obj2PointSeries(data: any, xPropName: any, yPropName: any): IPoint[] {

@@ -13,10 +13,17 @@ import {TickMark} from 'components/widgets/shared/TickMark';
 
 
 
-export interface IHeartRateWidgetProps extends IDefaultWidgetProps {}
+export interface IHeartRateWidgetProps extends IDefaultWidgetProps {
+  startUnixTime?: number;
+  endUnixTime?: number;
+}
 
 export const HeartRateWidget: React.FC<IHeartRateWidgetProps> = props => (
   <XYPlotTemplate
+    xMin={props.startUnixTime}
+    xMax={props.endUnixTime}
+    yMin={80}
+    yMax={170}
     status={props.data.length < props.numPointsBeforeLoad ? "loading" : "ready"}
     heightPx={props.heightPx}
     widthPx={props.widthPx}

@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import moment from 'moment';
 import {Section} from 'components/layout/Section/Section';
 import {Heading} from 'components/Heading/Heading';
 import {RedWord} from 'components/RedWord/RedWord';
@@ -30,6 +31,7 @@ const BIOMETRIC_SELECT_VALUES =
 
 
 export interface IBiometricsSectionProps {
+  startUnixTime: number;
   graphWidthPx: number;
   graphHeightPx: number;
   numPointsBeforeLoad: number;
@@ -45,59 +47,73 @@ export interface IBiometricsSectionProps {
   onChangeBiometricsDuration: (idAsMins: string) => void;
 }
 
-export const BiometricsSection: React.FC<IBiometricsSectionProps> = props => (
-  <Section backgroundColor="#fafafa">
-    <Heading><RedWord>#</RedWord>Biometrics</Heading>
-    <FlexColumn>
-      <InputRow>
-        <StackedInputCell>
-          <label>Duration to View</label>
-          <SelectField
-            selectedId={props.selectedBiometricRangeId}
-            options={BIOMETRIC_SELECT_VALUES}
-            onChange={props.onChangeBiometricsDuration} />
-        </StackedInputCell>
-      </InputRow>
+export const BiometricsSection: React.FC<IBiometricsSectionProps> = props => {
+  const endUnixTime = moment().unix();
 
-      <FlexCell className={globalStyles.marginBottom}>
-        <CoreTemperatureWidget
-          numPointsBeforeLoad={props.numPointsBeforeLoad}
-          data={props.coreBodyTemp}
-          widthPx={props.graphWidthPx}
-          heightPx={props.graphHeightPx} />
-      </FlexCell>
+  return (
+    <Section backgroundColor="#fafafa">
+      <Heading><RedWord>#</RedWord>Biometrics</Heading>
+      <FlexColumn>
+        <InputRow>
+          <StackedInputCell>
+            <label>Duration to View</label>
+            <SelectField
+              selectedId={props.selectedBiometricRangeId}
+              options={BIOMETRIC_SELECT_VALUES}
+              onChange={props.onChangeBiometricsDuration} />
+          </StackedInputCell>
+        </InputRow>
 
-      <FlexCell className={globalStyles.marginBottom}>
-        <AmbientTemperatureWidget
-          numPointsBeforeLoad={props.numPointsBeforeLoad}
-          data={props.ambientTemp}
-          widthPx={props.graphWidthPx}
-          heightPx={props.graphHeightPx} />
-      </FlexCell>
+        <FlexCell className={globalStyles.marginBottom}>
+          <CoreTemperatureWidget
+            startUnixTime={props.startUnixTime}
+            endUnixTime={endUnixTime}
+            numPointsBeforeLoad={props.numPointsBeforeLoad}
+            data={props.coreBodyTemp}
+            widthPx={props.graphWidthPx}
+            heightPx={props.graphHeightPx} />
+        </FlexCell>
 
-      <FlexCell className={globalStyles.marginBottom}>
-        <HeartRateWidget
-          numPointsBeforeLoad={props.numPointsBeforeLoad}
-          data={props.heartRate}
-          widthPx={props.graphWidthPx}
-          heightPx={props.graphHeightPx} />
-      </FlexCell>
+        <FlexCell className={globalStyles.marginBottom}>
+          <AmbientTemperatureWidget
+            startUnixTime={props.startUnixTime}
+            endUnixTime={endUnixTime}
+            numPointsBeforeLoad={props.numPointsBeforeLoad}
+            data={props.ambientTemp}
+            widthPx={props.graphWidthPx}
+            heightPx={props.graphHeightPx} />
+        </FlexCell>
 
-      <FlexCell className={globalStyles.marginBottom}>
-        <BreathRateWidget
-          numPointsBeforeLoad={props.numPointsBeforeLoad}
-          data={props.breathRate}
-          widthPx={props.graphWidthPx}
-          heightPx={props.graphHeightPx} />
-      </FlexCell>
+        <FlexCell className={globalStyles.marginBottom}>
+          <HeartRateWidget
+            startUnixTime={props.startUnixTime}
+            endUnixTime={endUnixTime}
+            numPointsBeforeLoad={props.numPointsBeforeLoad}
+            data={props.heartRate}
+            widthPx={props.graphWidthPx}
+            heightPx={props.graphHeightPx} />
+        </FlexCell>
 
-      <FlexCell className={globalStyles.marginBottom}>
-        <EnduranceZoneWidget
-          numPointsBeforeLoad={props.numPointsBeforeLoad}
-          data={props.enduranceZone}
-          heightPx={props.graphWidthPx}
-          widthPx={props.graphHeightPx} />
-      </FlexCell>
-    </FlexColumn>
-  </Section>
-);
+        <FlexCell className={globalStyles.marginBottom}>
+          <BreathRateWidget
+            startUnixTime={props.startUnixTime}
+            endUnixTime={endUnixTime}
+            numPointsBeforeLoad={props.numPointsBeforeLoad}
+            data={props.breathRate}
+            widthPx={props.graphWidthPx}
+            heightPx={props.graphHeightPx} />
+        </FlexCell>
+
+        <FlexCell className={globalStyles.marginBottom}>
+          <EnduranceZoneWidget
+            startUnixTime={props.startUnixTime}
+            endUnixTime={endUnixTime}
+            numPointsBeforeLoad={props.numPointsBeforeLoad}
+            data={props.enduranceZone}
+            heightPx={props.graphWidthPx}
+            widthPx={props.graphHeightPx} />
+        </FlexCell>
+      </FlexColumn>
+    </Section>
+  );
+};

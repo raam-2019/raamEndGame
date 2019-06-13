@@ -10,10 +10,17 @@ import {TickMark} from 'components/widgets/shared/TickMark';
 
 
 
-export interface IBreathRateWidgetProps extends IDefaultWidgetProps {}
+export interface IBreathRateWidgetProps extends IDefaultWidgetProps {
+  startUnixTime?: number;
+  endUnixTime?: number;
+}
 
 export const BreathRateWidget: React.FC<IBreathRateWidgetProps> = props => (
   <XYPlotTemplate
+    xMin={props.startUnixTime}
+    xMax={props.endUnixTime}
+    yMin={20}
+    yMax={70}
     status={props.data.length < props.numPointsBeforeLoad ? "loading" : "ready"}
     heightPx={props.heightPx}
     widthPx={props.widthPx}

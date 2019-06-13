@@ -18,11 +18,11 @@ function timeCompare(a: {x: any;}, b: {x: any;}) {
 export interface ICostOfRestWidgetProps extends IDefaultWidgetProps {}
 
 export const CostOfRestWidget: React.FC<ICostOfRestWidgetProps> = props => (
-    <XYPlotTemplate
+  <XYPlotTemplate
     heightPx={props.heightPx}
     widthPx={props.widthPx}
     status={props.data.length > 2 && props.data.length > 2 ? 'ready' : 'loading'}
-    title="Cost of Rest Over Time"
+    title="Cost of Rest Over Time (invalid)"
     useHorizontalGridLines={true}>
     {LinearAreaSeries({
       data: props.data.sort(timeCompare),

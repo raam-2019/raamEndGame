@@ -9,7 +9,7 @@ export const getTodo = `query GetTodo($id: ID!) {
   }
 }
 `;
-  export const listTodos = `query ListTodos(
+export const listTodos = `query ListTodos(
     $filter: ModelTodoFilterInput
     $limit: Int
     $nextToken: String
@@ -148,7 +148,6 @@ export const listRaamalytics = `query Raaamalytics {
   }
 }
 `;
-
 export const listCostOfRests = `query CostOfRest {
   listCostOfRests{
     items {
@@ -169,7 +168,7 @@ export const listCostOfRests = `query CostOfRest {
 export const listCostOfRests_token = `query CostOfRest(
   $nextToken: String
 )  {
-  listCostOfRests{
+  listCostOfRests(nextToken: $nextToken){
     items {
       key
       prediction_tstamp
