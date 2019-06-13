@@ -467,16 +467,22 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
 
   private __handleClickGoToCyclist = () => {
-    const data = this.state.calcData;
-    console.log(data);
-    if (_.isEmpty(data) || !_.isArray(data.message) || _.isEmpty(data.message[0])) {
+    const racers = this.state.calcData;
+    console.log(racers);
+    if (_.isEmpty(racers)) {
+      return;
+    }
+
+    const daveTrackleader = _.find(racers, racer => _.first(racer.trackleaders_racer_ID) === '52');
+
+    if (!daveTrackleader || _.isEmpty(daveTrackleader.message)) {
       return;
     }
 
     const viewport = {
       ...this.state.viewport,
-      latitude: parseFloat(data[0].message[0].latitude[0]),
-      longitude: parseFloat(data[0].message[0].longitude[0]),
+      latitude: parseFloat(daveTrackleader.message[0].latitude[0]),
+      longitude: parseFloat(daveTrackleader.message[0].longitude[0]),
       zoom: 14,
       transitionDuration: 5000,
       transitionInterpolator: new FlyToInterpolator()

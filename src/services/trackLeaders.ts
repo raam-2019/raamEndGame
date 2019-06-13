@@ -4,7 +4,7 @@ import {BehaviorSubject} from "rxjs";
 import {Parser} from 'xml2js';
 import {DOMParser} from 'xmldom';
 
-export const UPDATE_INTERVAL_IN_MS = 1000 * 60 * 3;
+export const UPDATE_INTERVAL_IN_MS = 1000 * 60 * 5;
 
 const __subject = new BehaviorSubject<any | null>(null);
 
