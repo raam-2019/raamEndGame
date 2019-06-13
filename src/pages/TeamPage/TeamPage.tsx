@@ -18,7 +18,7 @@ import {CourseAwarenessSection} from 'pages/TeamPage/CourseAwarenessSection/Cour
 
 
 
-const GRAPH_WIDTH_PX = 800;
+const GRAPH_WIDTH_PX = 750;
 const GRAPH_HEIGHT_PX = 400;
 const NUM_POINTS_BEFORE_LOAD = 3;
 
@@ -34,9 +34,12 @@ interface ITeamPageState {
   enduranceZone: IPoint[];
   ambientTemperature: IPoint[];
   elevation: IPoint[];
-  tailwindnow:IPoint[];
-  tailwind2hrs:IPoint[];
-  costofrest:IPoint[];
+  currentTailWind: IPoint[];
+  tailWindIn2Hours: IPoint[];
+
+  predictedHumidity: IPoint[];
+  predictedTemperature: IPoint[];
+  timeCostOfRest: IPoint[];
 
   androidBattery: number;
   radarBattery: number;
@@ -60,15 +63,17 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       breathRate: [],
       skinTemp: [],
       enduranceZone: [],
+      predictedHumidity: [],
+      predictedTemperature: [],
+      timeCostOfRest: [],
       androidBattery: -1,
       radarBattery: -1,
       watchBattery: -1,
       selectedBiometricRangeId: '20',  // Must match "20" in `BiometricsSectiontsx` as the default value.... could be typed if we wanted.
-      selectedAwarenessRangeId: '20', // Must match some default value in `CourseAwarenessSection.tsx`
+      selectedAwarenessRangeId: '1440', // Must match some default value in `CourseAwarenessSection.tsx`
       elevation: [],
-      tailwindnow: [],
-      tailwind2hrs: [],
-      costofrest: []
+      currentTailWind: [],
+      tailWindIn2Hours: []
     };
   }
 
@@ -88,79 +93,60 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
         this.__setCurrentBatteryLevelState(riderData);
 
         this.setState(update(this.state, {
-          heartRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchHeartRate')},
-          coreBodyTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqCoreTemp')},
-          mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoTotal')},
-          breathRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
-          skinTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
-          enduranceZone: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'enduranceZone')},
-          ambientTemperature: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchTemperature')},
-          elevation: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'elevation')}
+          heartRate: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqHeartRate')},
+          coreBodyTemp: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqCoreTemp')},
+          mo2: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'hemoTotal')},
+          breathRate: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
+          skinTemp: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
+          enduranceZone: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'enduranceZone')},
+          ambientTemperature: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'watchTemperature')},
+          elevation: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'elevation')}
         }));
       });
-      
+
 
     analyticsService
       .onAnalyticsUpdate()
       .pipe(takeUntil(this.__unsubscribe))
       .subscribe(result => {
         this.setState(update(this.state, {
-          tailwindnow: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_speed_m_per_s')},
-          tailwind2hrs: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_speed_plus_2hr')},
+          currentTailWind: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_speed_m_per_s')},
+          tailWindIn2Hours: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_direction_plus_2hr')},
+          predictedHumidity: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_direction_plus_2hr')}, // TODO {AD} this needs to be humidity
+          predictedTemperature: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_direction_plus_2hr')},
+          timeCostOfRest: {$set: dataUtil.analyticData2PointSeries(result, 'predicted_arrival_time', 'wind_direction_plus_2hr')}  // TODO {AD} this needs to be temperature
         }));
-
       });
   };
+
 
   public componentWillUnmount = () => {
     this.__unsubscribe.next();
     this.__unsubscribe.complete();
   };
 
-  private __removeSeriesBeforeStartTime(dataSeries: IPoint[], startTime: moment.Moment) {
-    return _.filter(dataSeries, point => startTime.isBefore(moment.unix(point.x)))
-  }
-  
+
+
   private __addSeriesAfterEndTime(dataSeries: IPoint[], endTime: moment.Moment) {
     return _.filter(dataSeries, point => endTime.isAfter(moment.unix(point.x)))
-  }
+  };
+
+
 
   public render = () => {
     // There is an assumption here that `selectedBiometricRangeId` is always a string integer
-    const biometricStartTime = moment().subtract(moment.duration(+this.state.selectedBiometricRangeId, 'minutes'));
-
+    const biometricStartTime = moment().subtract(moment.duration(+this.state.selectedBiometricRangeId, 'minutes')).unix();
     const courseAwarenessEndTime = moment().add(moment.duration(+this.state.selectedAwarenessRangeId, 'minutes'));
 
     const [
-      ambientTemp,
-      breathRate,
-      coreBodyTemp,
-      enduranceZone,
-      heartRate
+      // elevation,
+      currentTailWind,
+      tailWindIn2Hours
     ] = [
-      this.__removeSeriesBeforeStartTime(this.state.ambientTemperature, biometricStartTime),
-      this.__removeSeriesBeforeStartTime(this.state.breathRate, biometricStartTime),
-      this.__removeSeriesBeforeStartTime(this.state.coreBodyTemp, biometricStartTime),
-      this.__removeSeriesBeforeStartTime(this.state.enduranceZone, biometricStartTime),
-      this.__removeSeriesBeforeStartTime(this.state.heartRate, biometricStartTime),
+        this.__addSeriesAfterEndTime(this.state.elevation, courseAwarenessEndTime),
+        this.__addSeriesAfterEndTime(this.state.currentTailWind, courseAwarenessEndTime),
+        this.__addSeriesAfterEndTime(this.state.tailWindIn2Hours, courseAwarenessEndTime)
       ];
-
-    const [
-      elevation
-    ] = [
-        this.__addSeriesAfterEndTime(this.state.elevation, courseAwarenessEndTime)
-      ];
-
-      const [
-        tailwindnow,
-        tailwind2hrs
-
-      ] = [
-          this.__addSeriesAfterEndTime(this.state.tailwindnow, courseAwarenessEndTime),
-          this.__addSeriesAfterEndTime(this.state.tailwind2hrs, courseAwarenessEndTime)
-        ];
-
-
 
     return (
       <PageTemplate {...this.props}
@@ -173,13 +159,14 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
           watchBattery={this.state.watchBattery} />
 
         <BiometricsSection
+          startUnixTime={biometricStartTime}
           key={`biometrics-${this.state.selectedBiometricRangeId}`}
           selectedBiometricRangeId={this.state.selectedBiometricRangeId}
-          ambientTemp={ambientTemp}
-          breathRate={heartRate}
-          coreBodyTemp={coreBodyTemp}
-          enduranceZone={enduranceZone}
-          heartRate={breathRate}
+          ambientTemp={this.state.ambientTemperature}
+          breathRate={this.state.breathRate}
+          coreBodyTemp={this.state.coreBodyTemp}
+          enduranceZone={this.state.enduranceZone}
+          heartRate={this.state.heartRate}
           graphHeightPx={GRAPH_HEIGHT_PX}
           graphWidthPx={GRAPH_WIDTH_PX}
           numPointsBeforeLoad={NUM_POINTS_BEFORE_LOAD}
@@ -187,11 +174,14 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
 
         <CourseAwarenessSection
           key={`courseAwareness-${this.state.selectedAwarenessRangeId}`}
-          elevation={elevation}
+          predictedTimeXElevation={[]}
+          predictedHeadwindXForecastedHeadwind={[]}
+          tailwindnow={currentTailWind}
+          tailwind2hrs={tailWindIn2Hours}
 
-          tailwindnow={tailwindnow}
-          tailwind2hrs={tailwind2hrs} 
-
+          predictedHumidity={this.state.predictedHumidity}
+          predictedTemperature={this.state.predictedTemperature}
+          timeCostOfRest={this.state.timeCostOfRest}
           graphHeightPx={GRAPH_HEIGHT_PX}
           graphWidthPx={GRAPH_WIDTH_PX}
           numPointsBeforeLoad={NUM_POINTS_BEFORE_LOAD}
@@ -200,6 +190,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       </PageTemplate>
     );
   };
+
 
 
   private __setCurrentBatteryLevelState = (riderData: ISensorData[]) => {
@@ -215,6 +206,7 @@ export class TeamPage extends React.Component<ITeamPageProps, ITeamPageState> {
       watchBattery: watchBattery || -1
     });
   };
+
 
 
   private __handleChangeBiometricsDuration = (selectedBiometricRangeId: string) =>

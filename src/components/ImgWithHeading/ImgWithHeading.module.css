@@ -35,7 +35,7 @@
 /* tablet, landscape iPad, lo-res laptops ands desktops */ 
 @media (min-width:961px) { 
   .root .headingContainer {
-    top: 48px;
+    top: 36px;
     left: calc(100% - 100px);
 
     bottom: unset;

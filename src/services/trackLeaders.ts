@@ -4,7 +4,7 @@ import {BehaviorSubject} from "rxjs";
 import {Parser} from 'xml2js';
 import {DOMParser} from 'xmldom';
 
-export const UPDATE_INTERVAL_IN_MS = 1000 * 60;
+export const UPDATE_INTERVAL_IN_MS = 1000 * 60 * 3;
 
 const __subject = new BehaviorSubject<any | null>(null);
 
@@ -22,7 +22,7 @@ export function asObservable() {
 
 
 function __fetchResults() {
-  fetch('https://cors-anywhere.herokuapp.com/http://trackleaders.com/spot/transam19/fullfeed.xml')
+  fetch('https://cors-anywhere.herokuapp.com/http://trackleaders.com/spot/raam19/fullfeed.xml')
 
     .then(response => {
       if (response.body && !response.body.locked) {

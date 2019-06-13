@@ -8,34 +8,46 @@ import {
 } from 'components/widgets/shared/BasicAxes';
 import {LinearAreaSeries} from 'components/widgets/shared/BasicAreaSeries';
 import * as util from './shared/util';
-import {AfterTimeTickMark} from "./shared/TimeTickMark";
+import {IPoint} from 'types/IPoint';
+import {AfterTimeTickMark} from 'components/widgets/shared/TimeTickMark';
+import {LinearLineSeries} from 'components/widgets/shared/BasicLineSeries';
 import {TickMark} from 'components/widgets/shared/TickMark';
 
 
-//Date should be sorted now.
-export interface IElevationWidgetProps extends IDefaultWidgetProps {}
+export interface IFutureTempWidget extends IDefaultWidgetProps {
+  elevationData: IPoint[];
+}
+//TODO(klare): add in and statements into the status.
+//TODO(klare): integrate actual live data and see how it looks.
 
-export const ElevationWidget: React.FC<IElevationWidgetProps> = props => (
+export const FutureTempWidget: React.FC<IFutureTempWidget> = props => (
   <XYPlotTemplate
     heightPx={props.heightPx}
     widthPx={props.widthPx}
     status={props.data.length > 2 && props.data.length > 2 ? 'ready' : 'loading'}
-    title="Elevation over Predicted Time"
+    title="Predicted Temperature over Elevation (not valid yet)"
     useHorizontalGridLines={true}>
+
     {LinearAreaSeries({
-      data: props.data,
+      data: props.elevationData,
       lineColor: 'orange',
       fillColor: '#FFCF9E',
       lineWidthPx: util.StrokeWidthPx
     })}
 
+    {LinearLineSeries({
+      data: props.data,
+      lineColor: 'red',
+      lineWidthPx: util.StrokeWidthPx
+    })}
+
     {BasicHorizontalAxis({
-      axisLabel: "Time (h:m:s ago)",
+      axisLabel: "Predicted Arrival Time (Minutes)",
       fnTickFormat: t => AfterTimeTickMark({unixTime: t})
     })}
 
     {BasicVerticalAxis({
-      axisLabel: "Elevation Level",
+      axisLabel: "Temperature",
       fnTickFormat: t => TickMark({value: t})
     })}
   </XYPlotTemplate>

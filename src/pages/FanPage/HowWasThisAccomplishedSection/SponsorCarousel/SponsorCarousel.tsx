@@ -4,7 +4,7 @@ import * as React from 'react';
 import {Carousel} from 'react-responsive-carousel';
 
 import imgAtt from 'assets/images/sponsors/att.jpg';
-import imgEquivital from 'assets/images/sponsors/equivital.jpg';
+import imgEquivital from 'assets/images/sponsors/equivital.png';
 import imgGarmin from 'assets/images/sponsors/garmin.jpg';
 import imgHumon from 'assets/images/sponsors/humon.svg';
 import imgIronForge from 'assets/images/sponsors/iron_forge.png';
@@ -44,14 +44,14 @@ export class SponsorCarousel extends React.Component<object, ISponsorCarouselSta
         className={styles.card}
         href={sponsor.webpageUrl}
         key={sponsor.webpageUrl}>
-        <FlexCell>
+        <FlexCell flex="1">
           <img
             alt="sponsor logo"
             className={styles.img}
             src={sponsor.logoUrl} />
         </FlexCell>
 
-        <FlexCell>
+        <FlexCell flex="3">
           <Paragraph extraClassName={styles.copyText}>
             {sponsor.copyText}
           </Paragraph>

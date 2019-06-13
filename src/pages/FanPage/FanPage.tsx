@@ -72,12 +72,12 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
         this.__setCurrentLatLonState(riderData);
 
         this.setState(update(this.state, {
-          heartRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqHeartRate')},
-          coreBodyTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqCoreTemp')},
-          mo2: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'hemoTotal')},
-          breathRate: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
-          skinTemp: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
-          watchSpeed: {$set: dataUtil.riderData2PointSeries(riderData, 'ts', 'watchSpeed')},
+          heartRate: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqHeartRate')},
+          coreBodyTemp: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqCoreTemp')},
+          mo2: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'hemoPercent')},
+          breathRate: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqBreathingRate')},
+          skinTemp: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
+          watchSpeed: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'watchSpeed')},
         }));
       });
   };
