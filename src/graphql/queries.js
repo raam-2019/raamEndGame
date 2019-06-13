@@ -148,18 +148,38 @@ export const listRaamalytics = `query Raaamalytics {
   }
 }
 `;
-
-
-
-export const listCostOfRests = `query ListCostOfRests {
-  listCostOfRests {
+export const listCostOfRests = `query CostOfRest {
+  listCostOfRests{
     items {
       key
       prediction_tstamp
       cost_of_rest_s
       model_run
       segment_id
+      cumulative_distance_to_segment
+      elevation
+      window_size_hours
     }
+    nextToken
+  }
+}
+`;
+
+export const listCostOfRests_token = `query CostOfRest(
+  $nextToken: String
+)  {
+  listCostOfRests(nextToken: $nextToken){
+    items {
+      key
+      prediction_tstamp
+      cost_of_rest_s
+      model_run
+      segment_id
+      cumulative_distance_to_segment
+      elevation
+      window_size_hours
+    }
+    nextToken
   }
 }
 `;

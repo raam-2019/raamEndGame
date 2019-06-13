@@ -193,7 +193,7 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
     _.forEach(returnValue.rank, rank => {
 
-      if (rank[0] === "60") {
+      if (rank[0] === "52") {
         index = cnt;
       }
 
@@ -247,7 +247,7 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
     _.forEach(returnValue.rank, rank => {
 
-      if (rank[0] === "60") {
+      if (rank[0] === "52") {
         index = cnt;
       }
 
@@ -468,7 +468,8 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
 
   private __handleClickGoToCyclist = () => {
     const data = this.state.calcData;
-    console.log(data);
+    
+
     if (_.isEmpty(data) || !_.isArray(data.message) || _.isEmpty(data.message[0])) {
       return;
     }
@@ -481,6 +482,7 @@ export class RaceTrackerMap extends React.Component<IRaceTrackerMapProps, any> {
       transitionDuration: 5000,
       transitionInterpolator: new FlyToInterpolator()
     };
+    
     this.setState({viewport});
   };
 

@@ -16,6 +16,7 @@ interface IRawCostOfRest {
         model_run: string;
         segment_id: string;
       }>;
+      nextToken:string
     };
   };
 }
@@ -33,7 +34,7 @@ export interface ICostOfRest {
 
 
 const __subject = new BehaviorSubject<ICostOfRest[]>([]);
-
+let __token = '';
 
 
 export function init() {
@@ -50,9 +51,33 @@ export function asObservable() {
 
 
 function __getData() {
-  util.query<IRawCostOfRest>(queries.listCostOfRests)
+  
+  if (!__token) {
 
+    util.query<IRawCostOfRest>(queries.listCostOfRests)
+      .then(result => {
+
+        __token = result.data.listCostOfRests.nextToken;
+
+        return _.map(result.data.listCostOfRests.items, item => ({
+          segmentId: item.segment_id,
+          predictionUnixTime: moment(item.prediction_tstamp, 'YYYY-MM-DD HH:mm:SS').unix(),
+          modelRunId: item.model_run,
+          key: item.key,
+          costOfRestSeconds: item.cost_of_rest_s
+        } as ICostOfRest));
+      })
+      .then(rows => __subject.next(rows));
+
+  }else {
+    
+    util.queryWithToken<IRawCostOfRest>(queries.listCostOfRests_token, __token)
     .then(result => {
+      
+          if (result.data.listCostOfRests.nextToken !== null) {
+            __token = result.data.listCostOfRests.nextToken;
+          }
+
       return _.map(result.data.listCostOfRests.items, item => ({
         segmentId: item.segment_id,
         predictionUnixTime: moment(item.prediction_tstamp, 'YYYY-MM-DD HH:mm:SS').unix(),
@@ -61,6 +86,7 @@ function __getData() {
         costOfRestSeconds: item.cost_of_rest_s
       } as ICostOfRest));
     })
-
     .then(rows => __subject.next(rows));
+
+  }
 }

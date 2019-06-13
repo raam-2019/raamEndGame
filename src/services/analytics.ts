@@ -1,3 +1,4 @@
+    
 import * as _ from 'lodash';
 import {BehaviorSubject} from "rxjs";
 import {
@@ -39,6 +40,15 @@ export interface IAnalyticsData {
   wind_speed_plus_2hr_confidence_level?: String;
 }
 
+export interface IAnalyticsCostRestData {
+
+  costOfRestSeconds: number
+key: String
+modelRunId: String
+predictionUnixTime: number
+segmentId: string
+}
+
 
 
 const __subject = new BehaviorSubject<IAnalyticsData[]>([]);
@@ -60,6 +70,7 @@ async function __getData() {
   let serverResult: any;
 
   try {
+
     if (!__token) {
       serverResult = await API.graphql(graphqlOperation(listRaamalytics)) as any;
       __token = serverResult.data.listRaamalytics.nextToken;
