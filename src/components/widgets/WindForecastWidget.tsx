@@ -16,7 +16,8 @@ import {TickMark} from 'components/widgets/shared/TickMark';
 
 export interface IWindForecastWidget extends IDefaultWidgetProps {
   elevationData: IPoint[];
-  forecastedWind: IPoint[];
+  tailwindnow: IPoint[];
+  data: IPoint[];
 }
 //TODO(klare): add in and statements into the status.
 //TODO(klare): integrate actual live data and see how it looks.
@@ -25,7 +26,7 @@ export const WindForecastWidget: React.FC<IWindForecastWidget> = props => (
   <XYPlotTemplate
     heightPx={props.heightPx}
     widthPx={props.widthPx}
-    status={props.data.length > 2 && props.data.length > 2 ? 'ready' : 'loading'}
+    status={props.data.length > 2 ? 'ready' : 'loading'}
     title="Headwind vs 2hr forecasted headwind"
     useHorizontalGridLines={true}>
 
@@ -37,7 +38,7 @@ export const WindForecastWidget: React.FC<IWindForecastWidget> = props => (
     })}
 
     {LinearLineSeries({
-      data: props.forecastedWind,
+      data: props.tailwindnow,
       lineColor: 'red',
       lineWidthPx: util.StrokeWidthPx
     })}

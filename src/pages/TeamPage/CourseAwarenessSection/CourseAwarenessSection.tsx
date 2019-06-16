@@ -82,8 +82,8 @@ export const CourseAwarenessSection: React.FC<ICourseAwarenessSectionProps> = pr
         <WindForecastWidget
           numPointsBeforeLoad={props.numPointsBeforeLoad}
           elevationData={props.predictedTimeXElevation}
-          forecastedWind={props.tailwind2hrs}
-          data={props.tailwindnow}
+          tailwindnow={props.tailwindnow}
+          data={props.tailwind2hrs}
           heightPx={props.graphHeightPx}
           widthPx={props.graphWidthPx} />
       </FlexCell>
