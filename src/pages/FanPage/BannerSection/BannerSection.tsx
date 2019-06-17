@@ -21,11 +21,6 @@ export const BannerSection: React.FC<IBannerSectionProps> = props => (
   <Section
     backgroundImage={imgTopoBkgd}
     extraClassName={`${globalStyles.alignCenter} ${styles.bannerSection}`}>
-    <Card>
-      <Heading>
-        <RedWord>Live tracking of RAAM Soloists will be delayed according to RAAM race officials.</RedWord>
-      </Heading>
-    </Card>
 
     <br />
 
