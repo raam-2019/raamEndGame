@@ -12,3 +12,7 @@
 .bannerSection {
   padding: 200px 0px;
 }
+
+.bannerSection .link {
+  color: black;
+}
