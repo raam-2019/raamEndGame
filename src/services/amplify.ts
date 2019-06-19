@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import Amplify from 'aws-amplify';
+// import Amplify from 'aws-amplify';
 import {ISensorData} from 'types/subscriptionTypes';
 import {rider} from 'graphql/subscriptions';
 import {BehaviorSubject} from 'rxjs';
@@ -13,7 +13,7 @@ const __subject = new BehaviorSubject<ISensorData[]>([]);
 
 
 export function configure(config: any) {
-  Amplify.configure(config);
+  // Amplify.configure(config);
 
   __prefetchDataAndEmit()
     .then(() => __subscribeToRiderUpdates());
@@ -92,6 +92,7 @@ function __convertTemperatures2Fahrenheit(data: ISensorData) {
     .pickBy((value: any, key: string) => _.includes(tempKeys, key))
     .mapValues(value => {
       if (_.isNumber(value)) {
+        console.log(value);
         return util.celsius2Fahrenheit(value);
       }
 

@@ -109,8 +109,8 @@ export const PerfectRaceSection: React.FC<IPerfectRaceSectionProps> = props => (
           {/* TODO Net effective wind e.g. "-4 mph" */}
           <NumberWidget
             numDecimalDigits={1}
-            numberPoints={[]}
-            unitText="N/A" />
+            numberPoints={[{x: 0, y: 5}]}
+            unitText="mph" />
         </FlexCell>
 
         <FlexCell justifyContent="center">

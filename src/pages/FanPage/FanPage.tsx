@@ -79,6 +79,7 @@ export class FanPage extends React.Component<IFanPageProps, IFanPageState> {
           skinTemp: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'eqSkinTemp')},
           watchSpeed: {$set: dataUtil.sensorData2PointSeries(riderData, 'ts', 'watchSpeed')},
         }));
+
       });
   };
 

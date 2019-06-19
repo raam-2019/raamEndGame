@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import {BehaviorSubject} from 'rxjs';
 import * as util from 'services/util';
 import * as queries from 'graphql/queries';
-import moment from 'moment';
 
 
 
@@ -53,13 +52,15 @@ function __getData() {
   util.query<IRawCostOfRest>(queries.listCostOfRests)
 
     .then(result => {
-      return _.map(result.data.listCostOfRests.items, item => ({
-        segmentId: item.segment_id,
-        predictionUnixTime: moment(item.prediction_tstamp, 'YYYY-MM-DD HH:mm:SS').unix(),
-        modelRunId: item.model_run,
-        key: item.key,
-        costOfRestSeconds: item.cost_of_rest_s
-      } as ICostOfRest));
+      // return _.map(result.data.listCostOfRests.items, item => ({
+      //   segmentId: item.segment_id,
+      //   predictionUnixTime: moment(item.prediction_tstamp, 'YYYY-MM-DD HH:mm:SS').unix(),
+      //   modelRunId: item.model_run,
+      //   key: item.key,
+      //   costOfRestSeconds: item.cost_of_rest_s
+      // } as ICostOfRest));
+
+      return [];
     })
 
     .then(rows => __subject.next(rows));
